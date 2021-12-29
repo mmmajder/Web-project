@@ -2,13 +2,25 @@ package beans;
 
 import java.util.Date;
 
+
+import javax.ws.rs.FormParam;
+
+import enums.Gender;
+
 public class Person {
+	@FormParam("name")
 	private String name;
+	@FormParam("surname")
 	private String surname;
+	@FormParam("dateOfBirth")
 	private Date dateOfBirth;
+	@FormParam("gender")
 	private Gender gender;
+	@FormParam("username")
 	private String username;
+	@FormParam("password")
 	private String password;
+	@FormParam("email")
 	private String email;
 	
 	public Person(String name, String surname, Date dateOfBirth, Gender gender, String username, String password,

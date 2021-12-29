@@ -3,7 +3,14 @@ package beans;
 import java.util.ArrayList;
 import java.util.Date;
 
+import enums.Gender;
+
 public class User extends Person {
+	public User(String name, String surname, Date dateOfBirth, Gender gender, String username, String password,
+			String email) {
+		super(name, surname, dateOfBirth, gender, username, password, email);
+		// TODO Auto-generated constructor stub
+	}
 	private String profilePicture;
 	private String biography;
 	private ArrayList<FriendRequest> friendRequests;
@@ -11,19 +18,6 @@ public class User extends Person {
 	private ArrayList<Post> posts;
 	private Boolean isPrivate;
 	private Boolean isBlocked;
-
-	public User(String name, String surname, Date dateOfBirth, Gender gender, String username, String password,
-			String email, String profilePicture, String biography, ArrayList<FriendRequest> friendRequests,
-			ArrayList<User> friends, ArrayList<Post> posts, Boolean isPrivate, Boolean isBlocked) {
-		super(name, surname, dateOfBirth, gender, username, password, email);
-		this.profilePicture = profilePicture;
-		this.biography = biography;
-		this.friendRequests = friendRequests;
-		this.friends = friends;
-		this.posts = posts;
-		this.isPrivate = isPrivate;
-		this.isBlocked = isBlocked;
-	}
 	
 	public ArrayList<FriendRequest> getFriendRequests() {
 		return friendRequests;
