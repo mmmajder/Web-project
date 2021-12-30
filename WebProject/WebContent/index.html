@@ -1,62 +1,40 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
+
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>JAX-RS demo</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>WebProject-Login</title>
 
-<!--Import Google Icon Font-->
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<!--Import materialize.css-->
-<link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
 
-<!--Let browser know website is optimized for mobile-->
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link rel="stylesheet" href="css/login.css">
-    
-    
-<script src="jquery.min.js"></script>
-<script type="text/javascript">
-function getFormData($form){
-    var unindexed_array = $form.serializeArray();
-    var indexed_array = {};
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    $.map(unindexed_array, function(n, i){
-        indexed_array[n['name']] = n['value'];
-    });
-
-    return indexed_array;
-}
-
-function login() {
-	var $form = $("#login");
-	var data = getFormData($form);
-	
-	var s = JSON.stringify(data);
-	$.ajax({
-		url: "rest/demo/login",
-		type:"POST",
-		data: s,
-		contentType:"application/json",
-		dataType:"json",
-		complete: function(data) {
-			window.open("feed.html", '_self').focus();
-			//$( "#resultLogin" ).html( s );
-		}
-	});
-}
-
-</script>
+    <link rel="stylesheet" href="css/login.css">
+    <script src="js/login.js" type="text/javascript"></script>
 </head>
+
 <body>
-	<p id="title">WebProject</p>
-    <div class="container">
-        <form id="login" >
-            <input type="text" id="username" name="username" value="username"><br>
-            <input type="text" id="password" name="password" value="password"><br><br>
-            <input type="button" value="Log In"  onclick="login()" ><br>
-            <label for="register">Don't have an Account?</label><br>
-            <fieldset><div id="resultLogin">Rezultat poziva</div></fieldset><br />
+    <p id="title">WebProject</p>
+    <div id="login_div" class="container">
+        <form id="login">
+            <label for="username" style="float: left;">Username</label>
+            <input type="text" id="username" name="username"><br>
+
+            <label for="password" style="float: left;">Password</label>
+            <input type="password" id="password" name="password"><br><br>
+
+            <input type="button" value="Log In" onclick="login()"><br>
+            <label style="float: left;" id="register">Don't have an Account?</label>
+            <label style="float: right;">
+                <input type="checkbox" checked="checked" name="remember"> Remember me
+            </label>
+            <br><label for="resultLogin"></label>
         </form>
     </div>
 </body>
+
 </html>
