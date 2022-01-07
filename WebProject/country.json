@@ -1,0 +1,89 @@
+[
+  {
+    "name": "Pera",
+    "surname": "Peric",
+    "dateOfBirth": {
+      "year": 2000,
+      "month": "JANUARY",
+      "dayOfMonth": 1,
+      "monthValue": 1,
+      "dayOfWeek": "SATURDAY",
+      "dayOfYear": 1,
+      "leapYear": true,
+      "era": "CE",
+      "chronology": {
+        "id": "ISO",
+        "calendarType": "iso8601"
+      }
+    },
+    "gender": "muski",
+    "username": "pera",
+    "password": "pera12345",
+    "email": "pera@gmail.com",
+    "profilePicture": "user1.png",
+    "biography": "Mlad, lep, zgodan",
+    "friendIDs": [],
+    "postsIDs": [ "P000001", "P000002", "P000003" ],
+    "isPrivate": false,
+    "isBlocked": false,
+    "friendRequests": [ "FR000001", "FR000002" ]
+  },
+  {
+    "name": "Ana",
+    "surname": "Anic",
+    "dateOfBirth": {
+      "year": 1998,
+      "month": "FEBRUARY",
+      "dayOfMonth": 2,
+      "monthValue": 2,
+      "dayOfWeek": "MONDAY",
+      "dayOfYear": 33,
+      "leapYear": false,
+      "era": "CE",
+      "chronology": {
+        "id": "ISO",
+        "calendarType": "iso8601"
+      }
+    },
+    "gender": "zenski",
+    "username": "ana",
+    "password": "ana12345",
+    "email": "ana@gmail.com",
+    "profilePicture": "user2.jpg",
+    "biography": "Kuvam, perem, peglam",
+    "friendIDs": [ "jova" ],
+    "postsIDs": [ "P000004" ],
+    "isPrivate": false,
+    "isBlocked": false,
+    "friendRequests": []
+  },
+  {
+    "name": "Jova",
+    "surname": "Jovic",
+    "dateOfBirth": {
+      "year": 1965,
+      "month": "MAY",
+      "dayOfMonth": 5,
+      "monthValue": 5,
+      "dayOfWeek": "WEDNESDAY",
+      "dayOfYear": 125,
+      "leapYear": false,
+      "era": "CE",
+      "chronology": {
+        "id": "ISO",
+        "calendarType": "iso8601"
+      }
+    },
+    "gender": "muski",
+    "username": "jova",
+    "password": "jova12345",
+    "email": "jova@gmail.com",
+    "profilePicture": "user3.jpg",
+    "biography": "Mlad, lep, zgodan 2.0",
+    "friendIDs": [ "ana" ],
+    "postsIDs": [ "P000005", "P000006" ],
+    "isPrivate": false,
+    "isBlocked": false,
+    "friendRequests": []
+  }
+]

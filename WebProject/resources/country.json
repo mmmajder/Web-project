@@ -1,0 +1,90 @@
+[
+  {
+    "name": "Pera",
+    "surname": "Peric",
+    "dateOfBirth": {
+      "year": 2000,
+      "month": "JANUARY",
+      "chronology": {
+        "id": "ISO",
+        "calendarType": "iso8601"
+      },
+      "dayOfMonth": 1,
+      "monthValue": 1,
+      "dayOfWeek": "SATURDAY",
+      "dayOfYear": 1,
+      "leapYear": true,
+      "era": "CE"
+    },
+    "gender": "muski",
+    "username": "pera",
+    "password": "pera12345",
+    "email": "pera@gmail.com",
+    "profilePicture": "user1.png",
+    "biography": "Mlad, lep, zgodan",
+    "friendRequests": [ "FR000001", "FR000002" ],
+    "friendIDs": [],
+    "postsIDs": [ "P000001", "P000002", "P000003" ],
+    "isPrivate": false,
+    "isBlocked": false
+  },
+  {
+    "name": "Ana",
+    "surname": "Anic",
+    "dateOfBirth": {
+      "year": 1998,
+      "month": "FEBRUARY",
+      "chronology": {
+        "id": "ISO",
+        "calendarType": "iso8601"
+      },
+      "dayOfMonth": 2,
+      "monthValue": 2,
+      "dayOfWeek": "MONDAY",
+      "dayOfYear": 33,
+      "leapYear": false,
+      "era": "CE"
+    },
+    "gender": "zenski",
+    "username": "ana",
+    "password": "ana12345",
+    "email": "ana@gmail.com",
+    "profilePicture": "user2.jpg",
+    "biography": "Kuvam, perem, peglam",
+    "friendRequests": [],
+    "friendIDs": [ "jova" ],
+    "postsIDs": [ "P000004" ],
+    "isPrivate": false,
+    "isBlocked": false
+  },
+  {
+    "name": "Jova",
+    "surname": "Jovic",
+    "dateOfBirth": {
+      "year": 1965,
+      "month": "MAY",
+      "chronology": {
+        "id": "ISO",
+        "calendarType": "iso8601"
+      },
+      "dayOfMonth": 5,
+      "monthValue": 5,
+      "dayOfWeek": "WEDNESDAY",
+      "dayOfYear": 125,
+      "leapYear": false,
+      "era": "CE"
+    },
+    "gender": "muski",
+    "username": "jova",
+    "password": "jova12345",
+    "email": "jova@gmail.com",
+    "profilePicture": "user3.jpg",
+    "biography": "Mlad, lep, zgodan 2.0",
+    "friendRequests": [],
+    "friendIDs": [ "ana" ],
+    "postsIDs": [ "P000005", "P000006" ],
+    "isPrivate": false,
+    "isBlocked": false
+  }
+
+]

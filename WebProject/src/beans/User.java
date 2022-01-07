@@ -1,66 +1,73 @@
 package beans;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 
 import enums.Gender;
 
 public class User extends Person {
-	public User(String name, String surname, Date dateOfBirth, Gender gender, String username, String password,
-			String email) {
-		super(name, surname, dateOfBirth, gender, username, password, email);
-		// TODO Auto-generated constructor stub
+	
+	public User(String id, String name, String surname, LocalDate dateOfBirth, Gender gender, String username,
+			String password, String email, String profilePicture, String biography, ArrayList<String> friendRequestIDs,
+			ArrayList<String> friendIDs, ArrayList<String> postsIDs, Boolean isPrivate, Boolean isBlocked,
+			Boolean isDeleted) {
+		super(id, name, surname, dateOfBirth, gender, username, password, email, profilePicture);
+		this.biography = biography;
+		this.friendRequestIDs = friendRequestIDs;
+		this.friendIDs = friendIDs;
+		this.postsIDs = postsIDs;
+		this.isPrivate = isPrivate;
+		this.isBlocked = isBlocked;
+		this.isDeleted = isDeleted;
 	}
-	private String profilePicture;
+
 	private String biography;
-	private ArrayList<FriendRequest> friendRequests;
-	private ArrayList<User> friends;
-	private ArrayList<Post> posts;
+	private ArrayList<String> friendRequestIDs;
+	private ArrayList<String> friendIDs;
+	private ArrayList<String> postsIDs;
 	private Boolean isPrivate;
 	private Boolean isBlocked;
+	private Boolean isDeleted;
 	
-	public ArrayList<FriendRequest> getFriendRequests() {
-		return friendRequests;
+	
+
+	public Boolean getIsDeleted() {
+		return isDeleted;
 	}
-	public void setFriendRequests(ArrayList<FriendRequest> friendRequests) {
-		this.friendRequests = friendRequests;
+
+	public void setIsDeleted(Boolean isDeleted) {
+		this.isDeleted = isDeleted;
 	}
-	public void addFriendRequest(FriendRequest friendRequest) {
-		this.friendRequests.add(friendRequest);
+
+	public ArrayList<String> getFriendRequests() {
+		return friendRequestIDs;
 	}
-	public void removeFriendRequest(FriendRequest friendRequest) {
-		this.friendRequests.remove(friendRequest);
+
+	public void setFriendRequests(ArrayList<String> friendRequests) {
+		this.friendRequestIDs = friendRequests;
 	}
-	public ArrayList<Post> getPosts() {
-		return posts;
+
+	public ArrayList<String> getFriendRequestIDs() {
+		return friendRequestIDs;
 	}
-	public void setPosts(ArrayList<Post> posts) {
-		this.posts = posts;
-	}	
-	public void addPost(Post post) {
-		this.posts.add(post);
-	}	
-	public void removePost(Post post) {
-		this.posts.remove(post);
-	}	
-	public String getProfilePicture() {
-		return profilePicture;
+
+	public void setFriendRequestIDs(ArrayList<String> friendRequestIDs) {
+		this.friendRequestIDs = friendRequestIDs;
 	}
-	public void setProfilePicture(String profilePicture) {
-		this.profilePicture = profilePicture;
+
+	public ArrayList<String> getFriendIDs() {
+		return friendIDs;
 	}
-	public ArrayList<User> getFriends() {
-		return friends;
+	public void setFriendIDs(ArrayList<String> friendIDs) {
+		this.friendIDs = friendIDs;
 	}
-	public void setFriends(ArrayList<User> friends) {
-		this.friends = friends;
-	}	
-	public void addFriend(User friend) {
-		this.friends.add(friend);
+	public ArrayList<String> getPostsIDs() {
+		return postsIDs;
 	}
-	public void setFriends(User friend) {
-		this.friends.remove(friend);
+	public void setPostsIDs(ArrayList<String> postsIDs) {
+		this.postsIDs = postsIDs;
 	}
+	
 	public Boolean getIsPrivate() {
 		return isPrivate;
 	}
@@ -79,4 +86,21 @@ public class User extends Person {
 	public void setBiography(String biography) {
 		this.biography = biography;
 	}
+
+	@Override
+	public String toString() {
+		return "User [biography=" + biography + ", friendRequestIDs=" + friendRequestIDs + ", friendIDs=" + friendIDs
+				+ ", postsIDs=" + postsIDs + ", isPrivate=" + isPrivate + ", isBlocked=" + isBlocked + ", isDeleted="
+				+ isDeleted + ", getProfilePicture()=" + getProfilePicture() + ", getId()=" + getId() + ", getName()="
+				+ getName() + ", getSurname()=" + getSurname() + ", getDateOfBirth()=" + getDateOfBirth()
+				+ ", getGender()=" + getGender() + ", getUsername()=" + getUsername() + ", getPassword()="
+				+ getPassword() + ", getEmail()=" + getEmail() + ", getClass()=" + getClass() + ", hashCode()="
+				+ hashCode() + ", toString()=" + super.toString() + "]";
+	}
+
+	
+
+
+	
+	
 }

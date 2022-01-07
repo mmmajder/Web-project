@@ -1,30 +1,24 @@
 package beans;
 
-import java.util.Date;
-
-
-import javax.ws.rs.FormParam;
+import java.time.LocalDate;
 
 import enums.Gender;
 
 public class Person {
-	@FormParam("name")
+	private String id;
 	private String name;
-	@FormParam("surname")
 	private String surname;
-	@FormParam("dateOfBirth")
-	private Date dateOfBirth;
-	@FormParam("gender")
+	private LocalDate dateOfBirth;
 	private Gender gender;
-	@FormParam("username")
 	private String username;
-	@FormParam("password")
 	private String password;
-	@FormParam("email")
 	private String email;
+	private String profilePicture;
 	
-	public Person(String name, String surname, Date dateOfBirth, Gender gender, String username, String password,
-			String email) {
+	public Person(String id, String name, String surname, LocalDate dateOfBirth, Gender gender, String username,
+			String password, String email, String profilePicture) {
+		super();
+		this.id = id;
 		this.name = name;
 		this.surname = surname;
 		this.dateOfBirth = dateOfBirth;
@@ -32,6 +26,19 @@ public class Person {
 		this.username = username;
 		this.password = password;
 		this.email = email;
+		this.profilePicture = profilePicture;
+	}
+	public String getProfilePicture() {
+		return profilePicture;
+	}
+	public void setProfilePicture(String profilePicture) {
+		this.profilePicture = profilePicture;
+	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
 	}
 	public String getName() {
 		return name;
@@ -45,10 +52,10 @@ public class Person {
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
-	public Date getDateOfBirth() {
+	public LocalDate getDateOfBirth() {
 		return dateOfBirth;
 	}
-	public void setDateOfBirth(Date dateOfBirth) {
+	public void setDateOfBirth(LocalDate dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
 	public Gender getGender() {

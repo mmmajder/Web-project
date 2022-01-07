@@ -1,0 +1,50 @@
+﻿[
+  {
+    "id": "A00001",
+    "name": "Stana",
+    "surname": "Stanić",
+    "dateOfBirth": {
+      "year": 1990,
+      "month": "JANUARY",
+      "dayOfMonth": 1,
+      "monthValue": 1,
+      "chronology": {
+        "id": "ISO",
+        "calendarType": "iso8601"
+      },
+      "dayOfWeek": "MONDAY",
+      "dayOfYear": 1,
+      "leapYear": false,
+      "era": "CE"
+    },
+    "gender": "zenski",
+    "username": "administrator1",
+    "password": "administrator1",
+    "email": "admin1@gmail.com",
+    "profilePicture": "admin1.jpg"
+  },
+  {
+    "id": "A00002",
+    "name": "Marko",
+    "surname": "Marić",
+    "dateOfBirth": {
+      "year": 1978,
+      "month": "FEBRUARY",
+      "dayOfMonth": 2,
+      "monthValue": 2,
+      "chronology": {
+        "id": "ISO",
+        "calendarType": "iso8601"
+      },
+      "dayOfWeek": "THURSDAY",
+      "dayOfYear": 33,
+      "leapYear": false,
+      "era": "CE"
+    },
+    "gender": "muski",
+    "username": "administrator2",
+    "password": "administrator2",
+    "email": "admin2@gmail.com",
+    "profilePicture": "admin2.png"
+  }
+]	
