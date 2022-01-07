@@ -5,54 +5,103 @@ import java.util.ArrayList;
 
 
 public class Post {
-	private User author;
+	private String id;
+	private String authorID;
 	private String picture;
 	private String description;
 	private LocalDateTime posted;  
-	private ArrayList<Comment> comments;
+	private ArrayList<String> commentIDs;
+	private boolean isDeleted;
+
 	
-	public Post(User author, String picture, String description, LocalDateTime posted, ArrayList<Comment> comments) {
-		this.author = author;
+	public Post(String id, String author, String picture, String description, LocalDateTime posted,
+			ArrayList<String> comments, boolean isDeleted) {
+		super();
+		this.id = id;
+		this.authorID = author;
 		this.picture = picture;
 		this.description = description;
 		this.posted = posted;
-		this.comments = comments;
+		this.commentIDs = comments;
+		this.isDeleted = isDeleted;
 	}
-	
-	public User getAuthor() {
-		return author;
+
+
+	public String getId() {
+		return id;
 	}
-	public void setAuthor(User author) {
-		this.author = author;
+
+
+	public void setId(String id) {
+		this.id = id;
 	}
+
+
+	public String getAuthorID() {
+		return authorID;
+	}
+
+
+	public void setAuthorID(String authorID) {
+		this.authorID = authorID;
+	}
+
+
 	public String getPicture() {
 		return picture;
 	}
+
+
 	public void setPicture(String picture) {
 		this.picture = picture;
 	}
+
+
 	public String getDescription() {
 		return description;
 	}
+
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+
 	public LocalDateTime getPosted() {
 		return posted;
 	}
+
+
 	public void setPosted(LocalDateTime posted) {
 		this.posted = posted;
 	}
-	public ArrayList<Comment> getComments() {
-		return comments;
+
+
+	public ArrayList<String> getCommentIDs() {
+		return commentIDs;
 	}
-	public void setComments(ArrayList<Comment> comments) {
-		this.comments = comments;
+
+
+	public void setCommentIDs(ArrayList<String> commentIDs) {
+		this.commentIDs = commentIDs;
 	}
-	public void addComment(Comment comment) {
-		this.comments.add(comment);
+
+
+	public boolean isDeleted() {
+		return isDeleted;
 	}
-	public void removeComment(Comment comment) {
-		this.comments.remove(comment);
+
+
+	public void setDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
 	}
+
+
+	@Override
+	public String toString() {
+		return "Post [id=" + id + ", authorID=" + authorID + ", picture=" + picture + ", description=" + description
+				+ ", posted=" + posted + ", commentIDs=" + commentIDs + ", isDeleted=" + isDeleted + "]";
+	}
+	
+	
 }

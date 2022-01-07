@@ -1,6 +1,7 @@
 package repo;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Month;
 
 import org.json.simple.JSONObject;
@@ -41,6 +42,14 @@ public class DateManager {
 		int year = (int) (long) (date.get("year"));
         int day = (int) (long) (date.get("dayOfMonth"));
         return LocalDate.of(year, DateManager.getMonth((String)date.get("month")), day);
+	}
+
+	public static LocalDateTime getDateTime(JSONObject dateTime) {
+		int year = (int) (long) (dateTime.get("year"));
+        int day = (int) (long) (dateTime.get("dayOfMonth"));
+        int hour = (int) (long) (dateTime.get("hour"));
+        int minute = (int) (long) (dateTime.get("minute"));
+		return LocalDateTime.of(year, DateManager.getMonth((String)dateTime.get("month")), day, hour, minute);
 	}
 
 }

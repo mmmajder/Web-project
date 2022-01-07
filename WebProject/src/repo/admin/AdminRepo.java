@@ -76,14 +76,27 @@ public class AdminRepo {
         String password = (String) admin.get("password");
         String email = (String) admin.get("email");  
         String profilePicture = (String) admin.get("profilePicture");  
-        
-        admins.add(new Admin(id, name, surname, dateOfBirth, gender, username, password, email, profilePicture));  
+        String biography = (String) admin.get("biography");  
+        ArrayList<String> friendRequests = getList((JSONArray) admin.get("friendRequestIDs"));
+        ArrayList<String> friends = getList((JSONArray) admin.get("friendIDs"));
+        ArrayList<String> posts = getList((JSONArray) admin.get("postIDs"));
+        ArrayList<String> pictures = getList((JSONArray) admin.get("pictureIDs"));
+        ArrayList<String> chats = getList((JSONArray) admin.get("chats"));
+        boolean isPrivate = (boolean) admin.get("private"); 
+        admins.add(new Admin(id, username, password, email, name, surname, dateOfBirth, gender, profilePicture, biography, friends, friendRequests, posts, pictures, isPrivate, chats));
     }
 	private static Gender getGender(String gender) {
-		if (gender.equals("muski")) {
-        	return Gender.muski;        	
+		if (gender.equals("MALE")) {
+        	return Gender.MALE;        	
         } else {
-        	return Gender.zenski; 
+        	return Gender.FEMALE; 
         }
+	}
+	private static ArrayList<String> getList(JSONArray jsonArray) {
+		ArrayList<String> list = new ArrayList<String>();
+        for (Object elem : jsonArray) {
+        	list.add((String) elem);
+		}
+        return list;
 	}
 }

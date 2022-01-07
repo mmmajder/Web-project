@@ -32,13 +32,4 @@ public class UserDaoImpl implements UserDao {
 	public void update(User user) {
 		//TODO
 	}
-	
-	@Override
-	public void logicalDelete(String id) {
-		for (User user : UserRepo.users) {
-			if (user.getId().equals(id)) {
-				user.setIsDeleted(true);
-			}
-		}
-	}
 }

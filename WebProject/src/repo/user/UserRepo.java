@@ -77,50 +77,29 @@ public class UserRepo {
         String email = (String) user.get("email");  
         String profilePicture = (String) user.get("profilePicture");  
         String biography = (String) user.get("biography");  
-        ArrayList<String> friendRequests = getFriendRequests((JSONArray) user.get("friendRequests"));
-        ArrayList<String> friends = getFriends((JSONArray) user.get("friendIDs"));
-        ArrayList<String> posts = getPosts((JSONArray) user.get("postsIDs"));
-        boolean isPrivate = (boolean) user.get("isPrivate"); 
-        boolean isBlocked = (boolean) user.get("isBlocked"); 
-        boolean isDeleted = (boolean) user.get("isDeleted"); 
-        users.add(new User(id, name, surname, dateOfBirth, gender, username, password, email, profilePicture, biography, friendRequests, friends, posts, isPrivate, isBlocked, isDeleted));
+        ArrayList<String> friendRequests = getList((JSONArray) user.get("friendRequestIDs"));
+        ArrayList<String> friends = getList((JSONArray) user.get("friendIDs"));
+        ArrayList<String> posts = getList((JSONArray) user.get("postIDs"));
+        ArrayList<String> pictures = getList((JSONArray) user.get("pictureIDs"));
+        ArrayList<String> chats = getList((JSONArray) user.get("chats"));
+        boolean isPrivate = (boolean) user.get("private"); 
+        boolean isBlocked = (boolean) user.get("blocked"); 
+        users.add(new User(id, username, password, email, name, surname, dateOfBirth, gender, profilePicture, biography, friends, friendRequests, posts, pictures, isPrivate, chats, isBlocked));
     }
 	
-	private static ArrayList<String> getPosts(JSONArray postsObject) {
-		ArrayList<String> posts = new ArrayList<String>();
-        for (Object post : postsObject) {
-        	posts.add((String) post);
+	private static ArrayList<String> getList(JSONArray jsonArray) {
+		ArrayList<String> list = new ArrayList<String>();
+        for (Object elem : jsonArray) {
+        	list.add((String) elem);
 		}
-        return posts;
+        return list;
 	}
-
-
-
-	private static ArrayList<String> getFriends(JSONArray friendsObject) {
-		ArrayList<String> friends = new ArrayList<String>();
-        for (Object friend : friendsObject) {
-        	friends.add((String) friend);
-		}
-        return friends;
-	}
-
-
-
-	private static ArrayList<String> getFriendRequests(JSONArray friendRequestsObject) {
-		ArrayList<String> friendRequests = new ArrayList<String>();
-		for (Object request : friendRequestsObject) {
-        	friendRequests.add((String) request);
-		}
-		return friendRequests;
-	}
-
-
 
 	private static Gender getGender(String gender) {
-		if (gender.equals("muski")) {
-        	return Gender.muski;        	
+		if (gender.equals("MALE")) {
+        	return Gender.MALE;        	
         } else {
-        	return Gender.zenski; 
+        	return Gender.FEMALE; 
         }
 	}
 }

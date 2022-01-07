@@ -3,14 +3,41 @@ package beans;
 import java.time.LocalDateTime;
 
 public class Comment {
+	private String id;
 	private String text;
-	private User author;
+	private String authorID;
+	private LocalDateTime created;
 	private LocalDateTime lastEdited;
-	
-	public Comment(String text, User author, LocalDateTime lastEdited) {
-		this.author = author;
-		this.lastEdited = lastEdited;
+	private boolean isDeleted;
+
+	public Comment(String id, String text, String author, LocalDateTime created, LocalDateTime lastEdited, boolean isDeleted) {
+		super();
+		this.id = id;
 		this.text = text;
+		this.authorID = author;
+		this.lastEdited = lastEdited;
+		this.isDeleted = isDeleted;
+		this.created = created;
+	}
+	
+	public LocalDateTime getCreated() {
+		return created;
+	}
+
+
+
+	public void setCreated(LocalDateTime created) {
+		this.created = created;
+	}
+
+
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public String getText() {
@@ -21,12 +48,22 @@ public class Comment {
 		this.text = text;
 	}
 
-	public User getAuthor() {
-		return author;
+	
+
+	public String getAuthorID() {
+		return authorID;
 	}
 
-	public void setAuthor(User author) {
-		this.author = author;
+	public void setAuthorID(String authorID) {
+		this.authorID = authorID;
+	}
+
+	public boolean isDeleted() {
+		return isDeleted;
+	}
+
+	public void setDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
 	}
 
 	public LocalDateTime getLastEdited() {
