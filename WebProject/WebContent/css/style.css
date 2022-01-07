@@ -1,13 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
 :root {
-    --color-white: hsl(252, 30%, 100%);
-    --color-light: hsl(252, 30%, 95%);
+    --primary-color-hue: 237;
+    --dark-color-lightness: 17%;
+    --light-color-lightness: 95%;
+    --white-color-lightness: 100%;
+    --color-white: hsl(252, 30%, var(--white-color-lightness));
+    --color-light: hsl(252, 30%, var(--light-color-lightness));
     --color-grey: hsl(252, 15%, 65%);
-    --color-primary: #9599E2;
+    /**#9599E2**/
+    --color-primary: hsl(var(--primary-color-hue), 57%, 74%);
     --color-secondary: #8BC6EC;
     --color-success: hsl(120, 95%, 65%);
     --color-danger: hsl(0, 95%, 65%);
-    --color-dark: hsl(252, 30%, 17%);
+    --color-dark: hsl(252, 30%, var(--dark-color-lightness));
     --color-black: hsl(252, 30%, 10%);
     --border-radius: 2rem;
     --card-border-radius: 1rem;
@@ -44,6 +49,13 @@ body {
 
 .profile-picture {
     width: 2.7rem;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.profile-photo {
+    width: 15rem;
     aspect-ratio: 1/1;
     border-radius: 50%;
     overflow: hidden;
@@ -104,6 +116,11 @@ nav .container {
     justify-content: space-between;
 }
 
+nav .container .buttons {
+    float: right;
+    gap: 1rem;
+}
+
 .search-bar {
     background: var(--color-light);
     border-radius: var(--border-radius);
@@ -120,6 +137,10 @@ nav .container {
 
 .search-bar input[type="search"]::placeholder {
     color: var(--color-grey);
+}
+
+.search-bar-friends {
+    background: var(--color-white);
 }
 
 nav .create {
@@ -189,6 +210,7 @@ main .container .left .profile {
 }
 
 .left .sidebar i .notifications-count,
+.left .sidebar i .requests-count,
 .left .sidebar i .messages-count {
     background: var(--color-danger);
     color: white;
@@ -446,4 +468,217 @@ main .container .right {
 .right .request .action {
     display: flex;
     gap: 0.5rem;
+}
+
+
+/**Theme customization**/
+
+.customize-theme {
+    background: rgba(255, 255, 255, 0.5);
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    text-align: center;
+    display: none;
+    place-items: center;
+}
+
+.customize-theme .card {
+    background: var(--color-white);
+    padding: 3rem;
+    border-radius: var(--card-border-radius);
+    border: 2px solid var(--color-primary);
+    width: 50%;
+}
+
+.customize-theme .theme {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding-top: 1rem;
+}
+
+.customize-theme .theme>div {
+    padding: var(--card-padding);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 0.4rem;
+    cursor: pointer;
+}
+
+.customize-theme .theme>div.active {
+    border: 2px solid var(--color-primary);
+}
+
+.customize-theme .theme .theme-1 {
+    background-color: #F0EEF6;
+    color: #241E38;
+}
+
+.customize-theme .theme .theme-2 {
+    background-color: #8BC6EC;
+    background-image: linear-gradient(90deg, #8BC6EC 0%, #9599E2 100%);
+    color: #241E38;
+}
+
+.customize-theme .theme .theme-3 {
+    background-color: #241E38;
+    color: #F0EEF6;
+}
+
+.customize-theme .theme>div span {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    margin-right: 1rem;
+    border: 2px solid var(--color-grey);
+}
+
+
+/**Media queries for responsive design**/
+
+@media screen and (max-width: 1200px) {
+    .container {
+        width: 96%;
+    }
+    main .container {
+        grid: 1rem;
+        grid-template-columns: 5rem auto 30vw;
+    }
+    .left {
+        z-index: 5;
+        width: 5rem;
+    }
+    main .container .left .profile {
+        display: none;
+    }
+    .sidebar h3 {
+        display: none;
+    }
+    .left .btn {
+        display: none;
+    }
+}
+
+
+/**User account page**/
+
+.middle .profile-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 5rem;
+    background: var(--color-white);
+    border-top-left-radius: var(--card-border-radius);
+    border-top-right-radius: var(--card-border-radius);
+    padding: var(--card-padding);
+}
+
+.middle .profile-info .profile-photo {
+    margin-left: 4rem;
+}
+
+.middle .profile-user-settings .btn {
+    float: right;
+    top: 0px;
+}
+
+.middle .user-info {
+    padding: var(--card-padding);
+}
+
+.navbar {
+    width: 100%;
+    background-color: var(--color-white);
+    overflow: auto;
+}
+
+.navbar label {
+    float: left;
+    padding: 12px;
+    color: var(--color-dark);
+    text-decoration: none;
+    font-size: 17px;
+    width: 33%;
+    text-align: center;
+}
+
+.navbar label:hover {
+    color: var(--color-primary);
+}
+
+.navbar label.active {
+    font-weight: bold;
+}
+
+
+/**Photos**/
+
+.photos {
+    padding: var(--card-padding);
+}
+
+.row {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    padding: 0 4px;
+}
+
+.column {
+    -ms-flex: 33%;
+    flex: 33%;
+    max-width: 33%;
+    padding: 0 4px;
+}
+
+.column img {
+    margin-top: 8px;
+    vertical-align: middle;
+    width: 100%;
+}
+
+.middle .showing .photos,
+.middle .showing .posts,
+.middle .showing .friends {
+    display: none;
+}
+
+.middle .showing .visible {
+    display: block;
+}
+
+
+/**Friends**/
+
+.friends {
+    margin-top: 10px;
+    padding: var(--card-padding);
+}
+
+.friendship {
+    background: var(--color-white);
+    border-radius: var(--card-border-radius);
+    padding: var(--card-padding);
+    margin: 1rem 0;
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.friendship .buttons {
+    float: right;
+}
+
+.showing .container {
+    width: 60%;
 }

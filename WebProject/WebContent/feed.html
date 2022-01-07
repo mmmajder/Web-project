@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.1.6/css/unicons.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" href="images/logo.png">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -16,14 +17,18 @@
     <nav>
         <div class="container">
             <img src="images/Meeply.png" class="logo">
-            <div class="search-bar">
-                <i class="uil uil-search"></i>
-                <input type="search" placeholder="Search">
-            </div>
-            <div class="create">
-                <label class="btn btn-primary" for="create-post">Create Post</label>
-                <div class="profile-picture">
-                    <img src="images/profile-1.jpg">
+            <div id="buttons">
+                <div class="btn btn-primary" id="create-post">
+                    <i class="uil uil-postcard"></i>
+                    <label>Create Post</label>
+                </div>
+                <div class="btn btn-primary" id="add-new-photo">
+                    <i class="uil uil-image-plus"></i>
+                    <label>Add new Photo</label>
+                </div>
+                <div class="btn btn-primary" id="log-out">
+                    <i class="uil uil-sign-out-alt"></i>
+                    <label>Log out</label>
                 </div>
             </div>
         </div>
@@ -39,6 +44,14 @@
                     <a class="menu-item active" id="homepage">
                         <span><i class="uil uil-home"></i></span>
                         <h3>Home page</h3>
+                    </a>
+                    <a class="menu-item" id="my-profile">
+                        <span><i class="uil uil-user-circle"></i></span>
+                        <h3>My profile</h3>
+                    </a>
+                    <a class="menu-item" id="search-people">
+                        <span><i class="uil uil-search"></i></span>
+                        <h3>Search people</h3>
                     </a>
                     <a class="menu-item" id="notifications">
                         <span><i class="uil uil-bell">
@@ -89,6 +102,11 @@
                             <small class="messages-count">9+</small></i></span>
                         <h3>Messages</h3>
                     </a>
+                    <a class="menu-item" id="friend-requests">
+                        <span><i class="uil uil-user-check">
+                            <small class="requests-count">9+</small></i></span>
+                        <h3>Friend requests</h3>
+                    </a>
                     <a class="menu-item" id="themes">
                         <span><i class="uil uil-palette"></i></span>
                         <h3>Themes</h3>
@@ -129,6 +147,10 @@
                             <span class="edit">
                                 <i class="uil uil-ellipsis-h"></i>
                             </span>
+                        </div><br>
+
+                        <div class="caption">
+                            <p>Andjela Miskovic je postavila neku sliku.</p>
                         </div>
 
                         <div class="post-photo">
@@ -160,10 +182,6 @@
                                 <img src="images/profile-1.jpg">
                             </span>
                             <p>Liked by <b>Milan Ajder</b> and others...</p>
-                        </div>
-
-                        <div class="caption">
-                            <p><b>Andjela Miskovic</b> je postavila neku sliku.</p>
                         </div>
 
                         <div class="comments text-muted" id="view-comments">
@@ -468,6 +486,29 @@
             </div>
         </div>
     </main>
+
+    <!--Theme customization-->
+    <div class="customize-theme">
+        <div class="card">
+            <h2>Customize your view</h2>
+            <p class="text-muted">Choose the theme you enjoy the most!</p>
+            <div class="theme">
+                <div class="theme-1 active">
+                    <span></span>
+                    <h5 for="theme-1">Light</h5>
+                </div>
+                <div class="theme-2">
+                    <span></span>
+                    <h5 for="theme-2">Gradient</h5>
+                </div>
+                <div class="theme-3">
+                    <span></span>
+                    <h5 for="theme-3">Dark</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/feed.js"></script>
 
 </body>
 

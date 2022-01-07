@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meetply</title>
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.1.6/css/unicons.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="images/logo.png">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <!--NAVBAR-->
+    <nav>
+        <div class="container">
+            <img src="images/Meeply.png" class="logo">
+            <div id="buttons">
+                <div class="btn btn-primary" id="create-post">
+                    <i class="uil uil-postcard"></i>
+                    <label>Create Post</label>
+                </div>
+                <div class="btn btn-primary" id="add-new-photo">
+                    <i class="uil uil-image-plus"></i>
+                    <label>Add new Photo</label>
+                </div>
+                <div class="btn btn-primary" id="log-out">
+                    <i class="uil uil-sign-out-alt"></i>
+                    <label>Log out</label>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="main">
+        <div class="container">
+            <div class="middle">
+                <!--User info-->
+                <div class="profile-info">
+                    <div class="profile-photo">
+                        <img src="images/profile-1.jpg">
+                    </div>
+                    <div class="user-info">
+                        <div class="profile-user-settings">
+                            <h1 class="profile-user-name">@andji_m</h1>
+                            <button id="edit-profile" class="btn"><i class="uil uil-edit-alt"></i> Edit Profile</button>
+                        </div>
+                        <div class="profile-stats text-muted">
+                            <label id="number-of-posts">15 posts</label>
+                            <label id="number-of-photos">20 photos</label>
+                            <label id="number-of-friends">100 friends</label>
+                        </div>
+                        <div class="date-of-birth">
+                            <p id="date-of-birth">01.03.2000.</p>
+                        </div>
+                        <div class="profile-bio">
+                            <p>Lorem ipsum dolor sit, amet consecteturLorem ipsum dolor sit, amet consecteturLorem ipsum dolor sit, amet consecteturLorem ipsum dolor sit, amet consectetur adipisicing elit 📷✈️🏕️</p>
+                        </div>
+                    </div>
+
+                </div>
+                <!--Navbar-->
+                <div class="menu">
+                    <div class="navbar">
+                        <label class="active" id="photos">Photos</label>
+                        <label id="posts">Posts</label>
+                        <label id="friends">Friends</label>
+                    </div>
+                </div>
+                <div class="showing">
+                    <!--Photos-->
+                    <div class="photos visible">
+                        <div class="row">
+                            <div class="column">
+                                <img src="images/logInBackground.jpg">
+                                <img src="images/logInBackground.jpg">
+                                <img src="images/logInBackground.jpg">
+                                <img src="images/logInBackground.jpg">
+                            </div>
+                            <div class="column">
+                                <img src="images/logInBackground.jpg">
+                                <img src="images/profile-1.jpg">
+                                <img src="images/logInBackground.jpg">
+                                <img src="images/logInBackground.jpg">
+                            </div>
+                            <div class="column">
+                                <img src="images/logInBackground.jpg">
+                                <img src="images/logInBackground.jpg">
+                                <img src="images/logInBackground.jpg">
+                                <img src="images/logInBackground.jpg">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Posts-->
+                    <div class="feeds posts">
+                        <div class="feed">
+                            <div class="head">
+                                <div class="user">
+                                    <div class="profile-picture">
+                                        <img src="images/profile-1.jpg">
+                                    </div>
+                                    <div class="ingo">
+                                        <h3>Andjela Miskovic</h3>
+                                        <small>5 HOURS AGO</small>
+                                    </div>
+                                </div>
+                                <span class="edit">
+                                        <i class="uil uil-ellipsis-h"></i>
+                                    </span>
+                            </div><br>
+                            <div class="caption">
+                                <p>Andjela Miskovic je postavila neku sliku.</p>
+                            </div>
+                            <div class="interaction">
+                                <div class="interaction-buttons">
+                                    <span class="like">
+                                            <i class="uil uil-thumbs-up"></i>
+                                        </span>
+                                    <span class="comment">
+                                            <i class="uil uil-comment-dots"></i>
+                                        </span>
+                                    <span class="share">
+                                            <i class="uil uil-share-alt"></i>
+                                        </span>
+                                </div>
+                            </div>
+                            <div class="liked-by">
+                                <span>
+                                        <img src="images/profile-1.jpg">
+                                    </span>
+                                <span>
+                                        <img src="images/profile-1.jpg">
+                                    </span>
+                                <span>
+                                        <img src="images/profile-1.jpg">
+                                    </span>
+                                <p>Liked by <b>Milan Ajder</b> and others...</p>
+                            </div>
+                            <div class="comments text-muted" id="view-comments">
+                                <p>View all 5 comments</p>
+                            </div>
+                        </div>
+                        <div class="feed">
+                            <div class="head">
+                                <div class="user">
+                                    <div class="profile-picture">
+                                        <img src="images/profile-1.jpg">
+                                    </div>
+                                    <div class="ingo">
+                                        <h3>Andjela Miskovic</h3>
+                                        <small>5 HOURS AGO</small>
+                                    </div>
+                                </div>
+                                <span class="edit">
+                                        <i class="uil uil-ellipsis-h"></i>
+                                    </span>
+                            </div><br>
+                            <div class="caption">
+                                <p>Andjela Miskovic je postavila neku sliku.</p>
+                            </div>
+                            <div class="interaction">
+                                <div class="interaction-buttons">
+                                    <span class="like">
+                                            <i class="uil uil-thumbs-up"></i>
+                                        </span>
+                                    <span class="comment">
+                                            <i class="uil uil-comment-dots"></i>
+                                        </span>
+                                    <span class="share">
+                                            <i class="uil uil-share-alt"></i>
+                                        </span>
+                                </div>
+                            </div>
+                            <div class="liked-by">
+                                <span>
+                                        <img src="images/profile-1.jpg">
+                                    </span>
+                                <span>
+                                        <img src="images/profile-1.jpg">
+                                    </span>
+                                <span>
+                                        <img src="images/profile-1.jpg">
+                                    </span>
+                                <p>Liked by <b>Milan Ajder</b> and others...</p>
+                            </div>
+                            <div class="comments text-muted" id="view-comments">
+                                <p>View all 5 comments</p>
+                            </div>
+                        </div>
+                        <div class="feed">
+                            <div class="head">
+                                <div class="user">
+                                    <div class="profile-picture">
+                                        <img src="images/profile-1.jpg">
+                                    </div>
+                                    <div class="ingo">
+                                        <h3>Andjela Miskovic</h3>
+                                        <small>5 HOURS AGO</small>
+                                    </div>
+                                </div>
+                                <span class="edit">
+                                        <i class="uil uil-ellipsis-h"></i>
+                                    </span>
+                            </div><br>
+                            <div class="caption">
+                                <p>Andjela Miskovic je postavila neku sliku.</p>
+                            </div>
+                            <div class="interaction">
+                                <div class="interaction-buttons">
+                                    <span class="like">
+                                            <i class="uil uil-thumbs-up"></i>
+                                        </span>
+                                    <span class="comment">
+                                            <i class="uil uil-comment-dots"></i>
+                                        </span>
+                                    <span class="share">
+                                            <i class="uil uil-share-alt"></i>
+                                        </span>
+                                </div>
+                            </div>
+                            <div class="liked-by">
+                                <span>
+                                        <img src="images/profile-1.jpg">
+                                    </span>
+                                <span>
+                                        <img src="images/profile-1.jpg">
+                                    </span>
+                                <span>
+                                        <img src="images/profile-1.jpg">
+                                    </span>
+                                <p>Liked by <b>Milan Ajder</b> and others...</p>
+                            </div>
+                            <div class="comments text-muted" id="view-comments">
+                                <p>View all 5 comments</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Friends-->
+                    <div class="container">
+                        <div class="friends">
+                            <div class="search-bar search-bar-friends">
+                                <i class="uil uil-search"></i>
+                                <input type="search" placeholder="Search friends" id="friends-search">
+                            </div>
+                            <div class="friendships">
+                                <div class="friendship">
+                                    <div class="profile-picture">
+                                        <img src="images/profile-1.jpg">
+                                    </div>
+                                    <div>
+                                        <h3 id="friend-data">Milan Ajder</h3>
+                                    </div>
+                                    <div class="buttons">
+                                        <div class="btn" id="open-chat">
+                                            <i class="uil uil-message"></i>
+                                            <label>Send a Message</label>
+                                        </div>
+                                        <div class="btn" id="remove-friend">
+                                            <i class="uil uil-multiply"></i>
+                                            <label>Remove Friend</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="friendship">
+                                    <div class="profile-picture">
+                                        <img src="images/profile-1.jpg">
+                                    </div>
+                                    <div>
+                                        <h3 id="friend-data">Milan Ajder</h3>
+                                    </div>
+                                    <div class="buttons">
+                                        <div class="btn" id="open-chat">
+                                            <i class="uil uil-message"></i>
+                                            <label>Send a Message</label>
+                                        </div>
+                                        <div class="btn" id="remove-friend">
+                                            <i class="uil uil-multiply"></i>
+                                            <label>Remove Friend</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="friendship">
+                                    <div class="profile-picture">
+                                        <img src="images/profile-1.jpg">
+                                    </div>
+                                    <div>
+                                        <h3 id="friend-data">Pera Peric</h3>
+                                    </div>
+                                    <div class="buttons">
+                                        <div class="btn" id="open-chat">
+                                            <i class="uil uil-message"></i>
+                                            <label>Send a Message</label>
+                                        </div>
+                                        <div class="btn" id="remove-friend">
+                                            <i class="uil uil-multiply"></i>
+                                            <label>Remove Friend</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="friendship">
+                                    <div class="profile-picture">
+                                        <img src="images/profile-1.jpg">
+                                    </div>
+                                    <div>
+                                        <h3 id="friend-data">Mika Mikic</h3>
+                                    </div>
+                                    <div class="buttons">
+                                        <div class="btn" id="open-chat">
+                                            <i class="uil uil-message"></i>
+                                            <label>Send a Message</label>
+                                        </div>
+                                        <div class="btn" id="remove-friend">
+                                            <i class="uil uil-multiply"></i>
+                                            <label>Remove Friend</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="js/profile.js"></script>
+</body>
+
+</html>
