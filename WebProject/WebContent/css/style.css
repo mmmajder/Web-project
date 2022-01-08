@@ -23,6 +23,106 @@
     --sticky-top-right: -18rem;
 }
 
+
+/**Login & Register**/
+
+.login-body {
+    background-color: #8BC6EC;
+    background-image: linear-gradient(90deg, #8BC6EC 0%, #9599E2 100%);
+}
+
+.login-container {
+    width: 80%;
+    margin: 5% auto 5% auto;
+}
+
+.register,
+.register span {
+    font-size: 25px;
+}
+
+input[type=text],
+input[type=password],
+input[type=date],
+select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    border-radius: var(--border-radius);
+}
+
+#login .text-muted {
+    font-size: 13px;
+}
+
+#login div {
+    padding: 12px 20px;
+    margin: 8px 0;
+}
+
+.login-container .row {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    height: 60%;
+    padding: 0 4px;
+    background: var(--color-white);
+    border-radius: var(--card-border-radius);
+    align-items: center;
+    justify-content: space-between;
+}
+
+.login-container .row .column {
+    -ms-flex: 50%;
+    flex: 50%;
+    max-width: 50%;
+    padding: 4rem;
+    align-content: center;
+    width: 100%;
+    text-align: center;
+}
+
+.register .login-container .row {
+    height: 760px;
+    border-radius: 1rem;
+}
+
+.login-container .row .column img {
+    padding-left: 3rem;
+    width: 15rem;
+}
+
+.login-button,
+.register-button {
+    width: 100%;
+    line-height: 22px;
+}
+
+.login-button span,
+.register-button span {
+    display: block;
+    text-align: center;
+    margin: auto;
+}
+
+.register-button {
+    text-align: center;
+    line-height: 1.8;
+    margin: 1rem 4rem;
+    height: 4rem;
+}
+
+.register input[type=text],
+.register input[type=password],
+.register input[type=date],
+.register select {
+    font-size: 18px;
+}
+
 *,
 *::after,
 *::before {
@@ -587,7 +687,8 @@ main .container .right {
 
 .middle .profile-user-settings .btn {
     float: right;
-    top: 0px;
+    top: 0;
+    right: 0;
 }
 
 .middle .user-info {
@@ -625,7 +726,7 @@ main .container .right {
     padding: var(--card-padding);
 }
 
-.row {
+.photos .row {
     display: -ms-flexbox;
     display: flex;
     -ms-flex-wrap: wrap;
@@ -633,14 +734,14 @@ main .container .right {
     padding: 0 4px;
 }
 
-.column {
+.photos .column {
     -ms-flex: 33%;
     flex: 33%;
     max-width: 33%;
     padding: 0 4px;
 }
 
-.column img {
+.photos .column img {
     margin-top: 8px;
     vertical-align: middle;
     width: 100%;
@@ -677,6 +778,7 @@ main .container .right {
 
 .friendship .buttons {
     float: right;
+    margin-right: 1rem;
 }
 
 .showing .container {

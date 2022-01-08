@@ -21,6 +21,7 @@ $('#friends').click(function() {
     $('.friends').addClass('visible');
 });
 
+// friendship filter
 $(document).ready(function() {
     $("#friends-search").on("keyup", function() {
         var value = $(this).val().toLowerCase();

@@ -1,20 +1,35 @@
+// messages search
+// ne radi
+$(document).ready(function() {
+    $("#message-search").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $(".message-body h5").filter(function() {
+            $(this).parent().parent().toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
+});
+
+function goToMyProfile() {
+    window.location.href = "profile.html";
+}
+
 // sidebar
-const menuItems = document.querySelectorAll('.menu-item');
+const menuItems = $('.menu-item');
 
 // messages
-const messagesNotification = document.querySelector('#messages');
-const messages = document.querySelector('.messages');
+const messagesNotification = $('#messages');
+const messages = $('.messages');
 const message = messages.querySelectorAll('.message');
-const messageSearch = document.querySelector('#message-search');
+const messageSearch = $('#message-search');
 
 // theme
-const theme = document.querySelector('#themes');
-const themeCard = document.querySelector('.customize-theme');
-const root = document.querySelector(':root');
-const theme1 = document.querySelector('.theme-1');
-const theme2 = document.querySelector('.theme-2');
-const theme3 = document.querySelector('.theme-3');
-const body = document.querySelector('body');
+const theme = $('#themes');
+const themeCard = $('.customize-theme');
+const root = $(':root');
+const theme1 = $('.theme-1');
+const theme2 = $('.theme-2');
+const theme3 = $('.theme-3');
+const body = $('body');
 
 
 // remove active class from all menu items
@@ -22,6 +37,10 @@ const changeActiveItem = () => {
     menuItems.forEach(item => {
         item.classList.remove('active');
     })
+}
+
+function changeActiveItem() {
+    $('.menu-items').removeClass('active');
 }
 
 // setting notifications to popup when selected
@@ -38,6 +57,22 @@ menuItems.forEach(item => {
     })
 })
 
+$(document).ready(function() {
+    $('.menu-items').each(function() {
+        $(this).click(function() {
+            changeActiveItem();
+            $(this).addClass('active');
+            if (this.id != 'notifications') {
+                $('.notifications-popup').hide();
+            } else {
+                $('.notifications-popup').show();
+                $('#notifications .notifications-count').hide();
+            }
+        });
+    });
+});
+
+
 // search chat filter
 const searchMessage = () => {
     const value = messageSearch.value.toLowerCase();
@@ -51,6 +86,7 @@ const searchMessage = () => {
     })
 }
 messageSearch.addEventListener('keyup', searchMessage);
+
 
 // theme card opening and closing 
 const openThemeCard = () => {
@@ -112,7 +148,3 @@ theme3.addEventListener('click', () => {
     theme3.classList.add('active');
     changeBackground();
 });
-
-document.getElementById("my-profile").onclick = function() {
-    location.href = "profile.html";
-};
