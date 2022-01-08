@@ -32,4 +32,15 @@ public class UserDaoImpl implements UserDao {
 	public void update(User user) {
 		//TODO
 	}
+
+	@Override
+	public User read(String username, String password) {
+		for (User user : UserRepo.users) {
+			if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
+				return user;
+			}
+		}
+		return null;
+		
+	}
 }
