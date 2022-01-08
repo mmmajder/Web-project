@@ -1,62 +1,53 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
+
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>JAX-RS demo</title>
-
-<!--Import Google Icon Font-->
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<!--Import materialize.css-->
-<link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
-
-<!--Let browser know website is optimized for mobile-->
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link rel="stylesheet" href="css/login.css">
-    
-    
-<script src="jquery.min.js"></script>
-<script type="text/javascript">
-function getFormData($form){
-    var unindexed_array = $form.serializeArray();
-    var indexed_array = {};
-
-    $.map(unindexed_array, function(n, i){
-        indexed_array[n['name']] = n['value'];
-    });
-
-    return indexed_array;
-}
-
-function login() {
-	var $form = $("#login");
-	var data = getFormData($form);
-	
-	var s = JSON.stringify(data);
-	$.ajax({
-		url: "SocialNetwork/login/login",
-		type:"POST",
-		data: s,
-		contentType:"application/json",
-		dataType:"json",
-		complete: function(data) {
-			window.open("feed.html", '_self').focus();
-			//$( "#resultLogin" ).html( s );
-		}
-	});
-}
-
-</script>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Login to Meeply</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="images/logo.png">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
-<body>
-	<p id="title">WebProject</p>
+
+<body class="login-body">
     <div class="container">
-        <form id="login" >
-            <input type="text" id="username" name="username" value="username"><br>
-            <input type="text" id="password" name="password" value="password"><br><br>
-            <input type="button" value="Log In"  onclick="login()" ><br>
-            <label for="register">Don't have an Account?</label><br>
-            <fieldset><div id="resultLogin">Rezultat poziva</div></fieldset><br />
-        </form>
+        <div class="login-background">
+            <div class="login-container">
+                <div class="row">
+                    <div class="column">
+                        <img src="images/logo.png">
+                        <img src="images/Meeply.png">
+                    </div>
+                    <div class="column">
+                        <form id="login">
+
+                            <label for="username">Username</label>
+                            <input type="text" placeholder="Enter Username" name="username" required>
+
+                            <label for="password">Password</label>
+                            <input type="password" placeholder="Enter Password" name="password" required>
+
+                            <div class="btn btn-primary login-button" onclick="login()">
+                                <span>Log In</span>
+                            </div>
+
+                            <label class="text-muted">
+                                <input type="checkbox" checked="checked" name="remember">  Remember me
+                            </label>
+                            <br><label for="resultLogin"></label>
+                            <br><br>
+
+                            <label for="register-button">Don't have an account?</label>
+                            <div class="btn btn-primary register-button" onclick="location.href = 'register.html';">
+                                <span>Create an Account</span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+    <script src="js/login.js" type="text/javascript"></script>
 </body>
+
 </html>

@@ -1,6 +1,13 @@
+<<<<<<< HEAD
 /repo/
 /services/
 /users.json
 /beans/
 /enums/
 /picture/
+=======
+/app/
+/beans/
+/enums/
+/services/
+>>>>>>> 7200a6d193665cc70601826f6d8cc25e499cb3b6
