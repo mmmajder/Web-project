@@ -18,18 +18,9 @@
         <div class="container">
             <img src="images/Meeply.png" class="logo">
             <div id="buttons">
-                <div class="btn btn-primary" id="create-post">
-                    <i class="uil uil-postcard"></i>
-                    <label>Create Post</label>
-                </div>
-                <div class="btn btn-primary" id="add-new-photo">
-                    <i class="uil uil-image-plus"></i>
-                    <label>Add new Photo</label>
-                </div>
-                <div class="btn btn-primary" id="log-out">
-                    <i class="uil uil-sign-out-alt"></i>
-                    <label>Log out</label>
-                </div>
+                <span><i id="homepage" class="uil uil-home"></i></span>
+                <span><i id="my-profile" class="uil uil-user-circle"></i></span>
+                <span><i id="log-out" class="uil uil-sign-out-alt"></i></span>
             </div>
         </div>
     </nav>
@@ -49,9 +40,13 @@
                         <span><i class="uil uil-user-circle"></i></span>
                         <h3>My profile</h3>
                     </a>
-                    <a class="menu-item" id="search-people">
-                        <span><i class="uil uil-search"></i></span>
-                        <h3>Search people</h3>
+                    <a class="menu-item" id="create-post">
+                        <span><i class="uil uil-postcard"></i></span>
+                        <h3>Create post</h3>
+                    </a>
+                    <a class="menu-item" id="add-photo">
+                        <span><i class="uil uil-image-plus"></i></span>
+                        <h3>Add new photo</h3>
                     </a>
                     <a class="menu-item" id="notifications">
                         <span><i class="uil uil-bell">
@@ -125,7 +120,7 @@
                     <div class="profile-picture">
                         <img src="images/profile-1.jpg">
                     </div>
-                    <input type="text" placeholder="What are you thinking about?" id="create-post">
+                    <input type="text" placeholder="What are you thinking about?" id="post-text">
                     <input type="submit" value="Post" class="btn btn-primary">
                 </form>
 
@@ -370,51 +365,47 @@
             </div>
 
             <div class="right">
-                <!--MESSAGES-->
-                <div class="messages">
-                    <div class="heading">
-                        <h4>Messages</h4><i class="uil uil-edit"></i>
-                    </div>
+                <!--Search people-->
+                <h4>Get in touch with new friends!</h4>
+                <div class="new-people">
                     <div class="search-bar">
                         <i class="uil uil-search"></i>
-                        <input type="search" placeholder="Search messages" id="message-search">
+                        <input type="search" placeholder="Search people" id="people-search">
                     </div>
-                    <div class="message">
-                        <div class="profile-picture">
-                            <img src="images/profile-1.jpg">
-                            <div class="active"></div>
-                        </div>
-                        <div class="message-body">
-                            <h5>Milan Ajder</h5>
-                            <p class="text-muted">Volim te!</p>
-                        </div>
-                    </div>
-                    <div class="message">
+                    <div class="person">
                         <div class="profile-picture">
                             <img src="images/profile-1.jpg">
                         </div>
-                        <div class="message-body">
+                        <div class="person-body">
                             <h5>Milan Ajder</h5>
-                            <p class="text-muted">Volim te!</p>
+                            <p class="text-muted">8 mutual friends</p>
                         </div>
                     </div>
-                    <div class="message">
-                        <div class="profile-picture">
-                            <img src="images/profile-1.jpg">
-                            <div class="active"></div>
-                        </div>
-                        <div class="message-body">
-                            <h5>Milan Ajder</h5>
-                            <p class="text-muted">Volim te!</p>
-                        </div>
-                    </div>
-                    <div class="message">
+                    <div class="person">
                         <div class="profile-picture">
                             <img src="images/profile-1.jpg">
                         </div>
-                        <div class="message-body">
+                        <div class="person-body">
                             <h5>Milan Ajder</h5>
-                            <p class="text-muted">Volim te!</p>
+                            <p class="text-muted">8 mutual friends</p>
+                        </div>
+                    </div>
+                    <div class="person">
+                        <div class="profile-picture">
+                            <img src="images/profile-1.jpg">
+                        </div>
+                        <div class="person-body">
+                            <h5>Milan Ajder</h5>
+                            <p class="text-muted">8 mutual friends</p>
+                        </div>
+                    </div>
+                    <div class="person">
+                        <div class="profile-picture">
+                            <img src="images/profile-1.jpg">
+                        </div>
+                        <div class="person-body">
+                            <h5>Milan Ajder</h5>
+                            <p class="text-muted">8 mutual friends</p>
                         </div>
                     </div>
                 </div>

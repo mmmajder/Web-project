@@ -1,9 +1,9 @@
 // messages search
 // ne radi
 $(document).ready(function() {
-    $("#message-search").on("keyup", function() {
+    $("#people-search").on("keyup", function() {
         var value = $(this).val().toLowerCase();
-        $(".message-body h5").filter(function() {
+        $(".person-body h5").filter(function() {
             $(this).parent().parent().toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
     });

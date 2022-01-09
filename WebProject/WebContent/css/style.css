@@ -216,9 +216,17 @@ nav .container {
     justify-content: space-between;
 }
 
-nav .container .buttons {
+nav .container #buttons {
     float: right;
-    gap: 1rem;
+}
+
+nav .container #buttons span {
+    margin: 0 8px;
+}
+
+nav .container #buttons i {
+    font-size: 1.8rem;
+    color: var(--color-primary);
 }
 
 .search-bar {
@@ -415,6 +423,7 @@ main .container .left .profile {
     background: transparent;
     color: var(--color-dark);
     margin-right: 1rem;
+    margin-left: 1rem;
 }
 
 
@@ -483,29 +492,22 @@ main .container .right {
     bottom: 0;
 }
 
-.right .messages {
+.right .new-people {
     background: var(--color-white);
     border-radius: var(--card-border-radius);
     padding: var(--card-padding);
 }
 
-.right .messages .heading {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 1rem;
-}
-
-.right .messages i {
+.right .new-people i {
     font-size: 1.4rem;
 }
 
-.right .messages .search-bar {
+.right .new-people .search-bar {
     display: flex;
     margin-bottom: 1rem;
 }
 
-.right .messages .message {
+.right .new-people .person {
     display: flex;
     gap: 1rem;
     margin-bottom: 1rem;
@@ -521,15 +523,15 @@ main .container .right {
     border-radius: 50%;
 }
 
-.right .messages .message:last-child {
+.right .new-people .person:last-child {
     margin: 0;
 }
 
-.right .messages .message p {
+.right .new-people .person p {
     font-size: 0.8rem;
 }
 
-.right .messages .message .profile-picture .active {
+.right .new-people .person .profile-picture .active {
     width: 0.8rem;
     height: 0.8rem;
     border-radius: 50%;
@@ -547,7 +549,7 @@ main .container .right {
     margin-top: 1rem;
 }
 
-.right .friend-requests h4 {
+.right h4 {
     color: var(--color-grey);
     margin: 1rem 0;
 }

@@ -26,7 +26,3 @@ function login() {
         }
     });
 }
-
-document.getElementById("register").onclick = function() {
-    location.href = "../register.html";
-};
