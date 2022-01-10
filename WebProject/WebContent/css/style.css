@@ -216,15 +216,18 @@ nav .container {
     justify-content: space-between;
 }
 
-nav .container #buttons {
+nav .container #buttons,
+.send-message-icon {
     float: right;
 }
 
-nav .container #buttons span {
+nav .container #buttons span,
+.send-message-icon span {
     margin: 0 8px;
 }
 
-nav .container #buttons i {
+nav .container #buttons i,
+.send-message-icon i {
     font-size: 1.8rem;
     color: var(--color-primary);
 }
@@ -262,7 +265,7 @@ nav .create {
 
 main {
     position: relative;
-    top: 5.4rem;
+    top: 4.5rem;
 }
 
 main .container {
@@ -785,4 +788,172 @@ main .container .right {
 
 .showing .container {
     width: 60%;
+}
+
+
+/**Messages**/
+
+main .messages-container {
+    display: grid;
+    grid-template-columns: 25vw auto;
+    column-gap: 2rem;
+    position: relative;
+}
+
+.messages-container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+main .messages-container .left {
+    height: max-content;
+    position: sticky;
+    top: var(--sticky-top-right);
+    bottom: 0;
+}
+
+.left .messages {
+    background: var(--color-white);
+    border-radius: var(--card-border-radius);
+    padding: var(--card-padding);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+.left .messages .heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.left .messages i {
+    font-size: 1.4rem;
+}
+
+.left .messages .search-bar {
+    display: flex;
+    margin-bottom: 1rem;
+}
+
+.left .messages .message {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    align-items: start;
+}
+
+.left .message .profile-picture {
+    position: relative;
+    overflow: visible;
+}
+
+.left .profile-picture img {
+    border-radius: 50%;
+}
+
+.left .messages .message:last-child {
+    margin: 0;
+}
+
+.left .messages .message p {
+    font-size: 0.8rem;
+}
+
+.left .messages .message .profile-picture .active {
+    width: 0.8rem;
+    height: 0.8rem;
+    border-radius: 50%;
+    border: 3px solid var(--color-white);
+    background: var(--color-success);
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.chat {
+    background: var(--color-white);
+    border-radius: var(--card-border-radius);
+    padding: var(--card-padding);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+.chat-content {
+    height: 100%;
+    position: relative;
+}
+
+.chat-messages {
+    display: flex;
+    overflow-y: scroll;
+    border-bottom: 1px solid #F5F5F7;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 7rem;
+}
+
+.message-container {
+    display: flex;
+}
+
+.message-container .profile-picture {
+    margin: 5px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50px;
+}
+
+.message-right {
+    align-self: flex-end;
+    margin-top: 20px;
+}
+
+.message-left {
+    align-self: flex-start;
+    margin-top: 20px;
+}
+
+.message-right .message-text {
+    background-color: var(--color-primary);
+    border-radius: 20px;
+}
+
+.message-left .message-text {
+    background-color: #F5F5F7;
+    border: 1px solid #F5F5F7;
+    border-radius: 20px;
+    color: #556080;
+    margin-left: 10px;
+}
+
+.message-text {
+    max-width: 300px;
+    height: auto;
+    color: white;
+    text-align: center;
+    margin-top: 5px;
+    padding: 10px;
+}
+
+
+/**Scrollbar**/
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+ ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+ ::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+ ::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }
