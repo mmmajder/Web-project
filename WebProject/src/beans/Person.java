@@ -20,14 +20,31 @@ public class Person {
 	private ArrayList<String> friendRequestIDs;
 	private ArrayList<String> postIDs;
 	private ArrayList<String> pictureIDs;
-	private boolean isPrivate;
 	private ArrayList<String> chats;
+	private boolean isPrivate;
 	
 	
+	
+	
+	public Person() {
+		super();
+	}
+
+
+	public Person(String username, String password) {
+		super();
+		this.username = username;
+		this.password = password;
+	}
+
+
+	
+
+
 	public Person(String id, String username, String password, String email, String name, String surname,
 			LocalDate dateOfBirth, Gender gender, String profilePicture, String biography, ArrayList<String> friendIDs,
 			ArrayList<String> friendRequestIDs, ArrayList<String> postIDs, ArrayList<String> pictureIDs,
-			boolean isPrivate, ArrayList<String> chats) {
+			ArrayList<String> chats, boolean isPrivate) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -43,8 +60,20 @@ public class Person {
 		this.friendRequestIDs = friendRequestIDs;
 		this.postIDs = postIDs;
 		this.pictureIDs = pictureIDs;
-		this.isPrivate = isPrivate;
 		this.chats = chats;
+		this.isPrivate = isPrivate;
+	}
+
+
+	public Person(String id, String username, String email, String name, String surname, Gender gender,
+			String password) {
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.email = email;
+		this.name = name;
+		this.surname = surname;
+		this.gender = gender;
 	}
 
 
