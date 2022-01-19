@@ -40,9 +40,9 @@ $(document).ready(function() {
             changeActiveItem();
             $(this).addClass('active');
             if (this.id != 'notifications') {
-                $('.notifications-popup').hide();
+                $('.notifications-popup').fadeOut();
             } else {
-                $('.notifications-popup').show();
+                $('.notifications-popup').fadeIn();
                 $('#notifications .notifications-count').hide();
             }
         });

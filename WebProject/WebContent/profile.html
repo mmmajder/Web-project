@@ -319,12 +319,56 @@
 
         <!--Edit profile-->
         <div class="edit-profile-card">
+
+            <div class="div">
+                <span style="float: right;"><i id="cancel-edit" class="uil uil-times"></i></span>
+                <h3>Edit profile</h3>
+            </div>
             <div class="row">
                 <div class="column">
 
+                    <label for="name">Name</label>
+                    <input type="text" placeholder="Enter Name" id="name" name="name" required><br>
+
+                    <label for="surname">Surname</label>
+                    <input type="text" placeholder="Enter Surname" id="surname" name="surname" required><br>
+
+                    <label for="password">New Password</label>
+                    <input type="password" placeholder="Enter Password" id="password" name="password"><br>
+
+                    <label for="password2">Re-enter your new Password</label>
+                    <input type="password" placeholder="Re-Enter Password" id="password2" name="password2"><br>
+
                 </div>
                 <div class="column">
-                    <p>pera</p>
+
+                    <label for="gender">Gender</label><br>
+                    <select class="gender" id="gender" name="gender" required>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+
+                    <label for="dateOfBirth">Date of Birth</label>
+                    <input type="date" id="dateOfBirth" name="dateOfBirth" required>
+
+                    <label for="biography">Biography</label>
+                    <input type="text" placeholder="Biography" id="biography" name="biography">
+
+                    <label for="new-profile-photo">New Profile Photo</label><br>
+                    <label for="add-img">
+                        <i class="uil uil-image-plus"></i>
+                    </label>
+                    <input style="visibility: none; display: none;" onchange="getImage(this);" type="file" id="new-profile-photo" name="add-img" accept="image/png, image/jpg">
+
+                </div>
+                <br><label for="resultRegister"></label>
+            </div>
+            <div class="buttons">
+                <div class="btn btn-primary">
+                    <span>Save changes</span>
+                </div>
+                <div class="btn cancel-btn">
+                    <span>Cancel</span>
                 </div>
             </div>
         </div>

@@ -40,5 +40,13 @@ function logOut() {
 }
 
 $("#edit-profile").click(function() {
-    $(".edit-profile").show();
+    $(".edit-profile-card").fadeIn();
+})
+
+$(".cancel-btn").click(function() {
+    $(".edit-profile-card").fadeOut();
+})
+
+$("#cancel-edit").click(function() {
+    $(".edit-profile-card").fadeOut();
 })

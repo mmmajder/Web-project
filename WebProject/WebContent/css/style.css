@@ -44,7 +44,8 @@
 input[type=text],
 input[type=password],
 input[type=date],
-select {
+select,
+.new-profile-photo {
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
@@ -194,6 +195,15 @@ img {
 
 .btn:hover {
     opacity: 0.8;
+}
+
+#cancel-edit {
+    cursor: pointer;
+    font-size: 1.5rem;
+}
+
+#cancel-edit:hover {
+    color: var(--color-primary);
 }
 
 .btn-primary {
@@ -626,9 +636,9 @@ main .container .right {
     background: rgba(255, 255, 255, 0.5);
     position: fixed;
     top: 10%;
-    height: 80%;
-    width: 80%;
-    left: 10%;
+    height: 85%;
+    width: 90%;
+    left: 5%;
     text-align: center;
     place-items: center;
     display: none;
@@ -667,6 +677,10 @@ main .container .right {
     padding: 4rem;
     align-content: center;
     text-align: center;
+}
+
+.edit-profile-card .buttons {
+    align-content: center;
 }
 
 
@@ -818,6 +832,17 @@ main .container .right {
     font-weight: bold;
 }
 
+.new-profile-picture {
+    width: 0.8rem;
+    height: 0.8rem;
+    border-radius: 50%;
+    border: 3px solid var(--color-white);
+    background: var(--color-success);
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
 
 /**Photos**/
 
@@ -871,17 +896,17 @@ main .container .right {
     margin: 1rem 0;
     display: flex;
     gap: 1rem;
-    margin-bottom: 1rem;
-    text-align: center;
-}
-
-.friendship .buttons {
-    float: right;
-    margin-right: 1rem;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .showing .container {
     width: 60%;
+}
+
+.friendship label,
+.navbar label {
+    cursor: pointer;
 }
 
 
