@@ -12,16 +12,24 @@ function getFormData($form) {
 function login() {
     var $form = $("#login");
     var data = getFormData($form);
-
+	
     var s = JSON.stringify(data);
-    $.ajax({
+	console.log(s);    
+	$.ajax({
         url: "rest/demo/login",
         type: "POST",
         data: s,
         contentType: "application/json",
         dataType: "json",
         complete: function(data) {
-            window.open("feed.html", '_self').focus();
+			console.log(data.responseText);
+			if (data.responseText) {
+				window.open("feed.html", '_self').focus();
+			} else {
+				$("#resultLogin").empty();
+				$("#resultLogin").append("Wrong username or password.");
+			}
+            
             //$( "#resultLogin" ).html( s );
         }
     });

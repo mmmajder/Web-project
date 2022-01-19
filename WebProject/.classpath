@@ -9,7 +9,5 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="lib" path="jars/javax.ws.rs-api-2.0.jar"/>
-	<classpathentry kind="lib" path="jars/json-simple-1.1.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

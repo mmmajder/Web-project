@@ -1,5 +1,6 @@
 package enums;
 
 public enum Gender {
-	muski, zenski
+	MALE, 
+	FEMALE
 }

@@ -2,42 +2,54 @@ package beans;
 
 import java.time.LocalDateTime;
 
+import enums.FriendRequestState;
+
 public class FriendRequest {
-	private User sender;
-	private User reciever;
-	private LocalDateTime sent;
+	private String id;
+	private String senderID;
+	private String recieverID;
+	private LocalDateTime dateOfRequest;
 	private FriendRequestState state;
-	
-	public FriendRequest(User sender, User reciever, LocalDateTime sent, FriendRequestState state) {
+
+	public FriendRequest(String id, String sender, String reciever, LocalDateTime dateOfRequest, FriendRequestState state) {
 		super();
-		this.sender = sender;
-		this.reciever = reciever;
-		this.sent = sent;
+		this.id = id;
+		this.senderID = sender;
+		this.recieverID = reciever;
+		this.dateOfRequest = dateOfRequest;
 		this.state = state;
 	}
 
-	public User getSender() {
-		return sender;
+	public String getId() {
+		return id;
 	}
 
-	public void setSender(User sender) {
-		this.sender = sender;
+	public void setId(String id) {
+		this.id = id;
 	}
 
-	public User getReciever() {
-		return reciever;
+	public String getSenderID() {
+		return senderID;
 	}
 
-	public void setReciever(User reciever) {
-		this.reciever = reciever;
+	public void setSenderID(String senderID) {
+		this.senderID = senderID;
 	}
 
-	public LocalDateTime getSent() {
-		return sent;
+	public String getRecieverID() {
+		return recieverID;
 	}
 
-	public void setSent(LocalDateTime sent) {
-		this.sent = sent;
+	public void setRecieverID(String recieverID) {
+		this.recieverID = recieverID;
+	}
+
+	public LocalDateTime getDateOfRequest() {
+		return dateOfRequest;
+	}
+
+	public void setDateOfRequest(LocalDateTime dateOfRequest) {
+		this.dateOfRequest = dateOfRequest;
 	}
 
 	public FriendRequestState getState() {
