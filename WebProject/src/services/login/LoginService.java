@@ -26,6 +26,7 @@ public class LoginService {
 	public void init() {
 		if (ctx.getAttribute("userDAO") == null) {
 	    	String contextPath = ctx.getRealPath("");
+	    	System.out.println();
 			ctx.setAttribute("userDAO", new UserDAO(contextPath));
 		}
 		if (ctx.getAttribute("adminDAO") == null) {

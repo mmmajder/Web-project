@@ -1,57 +1,100 @@
-// sidebar
-const menuItems = document.querySelectorAll('.menu-item');
+// messages search
+$(document).ready(function() {
+    $("#people-search").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $(".person h5").filter(function() {
+            $(this).parent().parent().toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
+});
 
-// messages
-const messagesNotification = document.querySelector('#messages');
-const messages = document.querySelector('.messages');
-const message = messages.querySelectorAll('.message');
-const messageSearch = document.querySelector('#message-search');
 
-// theme
-const theme = document.querySelector('#themes');
-const themeCard = document.querySelector('.customize-theme');
-const root = document.querySelector(':root');
-const theme1 = document.querySelector('.theme-1');
-const theme2 = document.querySelector('.theme-2');
-const theme3 = document.querySelector('.theme-3');
-const body = document.querySelector('body');
+// navbar icons
+function goToMyProfile() {
+    window.location.href = "profile.html";
+}
 
+function goToMessages() {
+    window.location.href = "messages.html";
+}
+
+function logOut() {
+    window.location.href = "index.html";
+}
 
 // remove active class from all menu items
-const changeActiveItem = () => {
-    menuItems.forEach(item => {
+const changeActiveItem2 = () => {
+    $('.menu-item').forEach(item => {
         item.classList.remove('active');
     })
 }
 
-// setting notifications to popup when selected
-menuItems.forEach(item => {
-    item.addEventListener('click', () => {
-        changeActiveItem();
-        item.classList.add('active');
-        if (item.id != 'notifications') {
-            document.querySelector('.notifications-popup').style.display = 'none';
-        } else {
-            document.querySelector('.notifications-popup').style.display = 'block';
-            document.querySelector('#notifications .notifications-count').style.display = 'none';
-        }
-    })
+function changeActiveItem() {
+    $('.menu-item').removeClass('active');
+}
+
+// notifications popup
+$(document).ready(function() {
+    $('.menu-item').each(function() {
+        $(this).click(function() {
+            changeActiveItem();
+            $(this).addClass('active');
+            if (this.id != 'notifications') {
+                $('.notifications-popup').fadeOut();
+            } else {
+                $('.notifications-popup').fadeIn();
+                $('#notifications .notifications-count').hide();
+            }
+        });
+    });
+});
+
+// add new image
+function getImage(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+            $('#add-post-image').attr('src', e.target.result);
+        };
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+// friends request animation
+
+$(".decline").click(function() {
+    $(this).parent().parent().fadeOut('slow');
 })
 
-// search chat filter
-const searchMessage = () => {
-    const value = messageSearch.value.toLowerCase();
-    message.forEach(user => {
-        let name = user.querySelector('h5').textContent.toLowerCase();
-        if (name.indexOf(value) != -1) {
-            user.style.display = 'flex';
-        } else {
-            user.style.display = 'none';
-        }
-    })
-}
-messageSearch.addEventListener('keyup', searchMessage);
+/*
+// opening view comments
+$("#view-comments").onclick(function() {
+    $("#view-comments-card").show();
+})
+$("#view-comments-card").onclick(function(e) {
+    if (e.target.classList.contains('view-comments')) {
+        $("#view-comments-card").hide();
+    }
+})*/
+const comment = document.getElementsByClassName("view-comments");
+const card = document.getElementByClassName("view-comments-card");
 
+const openPostCard = () => {
+    card.style.display = 'grid';
+}
+const closePostCard = (e) => {
+    if (!e.target.classList.contains('view-comments')) {
+        card.style.display = 'none';
+    }
+}
+
+comment.addEventListener('click', openPostCard);
+card.addEventListener('click', closePostCard);
+
+
+/*
 // theme card opening and closing 
 const openThemeCard = () => {
     themeCard.style.display = 'grid';
@@ -111,8 +154,4 @@ theme3.addEventListener('click', () => {
     theme2.classList.remove('active');
     theme3.classList.add('active');
     changeBackground();
-});
-
-document.getElementById("my-profile").onclick = function() {
-    location.href = "profile.html";
-};
+});*/

@@ -1,58 +1,67 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 
+
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>WebProject-Register</title>
-
-    <!--Import Google Icon Font-->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!--Import materialize.css-->
-    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
-
-    <!--Let browser know website is optimized for mobile-->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <link rel="stylesheet" href="css/login.css">
-    <script src="js/register.js" type="text/javascript"></script>
+    <title>Register to Meeply</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="images/logo.png">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
-<body>
-    <p id="title" style="padding-bottom: 2%;">WebProject - Register</p>
-    <div id="login_div" class="container">
-        <form id="login">
-            <label for="email" style="float: left;">Email:</label>
-            <input type="text" id="email" name="email"><br>
+<body class="login-body register">
+    <div class="container">
+        <div class="login-background">
+            <form id="register">
+                <div class="login-container">
+                    <div class="row">
+                        <div class="column">
 
-            <label for="username" style="float: left;">Username:</label>
-            <input type="text" id="username" name="username"><br>
+                            <label for="email">Email</label>
+                            <input type="text" placeholder="Enter Email" id="email" name="email" required><br>
 
-            <label for="password" style="float: left;">Password</label>
-            <input type="password" id="password" name="password"><br>
+                            <label for="username">Username</label>
+                            <input type="text" placeholder="Enter Username" id="username" name="username" required><br>
 
-            <label for="password2" style="float: left;">Re-enter your Password</label>
-            <input type="password" id="password2" name="password2"><br>
+                            <label for="password">Password</label>
+                            <input type="password" placeholder="Enter Password" id="password" name="password" required><br>
 
-            <label for="name" style="float: left;">Name:</label>
-            <input type="text" id="name" name="name"><br>
+                            <label for="password2">Re-enter your Password</label>
+                            <input type="password" placeholder="Re-Enter Password" id="password2" name="password2" required><br>
 
-            <label for="surname" style="float: left;">Surname:</label>
-            <input type="text" id="surname" name="surname"><br>
+                        </div>
+                        <div class="column">
 
-            <label for="gender" style="float: left;">Gender:</label><br>
-            <select class="gender" id="gender" name="gender">
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-            </select>
+                            <label for="name">Name</label>
+                            <input type="text" placeholder="Enter Name" id="name" name="name" required><br>
 
-            <label for="dateOfBirth" style="float: left;">Date of Birth:</label>
-            <input type="date" id="dateOfBirth" name="dateOfBirth">
+                            <label for="surname">Surname</label>
+                            <input type="text" placeholder="Enter Surname" id="surname" name="surname" required><br>
 
-            <input type="button" value="Register" onclick="register()"><br>
+                            <label for="gender">Gender</label><br>
+                            <select class="gender" id="gender" name="gender" required>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                        </select>
 
-            <br><label for="resultRegister"></label>
-        </form>
+                            <label for="dateOfBirth">Date of Birth</label>
+                            <input type="date" id="dateOfBirth" name="dateOfBirth" required>
+
+                        </div>
+                        <div class="btn btn-primary register-button" onclick="register()">
+                            <span>Create an Account</span>
+                        </div>
+                        <br><label for="resultRegister"></label>
+
+                    </div>
+                </div>
+            </form>
+
+        </div>
     </div>
+    </div>
+    <script src="js/login.js" type="text/javascript"></script>
 </body>
 
 </html>

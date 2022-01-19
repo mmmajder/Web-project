@@ -21,6 +21,7 @@ $('#friends').click(function() {
     $('.friends').addClass('visible');
 });
 
+// friendship filter
 $(document).ready(function() {
     $("#friends-search").on("keyup", function() {
         var value = $(this).val().toLowerCase();
@@ -29,3 +30,23 @@ $(document).ready(function() {
         });
     });
 });
+
+function goToHomepage() {
+    window.location.href = "feed.html";
+}
+
+function logOut() {
+    window.location.href = "index.html";
+}
+
+$("#edit-profile").click(function() {
+    $(".edit-profile-card").fadeIn();
+})
+
+$(".cancel-btn").click(function() {
+    $(".edit-profile-card").fadeOut();
+})
+
+$("#cancel-edit").click(function() {
+    $(".edit-profile-card").fadeOut();
+})

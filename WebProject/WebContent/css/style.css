@@ -23,6 +23,118 @@
     --sticky-top-right: -18rem;
 }
 
+
+/**Login & Register**/
+
+.login-body {
+    background-color: #8BC6EC;
+    background-image: linear-gradient(90deg, #8BC6EC 0%, #9599E2 100%);
+}
+
+.login-container {
+    width: 80%;
+    margin: 5% auto 5% auto;
+}
+
+.register,
+.register span {
+    font-size: 25px;
+}
+
+input[type=text],
+input[type=password],
+input[type=date],
+select,
+.new-profile-photo {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    border-radius: var(--border-radius);
+}
+
+textarea {
+    resize: none;
+    overflow-y: scroll;
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+#login .text-muted {
+    font-size: 13px;
+}
+
+#login div {
+    padding: 12px 20px;
+    margin: 8px 0;
+}
+
+.login-container .row {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    height: 60%;
+    padding: 0 4px;
+    background: var(--color-white);
+    border-radius: var(--card-border-radius);
+    align-items: center;
+    justify-content: space-between;
+}
+
+.login-container .row .column {
+    -ms-flex: 50%;
+    flex: 50%;
+    max-width: 50%;
+    padding: 4rem;
+    align-content: center;
+    width: 100%;
+    text-align: center;
+}
+
+.register .login-container .row {
+    height: 760px;
+    border-radius: 1rem;
+}
+
+.login-container .row .column img {
+    padding-left: 3rem;
+    width: 15rem;
+}
+
+.login-button,
+.register-button {
+    width: 100%;
+    line-height: 22px;
+}
+
+.login-button span,
+.register-button span {
+    display: block;
+    text-align: center;
+    margin: auto;
+}
+
+.register-button {
+    text-align: center;
+    line-height: 1.8;
+    margin: 1rem 4rem;
+    height: 4rem;
+}
+
+.register input[type=text],
+.register input[type=password],
+.register input[type=date],
+.register select {
+    font-size: 18px;
+}
+
 *,
 *::after,
 *::before {
@@ -85,6 +197,15 @@ img {
     opacity: 0.8;
 }
 
+#cancel-edit {
+    cursor: pointer;
+    font-size: 1.5rem;
+}
+
+#cancel-edit:hover {
+    color: var(--color-primary);
+}
+
 .btn-primary {
     background: var(--color-primary);
     color: white;
@@ -116,9 +237,30 @@ nav .container {
     justify-content: space-between;
 }
 
-nav .container .buttons {
+nav .container #buttons {
     float: right;
-    gap: 1rem;
+    cursor: pointer;
+}
+
+.send-message-icon {
+    cursor: pointer;
+    float: left;
+}
+
+nav .container #buttons span,
+.send-message-icon span {
+    margin: 0 8px;
+}
+
+nav .container #buttons i,
+.send-message-icon i {
+    font-size: 1.8rem;
+    color: var(--color-primary);
+}
+
+.interaction-buttons i {
+    font-size: 1.5rem;
+    color: var(--color-primary);
 }
 
 .search-bar {
@@ -154,7 +296,7 @@ nav .create {
 
 main {
     position: relative;
-    top: 5.4rem;
+    top: 4.5rem;
 }
 
 main .container {
@@ -207,6 +349,14 @@ main .container .left .profile {
     color: var(--color-grey);
     position: relative;
     margin-left: 2rem;
+}
+
+.middle .create-post i {
+    font-size: 1.5rem;
+    color: var(--color-grey);
+    position: relative;
+    margin-right: 1rem;
+    cursor: pointer;
 }
 
 .left .sidebar i .notifications-count,
@@ -295,26 +445,37 @@ main .container .left .profile {
 }
 
 
-/**Posts**/
+/**New Posts**/
 
 .middle .create-post {
     width: 100%;
-    display: flex;
     align-items: center;
     justify-content: space-between;
     margin-top: 1rem;
     background: var(--color-white);
-    padding: 0.4rem var(--card-padding);
-    border-radius: var(--border-radius);
+    padding: var(--card-padding);
+    border-radius: var(--card-border-radius);
 }
 
-.middle .create-post input[type="text"] {
+.middle .create-post .inline-part {
+    display: flex;
+    margin-top: 0.5rem;
+}
+
+.middle .create-post #post,
+.middle .create-post label {
+    margin-top: 0.5rem;
+    height: 2rem;
+}
+
+.middle .create-post textarea {
     justify-self: start;
     width: 100%;
     padding-left: 1rem;
     background: transparent;
     color: var(--color-dark);
     margin-right: 1rem;
+    margin-left: 1rem;
 }
 
 
@@ -339,7 +500,9 @@ main .container .left .profile {
     gap: 1rem;
 }
 
-.middle .feed .post-photo {
+.middle .feed .post-photo,
+.card .post-photo,
+#add-post-image {
     overflow: hidden;
     margin: 0.7rem 0;
 }
@@ -383,29 +546,22 @@ main .container .right {
     bottom: 0;
 }
 
-.right .messages {
+.right .new-people {
     background: var(--color-white);
     border-radius: var(--card-border-radius);
     padding: var(--card-padding);
 }
 
-.right .messages .heading {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 1rem;
-}
-
-.right .messages i {
+.right .new-people i {
     font-size: 1.4rem;
 }
 
-.right .messages .search-bar {
+.right .new-people .search-bar {
     display: flex;
     margin-bottom: 1rem;
 }
 
-.right .messages .message {
+.right .new-people .person {
     display: flex;
     gap: 1rem;
     margin-bottom: 1rem;
@@ -421,15 +577,15 @@ main .container .right {
     border-radius: 50%;
 }
 
-.right .messages .message:last-child {
+.right .new-people .person:last-child {
     margin: 0;
 }
 
-.right .messages .message p {
+.right .new-people .person p {
     font-size: 0.8rem;
 }
 
-.right .messages .message .profile-picture .active {
+.right .new-people .person .profile-picture .active {
     width: 0.8rem;
     height: 0.8rem;
     border-radius: 50%;
@@ -447,7 +603,7 @@ main .container .right {
     margin-top: 1rem;
 }
 
-.right .friend-requests h4 {
+.right h4 {
     color: var(--color-grey);
     margin: 1rem 0;
 }
@@ -468,6 +624,63 @@ main .container .right {
 .right .request .action {
     display: flex;
     gap: 0.5rem;
+}
+
+
+/**New post**/
+
+
+/**Edit profile**/
+
+.edit-profile-card {
+    background: rgba(255, 255, 255, 0.5);
+    position: fixed;
+    top: 10%;
+    height: 85%;
+    width: 90%;
+    left: 5%;
+    text-align: center;
+    place-items: center;
+    display: none;
+    background: var(--color-white);
+    padding: 3rem;
+    border-radius: var(--card-border-radius);
+    border: 2px solid var(--color-primary);
+}
+
+.view-comments {
+    cursor: pointer;
+}
+
+.edit-profile-card .left {
+    width: 50%;
+    height: auto;
+    text-align: center;
+    padding: 15px;
+    float: left;
+}
+
+.edit-profile-card .row {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    padding: 0 4px;
+    background: var(--color-white);
+    border-radius: var(--card-border-radius);
+    align-items: center;
+    justify-content: space-between;
+}
+
+.edit-profile-card .row .column {
+    width: 50%;
+    padding: 4rem;
+    align-content: center;
+    text-align: center;
+}
+
+.edit-profile-card .buttons {
+    align-content: center;
 }
 
 
@@ -587,7 +800,8 @@ main .container .right {
 
 .middle .profile-user-settings .btn {
     float: right;
-    top: 0px;
+    top: 0;
+    right: 0;
 }
 
 .middle .user-info {
@@ -618,6 +832,17 @@ main .container .right {
     font-weight: bold;
 }
 
+.new-profile-picture {
+    width: 0.8rem;
+    height: 0.8rem;
+    border-radius: 50%;
+    border: 3px solid var(--color-white);
+    background: var(--color-success);
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
 
 /**Photos**/
 
@@ -625,7 +850,7 @@ main .container .right {
     padding: var(--card-padding);
 }
 
-.row {
+.photos .row {
     display: -ms-flexbox;
     display: flex;
     -ms-flex-wrap: wrap;
@@ -633,14 +858,14 @@ main .container .right {
     padding: 0 4px;
 }
 
-.column {
+.photos .column {
     -ms-flex: 33%;
     flex: 33%;
     max-width: 33%;
     padding: 0 4px;
 }
 
-.column img {
+.photos .column img {
     margin-top: 8px;
     vertical-align: middle;
     width: 100%;
@@ -671,14 +896,224 @@ main .container .right {
     margin: 1rem 0;
     display: flex;
     gap: 1rem;
-    margin-bottom: 1rem;
-    text-align: center;
-}
-
-.friendship .buttons {
-    float: right;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .showing .container {
     width: 60%;
+}
+
+.friendship label,
+.navbar label {
+    cursor: pointer;
+}
+
+
+/**Messages**/
+
+main .messages-container {
+    display: grid;
+    grid-template-columns: 25vw auto;
+    column-gap: 2rem;
+    position: fixed;
+    top: 10%;
+    height: 80%;
+    width: 80%;
+    left: 10%;
+}
+
+main .messages-container .left {
+    height: max-content;
+    position: sticky;
+    display: block;
+    top: var(--sticky-top-right);
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    overflow: hidden;
+    margin-top: 2rem;
+    background: var(--color-white);
+    padding: var(--card-padding);
+    border-radius: var(--card-border-radius);
+}
+
+.left .messages {
+    background: var(--color-white);
+    padding: var(--card-padding);
+    border-radius: var(--card-border-radius);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    overflow-y: scroll;
+    height: 400px;
+}
+
+.left .heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.left .heading i {
+    font-size: 1.4rem;
+}
+
+.left .search-bar {
+    display: flex;
+    margin-bottom: 1rem;
+}
+
+.left .messages .message {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    align-items: start;
+}
+
+.left .message .profile-picture {
+    position: relative;
+    overflow: visible;
+}
+
+.left .profile-picture img {
+    border-radius: 50%;
+}
+
+.left .messages .message:last-child {
+    margin: 0;
+}
+
+.left .messages .message p {
+    font-size: 0.8rem;
+}
+
+.left .messages .message .profile-picture .active {
+    width: 0.8rem;
+    height: 0.8rem;
+    border-radius: 50%;
+    border: 3px solid var(--color-white);
+    background: var(--color-success);
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.chat {
+    background: var(--color-white);
+    border-radius: var(--card-border-radius);
+    padding: var(--card-padding);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    display: block;
+    position: sticky;
+    top: var(--sticky-top-right);
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+.chat-content {
+    position: relative;
+    height: 415px;
+    bottom: 2rem;
+}
+
+.chat-messages {
+    display: flex;
+    overflow-y: scroll;
+    border-bottom: 1px solid #F5F5F7;
+    border-top: 1px solid #F5F5F7;
+    flex-direction: column;
+    position: absolute;
+    top: 2rem;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.chat .user {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.new-message {
+    display: inline-flex;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    align-content: center;
+    flex-grow: 1;
+}
+
+#new-message-text {
+    width: 100%;
+    flex-grow: 1;
+}
+
+.message-container {
+    display: flex;
+}
+
+.message-container .profile-picture {
+    margin: 5px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50px;
+}
+
+.message-right {
+    align-self: flex-end;
+    margin-top: 20px;
+}
+
+.message-left {
+    align-self: flex-start;
+    margin-top: 20px;
+}
+
+.message-right .message-text {
+    background-color: var(--color-primary);
+    border-radius: 20px;
+}
+
+.message-left .message-text {
+    background-color: #F5F5F7;
+    border: 1px solid #F5F5F7;
+    border-radius: 20px;
+    color: #556080;
+    margin-left: 10px;
+}
+
+.message-text {
+    max-width: 300px;
+    height: auto;
+    color: white;
+    text-align: center;
+    margin-top: 5px;
+    padding: 10px;
+}
+
+
+/**Scrollbar**/
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+ ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+ ::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+ ::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }

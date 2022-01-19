@@ -18,18 +18,9 @@
         <div class="container">
             <img src="images/Meeply.png" class="logo">
             <div id="buttons">
-                <div class="btn btn-primary" id="create-post">
-                    <i class="uil uil-postcard"></i>
-                    <label>Create Post</label>
-                </div>
-                <div class="btn btn-primary" id="add-new-photo">
-                    <i class="uil uil-image-plus"></i>
-                    <label>Add new Photo</label>
-                </div>
-                <div class="btn btn-primary" id="log-out">
-                    <i class="uil uil-sign-out-alt"></i>
-                    <label>Log out</label>
-                </div>
+                <span><i id="homepage" class="uil uil-home" onclick="goToHomepage()"></i></span>
+                <span><i id="my-profile" class="uil uil-user-circle"></i></span>
+                <span><i id="log-out" class="uil uil-sign-out-alt" onclick="logOut()"></i></span>
             </div>
         </div>
     </nav>
@@ -44,8 +35,8 @@
                     </div>
                     <div class="user-info">
                         <div class="profile-user-settings">
-                            <h1 class="profile-user-name">@andji_m</h1>
                             <button id="edit-profile" class="btn"><i class="uil uil-edit-alt"></i> Edit Profile</button>
+                            <h1 class="profile-user-name">@andji_m</h1>
                         </div>
                         <div class="profile-stats text-muted">
                             <label id="number-of-posts">15 posts</label>
@@ -325,7 +316,64 @@
                 </div>
             </div>
         </div>
-        <script src="js/profile.js"></script>
+
+        <!--Edit profile-->
+        <div class="edit-profile-card">
+
+            <div class="div">
+                <span style="float: right;"><i id="cancel-edit" class="uil uil-times"></i></span>
+                <h3>Edit profile</h3>
+            </div>
+            <div class="row">
+                <div class="column">
+
+                    <label for="name">Name</label>
+                    <input type="text" placeholder="Enter Name" id="name" name="name" required><br>
+
+                    <label for="surname">Surname</label>
+                    <input type="text" placeholder="Enter Surname" id="surname" name="surname" required><br>
+
+                    <label for="password">New Password</label>
+                    <input type="password" placeholder="Enter Password" id="password" name="password"><br>
+
+                    <label for="password2">Re-enter your new Password</label>
+                    <input type="password" placeholder="Re-Enter Password" id="password2" name="password2"><br>
+
+                </div>
+                <div class="column">
+
+                    <label for="gender">Gender</label><br>
+                    <select class="gender" id="gender" name="gender" required>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+
+                    <label for="dateOfBirth">Date of Birth</label>
+                    <input type="date" id="dateOfBirth" name="dateOfBirth" required>
+
+                    <label for="biography">Biography</label>
+                    <input type="text" placeholder="Biography" id="biography" name="biography">
+
+                    <label for="new-profile-photo">New Profile Photo</label><br>
+                    <label for="add-img">
+                        <i class="uil uil-image-plus"></i>
+                    </label>
+                    <input style="visibility: none; display: none;" onchange="getImage(this);" type="file" id="new-profile-photo" name="add-img" accept="image/png, image/jpg">
+
+                </div>
+                <br><label for="resultRegister"></label>
+            </div>
+            <div class="buttons">
+                <div class="btn btn-primary">
+                    <span>Save changes</span>
+                </div>
+                <div class="btn cancel-btn">
+                    <span>Cancel</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/profile.js"></script>
 </body>
 
 </html>
