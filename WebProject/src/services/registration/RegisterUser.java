@@ -9,15 +9,8 @@ public class RegisterUser {
 	private String surname;
 	private Gender gender;
 	private String password;
-	public RegisterUser(String username, String email, String name, String surname, Gender gender, String password) {
-		super();
-		this.username = username;
-		this.email = email;
-		this.name = name;
-		this.surname = surname;
-		this.gender = gender;
-		this.password = password;
-	}
+	
+
 	public String getUsername() {
 		return username;
 	}
