@@ -19,16 +19,14 @@
             <img src="images/Meeply.png" class="logo">
             <div id="buttons">
                 <span><i id="homepage" class="uil uil-home"></i></span>
-                <span><i id="my-profile" class="uil uil-user-circle"></i></span>
-                <span><i id="log-out" class="uil uil-sign-out-alt"></i></span>
+                <span><i id="my-profile" class="uil uil-user-circle" onclick="goToMyProfile()"></i></span>
+                <span><i id="log-out" class="uil uil-sign-out-alt" onclick="logOut()"></i></span>
             </div>
         </div>
     </nav>
 
-
     <main>
         <div class="container">
-
             <div class="left">
                 <!--SIDEBAR-->
                 <div class="sidebar">
@@ -39,14 +37,6 @@
                     <a class="menu-item" id="my-profile" onclick="goToMyProfile()">
                         <span><i class="uil uil-user-circle"></i></span>
                         <h3>My profile</h3>
-                    </a>
-                    <a class="menu-item" id="create-post">
-                        <span><i class="uil uil-postcard"></i></span>
-                        <h3>Create post</h3>
-                    </a>
-                    <a class="menu-item" id="add-photo">
-                        <span><i class="uil uil-image-plus"></i></span>
-                        <h3>Add new photo</h3>
                     </a>
                     <a class="menu-item" id="notifications">
                         <span><i class="uil uil-bell">
@@ -92,15 +82,10 @@
                             </div>
                         </div>
                     </a>
-                    <a class="menu-item" id="messages">
+                    <a class="menu-item" id="messages" onclick="goToMessages()">
                         <span><i class="uil uil-envelope-alt">
                             <small class="messages-count">9+</small></i></span>
                         <h3>Messages</h3>
-                    </a>
-                    <a class="menu-item" id="friend-requests">
-                        <span><i class="uil uil-user-check">
-                            <small class="requests-count">9+</small></i></span>
-                        <h3>Friend requests</h3>
                     </a>
                     <a class="menu-item" id="themes">
                         <span><i class="uil uil-palette"></i></span>
@@ -117,11 +102,15 @@
             <div class="middle">
                 <!--Create post form-->
                 <form class="create-post">
-                    <div class="profile-picture">
-                        <img src="images/profile-1.jpg">
-                    </div>
-                    <input type="text" placeholder="What are you thinking about?" id="post-text">
-                    <input type="submit" value="Post" class="btn btn-primary">
+                    <div class="inline-part">
+                        <textarea rows="5" placeholder="What are you thinking about?" id="post-text"></textarea>
+                        <label for="add-img">
+                            <i class="uil uil-image-plus"></i>
+                        </label>
+                        <input style="visibility: none; display: none;" onchange="getImage(this);" type="file" id="add-img" name="add-img" accept="image/png, image/jpg">
+                        <input type="submit" value="Post" id="post" class="btn btn-primary">
+                    </div><br>
+                    <img src="" id="add-post-image">
                 </form>
 
                 <!--Feed-->
@@ -160,9 +149,6 @@
                                 <span class="comment">
                                     <i class="uil uil-comment-dots"></i>
                                 </span>
-                                <span class="share">
-                                    <i class="uil uil-share-alt"></i>
-                                </span>
                             </div>
                         </div>
 
@@ -179,7 +165,7 @@
                             <p>Liked by <b>Milan Ajder</b> and others...</p>
                         </div>
 
-                        <div class="comments text-muted" id="view-comments">
+                        <div class="comments text-muted view-comments">
                             <p>View all 5 comments</p>
                         </div>
 
@@ -215,9 +201,6 @@
                                 <span class="comment">
                                     <i class="uil uil-comment-dots"></i>
                                 </span>
-                                <span class="share">
-                                    <i class="uil uil-share-alt"></i>
-                                </span>
                             </div>
                         </div>
 
@@ -238,7 +221,7 @@
                             <p><b>Andjela Miskovic</b> je postavila neku sliku.</p>
                         </div>
 
-                        <div class="comments text-muted" id="view-comments">
+                        <div class="comments text-muted view-comments">
                             <p>View all 5 comments</p>
                         </div>
 
@@ -274,9 +257,6 @@
                                 <span class="comment">
                                     <i class="uil uil-comment-dots"></i>
                                 </span>
-                                <span class="share">
-                                    <i class="uil uil-share-alt"></i>
-                                </span>
                             </div>
                         </div>
 
@@ -297,7 +277,7 @@
                             <p><b>Andjela Miskovic</b> je postavila neku sliku.</p>
                         </div>
 
-                        <div class="comments text-muted" id="view-comments">
+                        <div class="comments text-muted view-comments">
                             <p>View all 5 comments</p>
                         </div>
 
@@ -333,9 +313,6 @@
                                 <span class="comment">
                                     <i class="uil uil-comment-dots"></i>
                                 </span>
-                                <span class="share">
-                                    <i class="uil uil-share-alt"></i>
-                                </span>
                             </div>
                         </div>
 
@@ -356,7 +333,7 @@
                             <p><b>Andjela Miskovic</b> je postavila neku sliku.</p>
                         </div>
 
-                        <div class="comments text-muted" id="view-comments">
+                        <div class="comments text-muted view-comments">
                             <p>View all 5 comments</p>
                         </div>
 
@@ -425,7 +402,7 @@
                         </div>
                         <div class="action">
                             <button class="btn btn-primary">Accept</button>
-                            <button class="btn">Decline</button>
+                            <button class="btn decline">Decline</button>
                         </div>
                     </div>
                     <div class="request">
@@ -440,7 +417,7 @@
                         </div>
                         <div class="action">
                             <button class="btn btn-primary">Accept</button>
-                            <button class="btn">Decline</button>
+                            <button class="btn decline">Decline</button>
                         </div>
                     </div>
                     <div class="request">
@@ -455,7 +432,7 @@
                         </div>
                         <div class="action">
                             <button class="btn btn-primary">Accept</button>
-                            <button class="btn">Decline</button>
+                            <button class="btn decline">Decline</button>
                         </div>
                     </div>
                     <div class="request">
@@ -470,7 +447,7 @@
                         </div>
                         <div class="action">
                             <button class="btn btn-primary">Accept</button>
-                            <button class="btn">Decline</button>
+                            <button class="btn decline">Decline</button>
                         </div>
                     </div>
                 </div>
@@ -499,6 +476,7 @@
             </div>
         </div>
     </div>
+
     <script src="js/feed.js"></script>
 
 </body>

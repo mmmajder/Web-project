@@ -30,3 +30,15 @@ $(document).ready(function() {
         });
     });
 });
+
+function goToHomepage() {
+    window.location.href = "feed.html";
+}
+
+function logOut() {
+    window.location.href = "index.html";
+}
+
+$("#edit-profile").click(function() {
+    $(".edit-profile").show();
+})

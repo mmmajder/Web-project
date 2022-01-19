@@ -22,7 +22,6 @@ function register() {
         dataType: "json",
         complete: function(data) {
             window.open("feed.html", '_self').focus();
-            //$( "#resultLogin" ).html( s );
         }
     });
 }

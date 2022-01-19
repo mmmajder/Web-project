@@ -18,17 +18,17 @@
         <div class="container">
             <img src="images/Meeply.png" class="logo">
             <div id="buttons">
-                <span><i id="homepage" class="uil uil-home"></i></span>
-                <span><i id="my-profile" class="uil uil-user-circle"></i></span>
-                <span><i id="log-out" class="uil uil-sign-out-alt"></i></span>
+                <span><i id="homepage" class="uil uil-home" onclick="goToHomepage()"></i></span>
+                <span><i id="my-profile" class="uil uil-user-circle" onclick="goToMyProfile()"></i></span>
+                <span><i id="log-out" class="uil uil-sign-out-alt" onclick="logOut()"></i></span>
             </div>
         </div>
     </nav>
     <main>
-        <div class="messages-container">
-            <!--Search people to message-->
-            <div class="left">
-                <div class="messages">
+        <div class="container">
+            <div class="messages-container">
+                <!--Search people to message-->
+                <div class="left">
                     <div class="heading">
                         <h4>Messages</h4><i class="uil uil-edit"></i>
                     </div>
@@ -36,178 +36,196 @@
                         <i class="uil uil-search"></i>
                         <input type="search" placeholder="Search messages" id="message-search">
                     </div>
-                    <div class="message">
-                        <div class="profile-picture">
-                            <img src="images/profile-1.jpg">
-                            <div class="active"></div>
-                        </div>
-                        <div class="message-body">
-                            <h5>Milan Ajder</h5>
-                            <p class="text-muted">Volim te!</p>
-                        </div>
-                    </div>
-                    <div class="message">
-                        <div class="profile-picture">
-                            <img src="images/profile-1.jpg">
-                        </div>
-                        <div class="message-body">
-                            <h5>Milan Ajder</h5>
-                            <p class="text-muted">Volim te!</p>
-                        </div>
-                    </div>
-                    <div class="message">
-                        <div class="profile-picture">
-                            <img src="images/profile-1.jpg">
-                            <div class="active"></div>
-                        </div>
-                        <div class="message-body">
-                            <h5>Milan Ajder</h5>
-                            <p class="text-muted">Volim te!</p>
-                        </div>
-                    </div>
-                    <div class="message">
-                        <div class="profile-picture">
-                            <img src="images/profile-1.jpg">
-                        </div>
-                        <div class="message-body">
-                            <h5>Milan Ajder</h5>
-                            <p class="text-muted">Volim te!</p>
-                        </div>
-                    </div>
-                    <div class="message">
-                        <div class="profile-picture">
-                            <img src="images/profile-1.jpg">
-                        </div>
-                        <div class="message-body">
-                            <h5>Milan Ajder</h5>
-                            <p class="text-muted">Volim te!</p>
-                        </div>
-                    </div>
-                    <div class="message">
-                        <div class="profile-picture">
-                            <img src="images/profile-1.jpg">
-                        </div>
-                        <div class="message-body">
-                            <h5>Milan Ajder</h5>
-                            <p class="text-muted">Volim te!</p>
-                        </div>
-                    </div>
-                    <div class="message">
-                        <div class="profile-picture">
-                            <img src="images/profile-1.jpg">
-                        </div>
-                        <div class="message-body">
-                            <h5>Milan Ajder</h5>
-                            <p class="text-muted">Volim te!</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!--Chat-->
-            <div class="chat">
-                <div class="user">
-                    <div class="profile-picture">
-                        <img src="images/profile-1.jpg">
-                        <div class="active"></div>
-                    </div>
-                    <div class="message-body">
-                        <h5>Andjela Miskovic</h5>
-                        <p class="text-muted">ACTIVE</p>
-                    </div>
-                </div>
-                <div class="chat-content">
-                    <div class="chat-messages">
-                        <div class="message-right">
-                            <div class="message-container">
-                                <div class="message-text">
-                                    <span>Heiii</span>
-                                </div>
-                                <div class="profile-picture">
-                                    <img src="images/profile-1.jpg">
-                                </div>
+                    <div class="messages">
+                        <div class="message">
+                            <div class="profile-picture">
+                                <img src="images/profile-1.jpg">
+                                <div class="active"></div>
+                            </div>
+                            <div class="message-body">
+                                <h5>Milan Ajder</h5>
+                                <p class="text-muted">Volim te!</p>
                             </div>
                         </div>
-                        <div class="message-left">
-                            <div class="message-container">
-                                <div class="profile-picture">
-                                    <img src="images/profile-1.jpg">
-                                </div>
-                                <div class="message-text">
-                                    <span>Hejj</span>
-                                </div>
+                        <div class="message">
+                            <div class="profile-picture">
+                                <img src="images/profile-1.jpg">
+                            </div>
+                            <div class="message-body">
+                                <h5>Milan Ajder</h5>
+                                <p class="text-muted">Volim te!</p>
                             </div>
                         </div>
-                        <div class="message-right">
-                            <div class="message-container">
-                                <div class="message-text">
-                                    <span>Sta ima novo?</span>
-                                </div>
-                                <div class="profile-picture">
-                                    <img src="images/profile-1.jpg">
-                                </div>
+                        <div class="message">
+                            <div class="profile-picture">
+                                <img src="images/profile-1.jpg">
+                                <div class="active"></div>
+                            </div>
+                            <div class="message-body">
+                                <h5>Milan Ajder</h5>
+                                <p class="text-muted">Volim te!</p>
                             </div>
                         </div>
-                        <div class="message-left">
-                            <div class="message-container">
-                                <div class="profile-picture">
-                                    <img src="images/profile-1.jpg">
-                                </div>
-                                <div class="message-text">
-                                    <span>Evo nista, kod tebe?</span>
-                                </div>
+                        <div class="message">
+                            <div class="profile-picture">
+                                <img src="images/profile-1.jpg">
+                            </div>
+                            <div class="message-body">
+                                <h5>Milan Ajder</h5>
+                                <p class="text-muted">Volim te!</p>
                             </div>
                         </div>
-                        <div class="message-right">
-                            <div class="message-container">
-                                <div class="message-text">
-                                    <span>Heiii</span>
-                                </div>
-                                <div class="profile-picture">
-                                    <img src="images/profile-1.jpg">
-                                </div>
+                        <div class="message">
+                            <div class="profile-picture">
+                                <img src="images/profile-1.jpg">
+                                <div class="active"></div>
+                            </div>
+                            <div class="message-body">
+                                <h5>Milan Ajder</h5>
+                                <p class="text-muted">Volim te!</p>
                             </div>
                         </div>
-                        <div class="message-right">
-                            <div class="message-container">
-                                <div class="message-text">
-                                    <span>Heiii</span>
-                                </div>
-                                <div class="profile-picture">
-                                    <img src="images/profile-1.jpg">
-                                </div>
+                        <div class="message">
+                            <div class="profile-picture">
+                                <img src="images/profile-1.jpg">
+                            </div>
+                            <div class="message-body">
+                                <h5>Milan Ajder</h5>
+                                <p class="text-muted">Volim te!</p>
                             </div>
                         </div>
-                        <div class="message-right">
-                            <div class="message-container">
-                                <div class="message-text">
-                                    <span>Heiii</span>
-                                </div>
-                                <div class="profile-picture">
-                                    <img src="images/profile-1.jpg">
-                                </div>
+                        <div class="message">
+                            <div class="profile-picture">
+                                <img src="images/profile-1.jpg">
+                            </div>
+                            <div class="message-body">
+                                <h5>Milan Ajder</h5>
+                                <p class="text-muted">Volim te!</p>
                             </div>
                         </div>
-                        <div class="message-left">
-                            <div class="message-container">
-                                <div class="profile-picture">
-                                    <img src="images/profile-1.jpg">
-                                </div>
-                                <div class="message-text">
-                                    <span>Hejj</span>
-                                </div>
+                        <div class="message">
+                            <div class="profile-picture">
+                                <img src="images/profile-1.jpg">
+                            </div>
+                            <div class="message-body">
+                                <h5>Milan Ajder</h5>
+                                <p class="text-muted">Volim te!</p>
+                            </div>
+                        </div>
+                        <div class="message">
+                            <div class="profile-picture">
+                                <img src="images/profile-1.jpg">
+                            </div>
+                            <div class="message-body">
+                                <h5>Milan Ajder</h5>
+                                <p class="text-muted">Volim te!</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!--Send new message-->
-                <div class="new-message">
-                    <div>
+                <!--Chat-->
+                <div class="chat">
+                    <div class="user">
+                        <div class="profile-picture">
+                            <img src="images/profile-1.jpg">
+                            <div class="active"></div>
+                        </div>
+                        <div class="message-body">
+                            <h4>Andjela Miskovic</h4>
+                            <p class="text-muted">active</p>
+                        </div>
+                    </div>
+                    <div class="chat-content">
+                        <div class="chat-messages">
+                            <div class="message-right">
+                                <div class="message-container">
+                                    <div class="message-text">
+                                        <span>Heiii</span>
+                                    </div>
+                                    <div class="profile-picture">
+                                        <img src="images/profile-1.jpg">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="message-left">
+                                <div class="message-container">
+                                    <div class="profile-picture">
+                                        <img src="images/profile-1.jpg">
+                                    </div>
+                                    <div class="message-text">
+                                        <span>Hejj</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="message-right">
+                                <div class="message-container">
+                                    <div class="message-text">
+                                        <span>Sta ima novo?</span>
+                                    </div>
+                                    <div class="profile-picture">
+                                        <img src="images/profile-1.jpg">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="message-left">
+                                <div class="message-container">
+                                    <div class="profile-picture">
+                                        <img src="images/profile-1.jpg">
+                                    </div>
+                                    <div class="message-text">
+                                        <span>Evo nista, kod tebe?</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="message-right">
+                                <div class="message-container">
+                                    <div class="message-text">
+                                        <span>Heiii</span>
+                                    </div>
+                                    <div class="profile-picture">
+                                        <img src="images/profile-1.jpg">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="message-right">
+                                <div class="message-container">
+                                    <div class="message-text">
+                                        <span>Heiii</span>
+                                    </div>
+                                    <div class="profile-picture">
+                                        <img src="images/profile-1.jpg">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="message-right">
+                                <div class="message-container">
+                                    <div class="message-text">
+                                        <span>Heiii</span>
+                                    </div>
+                                    <div class="profile-picture">
+                                        <img src="images/profile-1.jpg">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="message-left">
+                                <div class="message-container">
+                                    <div class="profile-picture">
+                                        <img src="images/profile-1.jpg">
+                                    </div>
+                                    <div class="message-text">
+                                        <span>Hejj</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Send new message-->
+                    <div class="new-message">
                         <input type="text" placeholder="Type a message..." id="new-message-text">
-                    </div>
-                    <div class="send-message-icon">
-                        <span><i id="send-message" class="uil uil-message"></i></span>
+                        <div class="send-message-icon">
+                            <span><i id="send-message" class="uil uil-message"></i></span>
+                        </div>
                     </div>
                 </div>
             </div>

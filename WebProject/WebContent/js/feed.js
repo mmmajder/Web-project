@@ -1,64 +1,41 @@
 // messages search
-// ne radi
 $(document).ready(function() {
     $("#people-search").on("keyup", function() {
         var value = $(this).val().toLowerCase();
-        $(".person-body h5").filter(function() {
+        $(".person h5").filter(function() {
             $(this).parent().parent().toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
     });
 });
 
+
+// navbar icons
 function goToMyProfile() {
     window.location.href = "profile.html";
 }
 
-// sidebar
-const menuItems = $('.menu-item');
+function goToMessages() {
+    window.location.href = "messages.html";
+}
 
-// messages
-const messagesNotification = $('#messages');
-const messages = $('.messages');
-const message = messages.querySelectorAll('.message');
-const messageSearch = $('#message-search');
-
-// theme
-const theme = $('#themes');
-const themeCard = $('.customize-theme');
-const root = $(':root');
-const theme1 = $('.theme-1');
-const theme2 = $('.theme-2');
-const theme3 = $('.theme-3');
-const body = $('body');
-
+function logOut() {
+    window.location.href = "index.html";
+}
 
 // remove active class from all menu items
-const changeActiveItem = () => {
-    menuItems.forEach(item => {
+const changeActiveItem2 = () => {
+    $('.menu-item').forEach(item => {
         item.classList.remove('active');
     })
 }
 
 function changeActiveItem() {
-    $('.menu-items').removeClass('active');
+    $('.menu-item').removeClass('active');
 }
 
-// setting notifications to popup when selected
-menuItems.forEach(item => {
-    item.addEventListener('click', () => {
-        changeActiveItem();
-        item.classList.add('active');
-        if (item.id != 'notifications') {
-            document.querySelector('.notifications-popup').style.display = 'none';
-        } else {
-            document.querySelector('.notifications-popup').style.display = 'block';
-            document.querySelector('#notifications .notifications-count').style.display = 'none';
-        }
-    })
-})
-
+// notifications popup
 $(document).ready(function() {
-    $('.menu-items').each(function() {
+    $('.menu-item').each(function() {
         $(this).click(function() {
             changeActiveItem();
             $(this).addClass('active');
@@ -72,22 +49,52 @@ $(document).ready(function() {
     });
 });
 
+// add new image
+function getImage(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
 
-// search chat filter
-const searchMessage = () => {
-    const value = messageSearch.value.toLowerCase();
-    message.forEach(user => {
-        let name = user.querySelector('h5').textContent.toLowerCase();
-        if (name.indexOf(value) != -1) {
-            user.style.display = 'flex';
-        } else {
-            user.style.display = 'none';
-        }
-    })
+        reader.onload = function(e) {
+            $('#add-post-image').attr('src', e.target.result);
+        };
+
+        reader.readAsDataURL(input.files[0]);
+    }
 }
-messageSearch.addEventListener('keyup', searchMessage);
+
+// friends request animation
+
+$(".decline").click(function() {
+    $(this).parent().parent().fadeOut('slow');
+})
+
+/*
+// opening view comments
+$("#view-comments").onclick(function() {
+    $("#view-comments-card").show();
+})
+$("#view-comments-card").onclick(function(e) {
+    if (e.target.classList.contains('view-comments')) {
+        $("#view-comments-card").hide();
+    }
+})*/
+const comment = document.getElementsByClassName("view-comments");
+const card = document.getElementByClassName("view-comments-card");
+
+const openPostCard = () => {
+    card.style.display = 'grid';
+}
+const closePostCard = (e) => {
+    if (!e.target.classList.contains('view-comments')) {
+        card.style.display = 'none';
+    }
+}
+
+comment.addEventListener('click', openPostCard);
+card.addEventListener('click', closePostCard);
 
 
+/*
 // theme card opening and closing 
 const openThemeCard = () => {
     themeCard.style.display = 'grid';
@@ -147,4 +154,4 @@ theme3.addEventListener('click', () => {
     theme2.classList.remove('active');
     theme3.classList.add('active');
     changeBackground();
-});
+});*/
