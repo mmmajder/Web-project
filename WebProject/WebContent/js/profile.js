@@ -87,4 +87,3 @@ $(".cancel-btn").click(function() {
 $("#cancel-edit").click(function() {
 	$(".edit-profile-card").fadeOut();
 })
-
