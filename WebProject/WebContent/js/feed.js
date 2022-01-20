@@ -64,8 +64,32 @@ function getImage(input) {
     }
 }
 
-// friends request animation
+// add comment
+$(".uil-enter").click(function() {
+	
+	$.ajax({
+		url: "rest/feed/addComment",
+		type: "POST",
+		data: $("#add-comment"),
+		contentType: "application/json",
+		dataType: "json",
+		complete: function(data) {
+			$("#add-comment").html("");
+			var user = JSON.parse(data.responseText)
+			console.log(user)
+			$("#profile-user-name").html("@" + user.username);
+			$("#number-of-posts").html(user.posts.length + " Posts");
+			$("#number-of-photos").html(user.posts.length + " Photos");			// TODO
+			$("#number-of-friends").html(user.friends.length + " Friends");		// kada je nula izbaci 1 ?
+			$("#date-of-birth").html(user.dateOfBirth);
+			$("#profile-bio-text").html(user.biography);
+		}
+	});
+})
 
+
+
+// friends request animation
 $(".decline").click(function() {
     $(this).parent().parent().fadeOut('slow');
 })

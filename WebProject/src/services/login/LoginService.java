@@ -11,6 +11,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 import beans.User;
+import dao.comment.CommentDAO;
 import dao.person.UserDAO;
 
 @Path("/login")
@@ -25,6 +26,11 @@ public class LoginService {
 	    	String contextPath = ctx.getRealPath("");
 	    	System.out.println();
 			ctx.setAttribute("userDAO", new UserDAO(contextPath));
+		}
+		if (ctx.getAttribute("commentDAO") == null) {
+	    	String contextPath = ctx.getRealPath("");
+	    	System.out.println();
+			ctx.setAttribute("commentDAO", new CommentDAO(contextPath));
 		}
 	}
 	

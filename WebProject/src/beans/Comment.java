@@ -68,4 +68,12 @@ public class Comment {
 	public void setLastEdited(LocalDateTime lastEdited) {
 		this.lastEdited = lastEdited;
 	}
+
+	@Override
+	public String toString() {
+		return "Comment [id=" + id + ", text=" + text + ", author=" + author + ", created=" + created + ", lastEdited="
+				+ lastEdited + ", isDeleted=" + isDeleted + "]";
+	}
+	
+	
 }
