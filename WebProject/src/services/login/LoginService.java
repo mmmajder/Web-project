@@ -10,13 +10,10 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
-import beans.Admin;
-import beans.Person;
 import beans.User;
-import dao.person.AdminDAO;
 import dao.person.UserDAO;
 
-@Path("/demo")
+@Path("/login")
 public class LoginService {
 	
 	@Context
@@ -29,33 +26,21 @@ public class LoginService {
 	    	System.out.println();
 			ctx.setAttribute("userDAO", new UserDAO(contextPath));
 		}
-		if (ctx.getAttribute("adminDAO") == null) {
-	    	String contextPath = ctx.getRealPath("");
-			ctx.setAttribute("adminDAO", new AdminDAO(contextPath));
-		} 
 	}
 	
 	@POST 
 	@Path("/login") 
 	@Produces(MediaType.APPLICATION_JSON)
-	public Person login(@Context HttpServletRequest request, LoginUser temp) {
+	public User login(@Context HttpServletRequest request, LoginUser temp) {
 		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");
 		User retUser = dao.find(temp.getUsername(), temp.getPassword());
 		if (retUser!=null) {
-			if (temp.getRemember()!=null) {
-				request.getSession().setAttribute("logged", retUser);
-			}
-			return retUser;
+			request.getSession().setAttribute("logged", retUser);
+			/*if (temp.getRemember()!=null) {
+				
+			}*/
 		}
-		AdminDAO adminDAO = (AdminDAO) ctx.getAttribute("adminDAO");
-		Admin retAdmin = adminDAO.find(temp.getUsername(), temp.getPassword());
-		if (retAdmin!=null) {
-			if (temp.getRemember()!=null) {
-				request.getSession().setAttribute("logged", retAdmin);
-			}
-			return retAdmin;
-		}
-		return null;
+		return retUser;
 	}
 	
 	@GET
@@ -63,5 +48,5 @@ public class LoginService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public User testLogin(@Context HttpServletRequest request) {
 		return (User) request.getSession().getAttribute("logged");
-		}
+	}
 }

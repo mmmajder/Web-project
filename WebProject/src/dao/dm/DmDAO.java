@@ -24,7 +24,10 @@ public class DmDAO {
 		this.path = contextPath;
 		readFile();
 	}
-	
+	public DmDAO() {
+		this.path = "";
+		readFile();
+	}
 	public Collection<DM> findAll() {
 		return dms.values();
 	}

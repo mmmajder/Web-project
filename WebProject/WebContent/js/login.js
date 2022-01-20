@@ -16,7 +16,7 @@ function login() {
     var s = JSON.stringify(data);
 	console.log(s);    
 	$.ajax({
-        url: "rest/demo/login",
+        url: "rest/login/login",
         type: "POST",
         data: s,
         contentType: "application/json",
@@ -24,7 +24,8 @@ function login() {
         complete: function(data) {
 			console.log(data.responseText);
 			if (data.responseText) {
-				window.open("feed.html", '_self').focus();
+				window.open("feed.html", '_self').focus(); 
+				localStorage.user = data.responseText;
 			} else {
 				$("#resultLogin").empty();
 				$("#resultLogin").append("Wrong username or password.");

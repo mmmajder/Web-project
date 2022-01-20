@@ -22,10 +22,6 @@ public class UserDAO {
 	private Map<String, User> users = new HashMap<>();
 	private String path;
 	
-	public static void main(String[] args) {
-		UserDAO usersDAO = new UserDAO("");
-	}
-	
 	public UserDAO(String contextPath) {
 		this.path = contextPath;
 		readFile();
@@ -59,7 +55,7 @@ public class UserDAO {
 		try(CSVReader csvr = new CSVReader(new FileReader(this.path + "/resources/" + CSV_FILE), ';', CSVWriter.NO_QUOTE_CHARACTER, 1)) {
 			ColumnPositionMappingStrategy<PersonRepo> strategy = new ColumnPositionMappingStrategy<>();
 			strategy.setType(PersonRepo.class);
-			String[] columns = new String[] {"id", "username", "password", "email", "name", "surname","dateOfBirth", "gender", "profilePicture", "biography", "friendIDs", "friendRequestIDs","postIDs", "pictureIDs", "chats", "isPrivate", "isBlocked" };
+			String[] columns = new String[] {"id", "username", "password", "email", "name", "surname","dateOfBirth", "gender", "profilePicture", "biography", "friendIDs", "friendRequestIDs","postIDs", "pictureIDs", "chats", "isPrivate", "isBlocked", "isAdmin" };
 			strategy.setColumnMapping(columns);
 			
 			CsvToBean<PersonRepo> csv = new CsvToBean<>();
@@ -71,10 +67,9 @@ public class UserDAO {
 				ArrayList<String> friendIDs = getList(tempUser.getFriendIDs());
 				ArrayList<String> friendRequestIDs = getList(tempUser.getFriendRequestIDs());
 				ArrayList<String> postIDs = getList(tempUser.getPostIDs());
-				ArrayList<String> pictureIDs = getList(tempUser.getPictureIDs());
 				ArrayList<String> chats = getList(tempUser.getChats());
 				
-				User user = new User(tempUser.getId(), tempUser.getUsername(), tempUser.getPassword(), tempUser.getEmail(), tempUser.getName(), tempUser.getSurname(), date, gender, tempUser.getProfilePicture(), tempUser.getBiography(), friendIDs, friendRequestIDs, postIDs, pictureIDs, chats, tempUser.getIsPrivate(), tempUser.getIsBlocked());
+				User user = new User(tempUser.getId(), tempUser.getUsername(), tempUser.getPassword(), tempUser.getEmail(), tempUser.getName(), tempUser.getSurname(), date, gender, tempUser.getProfilePicture(), tempUser.getBiography(), friendIDs, friendRequestIDs, postIDs, chats, tempUser.getIsPrivate(), tempUser.getIsBlocked(), tempUser.isAdmin());
 				users.put(tempUser.getUsername(), user);
 				System.out.println(user);
 			}

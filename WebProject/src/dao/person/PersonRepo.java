@@ -20,10 +20,15 @@ public class PersonRepo {
 	private String chats;
 	private boolean isPrivate;
 	private boolean isBlocked;
+	private boolean isAdmin;
+
+
+	
+
 	public PersonRepo(String id, String username, String password, String email, String name, String surname,
 			String dateOfBirth, String gender, String profilePicture, String biography, String friendIDs,
 			String friendRequestIDs, String postIDs, String pictureIDs, String chats, boolean isPrivate,
-			boolean isBlocked) {
+			boolean isBlocked, boolean isAdmin) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -42,29 +47,7 @@ public class PersonRepo {
 		this.chats = chats;
 		this.isPrivate = isPrivate;
 		this.isBlocked = isBlocked;
-	}
-	
-	
-	public PersonRepo(String id, String username, String password, String email, String name, String surname,
-			String dateOfBirth, String gender, String profilePicture, String biography, String friendIDs,
-			String friendRequestIDs, String postIDs, String pictureIDs, String chats, boolean isPrivate) {
-		super();
-		this.id = id;
-		this.username = username;
-		this.password = password;
-		this.email = email;
-		this.name = name;
-		this.surname = surname;
-		this.dateOfBirth = dateOfBirth;
-		this.gender = gender;
-		this.profilePicture = profilePicture;
-		this.biography = biography;
-		this.friendIDs = friendIDs;
-		this.friendRequestIDs = friendRequestIDs;
-		this.postIDs = postIDs;
-		this.pictureIDs = pictureIDs;
-		this.chats = chats;
-		this.isPrivate = isPrivate;
+		this.isAdmin = isAdmin;
 	}
 
 
@@ -75,6 +58,26 @@ public class PersonRepo {
 				+ ", profilePicture=" + profilePicture + ", biography=" + biography + ", friendIDs=" + friendIDs
 				+ ", friendRequestIDs=" + friendRequestIDs + ", postIDs=" + postIDs + ", pictureIDs=" + pictureIDs
 				+ ", chats=" + chats + ", isPrivate=" + isPrivate + ", isBlocked=" + isBlocked + "]";
+	}
+
+
+	public boolean isAdmin() {
+		return isAdmin;
+	}
+
+
+	public void setAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
+	}
+
+
+	public void setPrivate(boolean isPrivate) {
+		this.isPrivate = isPrivate;
+	}
+
+
+	public void setBlocked(boolean isBlocked) {
+		this.isBlocked = isBlocked;
 	}
 
 

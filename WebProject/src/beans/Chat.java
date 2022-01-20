@@ -4,11 +4,12 @@ import java.util.ArrayList;
 
 public class Chat {
 	private String id;
-	private ArrayList<String> dmIDs;
-	public Chat(String id, ArrayList<String> dmIDs) {
+	private ArrayList<String> dms;
+	
+	public Chat(String id, ArrayList<String> dms) {
 		super();
 		this.id = id;
-		this.dmIDs = dmIDs;
+		this.dms = dms;
 	}
 	
 	public String getId() {
@@ -19,19 +20,19 @@ public class Chat {
 		this.id = id;
 	}
 
-	public ArrayList<String> getDmIDs() {
-		return dmIDs;
+	public ArrayList<String> getDms() {
+		return dms;
 	}
 
-	public void setDmIDs(ArrayList<String> dmIDs) {
-		this.dmIDs = dmIDs;
+	public void setDms(ArrayList<String> dms) {
+		this.dms = dms;
 	}
-
 
 	@Override
 	public String toString() {
-		return "Chat [id=" + id + ", dmIDs=" + dmIDs + "]";
+		return "Chat [id=" + id + ", dms=" + dms + "]";
 	}
+	
 	
 	
 	

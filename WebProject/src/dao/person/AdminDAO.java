@@ -1,4 +1,4 @@
-package dao.person;
+/*package dao.person;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -101,4 +101,4 @@ public class AdminDAO {
 		return elems;
 	}
 
-}
+}*/

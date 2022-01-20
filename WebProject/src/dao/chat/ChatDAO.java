@@ -19,12 +19,17 @@ public class ChatDAO {
 	static final String CSV_FILE = "chats.csv";
 	private Map<String, Chat> chats = new HashMap<>();
 	private String path;
-	
+
+	public ChatDAO() {
+		this.path = "";
+		readFile();
+	}
+
 	public ChatDAO(String contextPath) {
 		this.path = contextPath;
 		readFile();
 	}
-	
+
 	public Collection<Chat> findAll() {
 		return chats.values();
 	}
@@ -37,18 +42,19 @@ public class ChatDAO {
 		}
 		return null;
 	}
-	
+
 	void readFile() {
-		try(CSVReader csvr = new CSVReader(new FileReader(this.path + "/resources/" + CSV_FILE), ';', CSVWriter.NO_QUOTE_CHARACTER, 1)) {
+		try (CSVReader csvr = new CSVReader(new FileReader(this.path + "/resources/" + CSV_FILE), ';',
+				CSVWriter.NO_QUOTE_CHARACTER, 1)) {
 			ColumnPositionMappingStrategy<ChatRepo> strategy = new ColumnPositionMappingStrategy<>();
 			strategy.setType(ChatRepo.class);
-			String[] columns = new String[] {"id", "dmIDs"};
+			String[] columns = new String[] { "id", "dmIDs" };
 			strategy.setColumnMapping(columns);
 			CsvToBean<ChatRepo> csv = new CsvToBean<>();
 			List<ChatRepo> tempChats = csv.parse(strategy, csvr);
-			
+
 			for (ChatRepo tempChat : tempChats) {
-				ArrayList<String> chatDms = getList(tempChat.getDmIDs());
+				ArrayList<String> chatDms = getDMs(tempChat.getDmIDs());
 				Chat chat = new Chat(tempChat.getId(), chatDms);
 				chats.put(tempChat.getId(), chat);
 				System.out.println(chat);
@@ -60,13 +66,13 @@ public class ChatDAO {
 		}
 
 	}
-	
-	private ArrayList<String> getList(String s) {
-		ArrayList<String> elems = new ArrayList<String>();
+
+	private ArrayList<String> getDMs(String s) {
+		ArrayList<String> dms = new ArrayList<String>();
 		for (String elem : s.split("\\|")) {
-			elems.add(elem);
+			dms.add(elem);
 		}
-		return elems;
+		return dms;
 	}
 
 }

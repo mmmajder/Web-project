@@ -12,9 +12,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
-import beans.Admin;
 import beans.User;
-import dao.person.AdminDAO;
 import dao.person.UserDAO;
 
 @Path("/register")
@@ -28,26 +26,22 @@ public class RegistrationService {
 	    	String contextPath = ctx.getRealPath("");
 			ctx.setAttribute("userDAO", new UserDAO(contextPath));
 		}
-		if (ctx.getAttribute("adminDAO") == null) {
-	    	String contextPath = ctx.getRealPath("");
-			ctx.setAttribute("adminDAO", new AdminDAO(contextPath));
-		} 
 	}
 	
-	@POST
+	
+	// TODO
+	/*@POST
 	@Path("/register")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public User register(@Context HttpServletRequest request, RegisterUser registerUser) {
 		UserDAO userDao = (UserDAO) ctx.getAttribute("userDAO");
 		User existingUser = userDao.find(registerUser.getUsername(), registerUser.getPassword());
-		AdminDAO adminDao = (AdminDAO) ctx.getAttribute("adminDAO");
-		Admin existingAdmin = adminDao.find(registerUser.getUsername(), registerUser.getPassword());
-		if (existingUser==null && existingAdmin==null) {
-			return new User(generateId(), registerUser.getUsername(), registerUser.getEmail(), registerUser.getName(), registerUser.getSurname(), registerUser.getGender(), registerUser.getPassword());
+		if (existingUser==null) {
+			return new User(generateId(), registerUser.getUsername(), registerUser.getEmail(), registerUser.getName(), registerUser.getSurname(), registerUser.getGender(), registerUser.getPassword(), false);
 		}
 		return null;
-	}
+	}*/
 	
 	// example of id = U00001
 	private String generateId() {

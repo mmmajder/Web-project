@@ -35,6 +35,8 @@ function changeActiveItem() {
 
 // notifications popup
 $(document).ready(function() {
+	$('#imeId').html(localStorage.user);
+	//$('#imeId').html("Cao");
     $('.menu-item').each(function() {
         $(this).click(function() {
             changeActiveItem();

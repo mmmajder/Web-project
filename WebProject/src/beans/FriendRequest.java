@@ -6,16 +6,16 @@ import enums.FriendRequestState;
 
 public class FriendRequest {
 	private String id;
-	private String senderID;
-	private String recieverID;
+	private String sender;
+	private String reciever;
 	private LocalDateTime dateOfRequest;
 	private FriendRequestState state;
 
 	public FriendRequest(String id, String sender, String reciever, LocalDateTime dateOfRequest, FriendRequestState state) {
 		super();
 		this.id = id;
-		this.senderID = sender;
-		this.recieverID = reciever;
+		this.sender = sender;
+		this.reciever = reciever;
 		this.dateOfRequest = dateOfRequest;
 		this.state = state;
 	}
@@ -28,20 +28,21 @@ public class FriendRequest {
 		this.id = id;
 	}
 
-	public String getSenderID() {
-		return senderID;
+
+	public String getSender() {
+		return sender;
 	}
 
-	public void setSenderID(String senderID) {
-		this.senderID = senderID;
+	public void setSender(String sender) {
+		this.sender = sender;
 	}
 
-	public String getRecieverID() {
-		return recieverID;
+	public String getReciever() {
+		return reciever;
 	}
 
-	public void setRecieverID(String recieverID) {
-		this.recieverID = recieverID;
+	public void setReciever(String reciever) {
+		this.reciever = reciever;
 	}
 
 	public LocalDateTime getDateOfRequest() {
