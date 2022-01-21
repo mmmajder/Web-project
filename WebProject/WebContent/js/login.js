@@ -24,7 +24,7 @@ function login() {
         complete: function(data) {
 			console.log(data.responseText);
 			if (data.responseText) {
-				window.open("feed.html", '_self').focus(); 
+				window.open("feed.Whtml", '_self').focus(); 
 			} else {
 				$("#resultLogin").empty();
 				$("#resultLogin").append("Wrong username or password.");
@@ -34,3 +34,4 @@ function login() {
         }
     });
 }
+
