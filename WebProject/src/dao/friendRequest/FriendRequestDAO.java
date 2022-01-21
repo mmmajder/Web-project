@@ -17,11 +17,14 @@ import au.com.bytecode.opencsv.bean.ColumnPositionMappingStrategy;
 import au.com.bytecode.opencsv.bean.CsvToBean;
 import beans.Comment;
 import beans.FriendRequest;
+import beans.User;
+import dao.person.UserDAO;
 import enums.FriendRequestState;
 
 public class FriendRequestDAO {
 	static final String CSV_FILE = "friendRequests.csv";
 	private Map<String, FriendRequest> friendRequests = new HashMap<>();
+	private Map<String, ArrayList<FriendRequest>> usersRequests = new HashMap<String, ArrayList<FriendRequest>>();
 	private String path;
 
 	public FriendRequestDAO(String contextPath) {
@@ -38,11 +41,26 @@ public class FriendRequestDAO {
 	public Collection<FriendRequest> findAll() {
 		return friendRequests.values();
 	}
+	public FriendRequest getById(String id) {
+		return friendRequests.get(id);
+	}
 
 	public void add(FriendRequest fr) {
 		friendRequests.put(fr.getId(), fr);
 		writeFile();
 	}
+	
+	public ArrayList<FriendRequest> getPending(User user) {
+		ArrayList<FriendRequest> pendingFriendRequests = new ArrayList<FriendRequest>();
+		for (String r : user.getFriendRequests()) {
+			FriendRequest friendRequest = getById(r);
+			if (friendRequest.getState()==FriendRequestState.PENDING) {
+				pendingFriendRequests.add(friendRequest);
+			}
+		}
+		return pendingFriendRequests;
+	}
+	
 	//FR000002
 	public String generateId() {
 		StringBuilder sb = new StringBuilder();

@@ -8,6 +8,24 @@ $(document).ready(function() {
     });
 });
 
+// show friend requests
+$(document).ready(function() {
+	$.ajax({
+		url: "rest/friendRequest/getFriendRequests",
+		type: "GET",
+		contentType: "application/json",
+		complete: function(data) {
+			var friendRequests = data.resopnseText;
+			if (friendRequests.length == 0) {
+				return;
+			}
+			
+			console.log()
+			$(".request .info .profile-picture img").attr("src", "")
+			
+		}
+	});
+});
 
 // navbar icons
 function goToMyProfile() {
