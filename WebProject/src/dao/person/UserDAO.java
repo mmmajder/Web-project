@@ -9,6 +9,10 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.IconifyAction;
+import javax.validation.constraints.Size;
 
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
@@ -16,17 +20,19 @@ import au.com.bytecode.opencsv.bean.ColumnPositionMappingStrategy;
 import au.com.bytecode.opencsv.bean.CsvToBean;
 import beans.User;
 import enums.Gender;
+import services.search.SearchData;
+import services.search.UserSearchData;
 
 public class UserDAO {
 	static final String CSV_FILE = "users.csv";
 	private Map<String, User> users = new HashMap<>();
 	private String path;
-	
+
 	public UserDAO(String contextPath) {
 		this.path = contextPath;
 		readFile();
 	}
-	
+
 	public Collection<User> findAll() {
 		return users.values();
 	}
@@ -50,26 +56,34 @@ public class UserDAO {
 		}
 		return user;
 	}
-	
+
 	void readFile() {
-		try(CSVReader csvr = new CSVReader(new FileReader(this.path + "/resources/" + CSV_FILE), ';', CSVWriter.NO_QUOTE_CHARACTER, 1)) {
+		try (CSVReader csvr = new CSVReader(new FileReader(this.path + "/resources/" + CSV_FILE), ';',
+				CSVWriter.NO_QUOTE_CHARACTER, 1)) {
 			ColumnPositionMappingStrategy<PersonRepo> strategy = new ColumnPositionMappingStrategy<>();
 			strategy.setType(PersonRepo.class);
-			String[] columns = new String[] {"id", "username", "password", "email", "name", "surname","dateOfBirth", "gender", "profilePicture", "biography", "friendIDs", "friendRequestIDs","postIDs", "pictureIDs", "chats", "isPrivate", "isBlocked", "isAdmin" };
+			String[] columns = new String[] { "id", "username", "password", "email", "name", "surname", "dateOfBirth",
+					"gender", "profilePicture", "biography", "friendIDs", "friendRequestIDs", "postIDs", "pictureIDs",
+					"chats", "isPrivate", "isBlocked", "isAdmin" };
 			strategy.setColumnMapping(columns);
-			
+
 			CsvToBean<PersonRepo> csv = new CsvToBean<>();
 			List<PersonRepo> tempUsers = csv.parse(strategy, csvr);
-			
+
 			for (PersonRepo tempUser : tempUsers) {
-				LocalDate date = LocalDate.of(Integer.parseInt(tempUser.getDateOfBirth().split("-")[0]), Integer.parseInt(tempUser.getDateOfBirth().split("-")[1]), Integer.parseInt(tempUser.getDateOfBirth().split("-")[2]));
+				LocalDate date = LocalDate.of(Integer.parseInt(tempUser.getDateOfBirth().split("-")[0]),
+						Integer.parseInt(tempUser.getDateOfBirth().split("-")[1]),
+						Integer.parseInt(tempUser.getDateOfBirth().split("-")[2]));
 				Gender gender = getGender(tempUser.getGender());
 				ArrayList<String> friendIDs = getList(tempUser.getFriendIDs());
 				ArrayList<String> friendRequestIDs = getList(tempUser.getFriendRequestIDs());
 				ArrayList<String> postIDs = getList(tempUser.getPostIDs());
 				ArrayList<String> chats = getList(tempUser.getChats());
-				
-				User user = new User(tempUser.getId(), tempUser.getUsername(), tempUser.getPassword(), tempUser.getEmail(), tempUser.getName(), tempUser.getSurname(), date, gender, tempUser.getProfilePicture(), tempUser.getBiography(), friendIDs, friendRequestIDs, postIDs, chats, tempUser.getIsPrivate(), tempUser.getIsBlocked(), tempUser.isAdmin());
+
+				User user = new User(tempUser.getId(), tempUser.getUsername(), tempUser.getPassword(),
+						tempUser.getEmail(), tempUser.getName(), tempUser.getSurname(), date, gender,
+						tempUser.getProfilePicture(), tempUser.getBiography(), friendIDs, friendRequestIDs, postIDs,
+						chats, tempUser.getIsPrivate(), tempUser.getIsBlocked(), tempUser.isAdmin());
 				users.put(tempUser.getUsername(), user);
 				System.out.println(user);
 			}
@@ -80,20 +94,42 @@ public class UserDAO {
 		}
 
 	}
-	
+
 	private Gender getGender(String stringGender) {
-		if (stringGender=="MALE") {
+		if (stringGender == "MALE") {
 			return Gender.MALE;
-		} 
-			return Gender.FEMALE;
+		}
+		return Gender.FEMALE;
 	}
-	
+
 	private ArrayList<String> getList(String s) {
 		ArrayList<String> elems = new ArrayList<String>();
 		for (String elem : s.split("\\|")) {
 			elems.add(elem);
 		}
 		return elems;
+	}
+
+	public ArrayList<UserSearchData> searchUsers(SearchData data, User loggedUser) {
+		ArrayList<UserSearchData> list = new ArrayList<UserSearchData>();
+		for (User user : findAll()) {
+			if (user.getName().contains(data.getName()) && user.getSurname().contains(data.getLastName())) {
+				LocalDate startDate = data.getStart() == null ? LocalDate.MIN : data.getStart();
+				LocalDate endDate = data.getEnd() == null ? LocalDate.MAX : data.getEnd();
+				if (user.getDateOfBirth().isAfter(startDate) && user.getDateOfBirth().isBefore(endDate)) {
+					UserSearchData newUser = new UserSearchData(user.getId(), user.getName(), user.getSurname(), user.getProfilePicture(), getNumberOfMutualFriends(loggedUser, user));
+					list.add(newUser);
+				}
+			}
+		}
+		return list;
+	}
+	
+	public int getNumberOfMutualFriends(User loggedUser, User otherUser) {
+		return loggedUser.getFriends().stream()
+			    .filter(otherUser.getFriends()::contains)
+			    .collect(Collectors
+			    .toList()).size();
 	}
 
 }
