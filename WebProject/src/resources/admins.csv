@@ -1,3 +1,0 @@
-id;username;password;email;name;surname;dateOfBirth;gender;profilePicture;biography;friendIDs;friendRequestIDs;postIDs;pictureIDs;chats;isPrivate
-A00001;administrator1;administrator1;admin1@gmail.com;Stana;Stanic;1990-01-01;FEMALE;admin1.jpg;Ne nemoj mi prici;;;;;true
-A00002;administrator2;administrator2;admin2@gmail.com;Marko;Markovic;1978-02-02;MALE;admin2.png;Works at: Sam svoj gazda;;;;;true

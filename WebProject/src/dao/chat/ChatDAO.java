@@ -1,9 +1,15 @@
 package dao.chat;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -28,7 +34,7 @@ public class ChatDAO {
 		readFile();
 	}
 	
-	/*public static void main(String[] args) {
+	public static void main(String[] args) {
 		ChatDAO dao = new ChatDAO("src");
 		
 		dao.add(new Chat(dao.generateId(), new ArrayList<>()));
@@ -37,7 +43,7 @@ public class ChatDAO {
 		dms.add("DM2");
 		dao.add(new Chat(dao.generateId(), dms));
 		dao.writeFile();
-	}*/
+	}
 
 	public ChatDAO(String contextPath) {
 		this.path = contextPath;
@@ -73,7 +79,8 @@ public class ChatDAO {
 	
 	void writeFile() {
 		try {
-			CSVWriter writer = new CSVWriter(new FileWriter(this.path + "/resources/" + CSV_FILE), ';',
+			OutputStream os = new FileOutputStream(this.path + "/resources/" + CSV_FILE);
+			CSVWriter writer = new CSVWriter(new PrintWriter(new OutputStreamWriter(os, "UTF-8")), ';',
 					CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.DEFAULT_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END);
 			List<String[]> data = new ArrayList<String[]>();
 			data.add(new String[] { "id", "dmIDs" });
@@ -101,8 +108,9 @@ public class ChatDAO {
 	}
 	
 	void readFile() {
-		try (CSVReader csvr = new CSVReader(new FileReader(this.path + "/resources/" + CSV_FILE), ';',
-				CSVWriter.NO_QUOTE_CHARACTER, 1)) {
+		try (CSVReader csvr = new CSVReader(
+				new InputStreamReader(new FileInputStream(this.path + "/resources/" + CSV_FILE), "UTF-8"), ';', '\'',
+				1);) {
 			ColumnPositionMappingStrategy<ChatRepo> strategy = new ColumnPositionMappingStrategy<>();
 			strategy.setType(ChatRepo.class);
 			String[] columns = new String[] { "id", "dmIDs" };

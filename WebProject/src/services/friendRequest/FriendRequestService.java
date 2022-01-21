@@ -41,8 +41,7 @@ public class FriendRequestService {
 	@GET
 	@Path("/getFriendRequests")
 	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public ArrayList<UserSearchData> getFriendRequests(@Context HttpServletRequest request, SearchData data) {
+	public ArrayList<UserSearchData> getFriendRequests(@Context HttpServletRequest request) {
 		User user = (User) request.getSession().getAttribute("logged");
 		FriendRequestDAO dao = (FriendRequestDAO) ctx.getAttribute("friendRequestDAO");
 		ArrayList<FriendRequest> friendRequest = dao.getPending(user);

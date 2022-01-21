@@ -1,9 +1,15 @@
 package dao.post;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -13,9 +19,6 @@ import java.util.Map;
 
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
-import au.com.bytecode.opencsv.bean.ColumnPositionMappingStrategy;
-import au.com.bytecode.opencsv.bean.CsvToBean;
-import beans.Comment;
 import beans.Post;
 
 public class PostDAO {
@@ -30,7 +33,8 @@ public class PostDAO {
 
 	public static void main(String[] args) {
 		PostDAO dao = new PostDAO("src");
-		dao.add(new Post(dao.generateId(), "author", "picture", "description", LocalDateTime.now(), new ArrayList<>(), false, false));
+		dao.add(new Post(dao.generateId(), "author", "picture", "description", LocalDateTime.now(), new ArrayList<>(),
+				false, false));
 	}
 
 	public Collection<Post> findAll() {
@@ -41,10 +45,11 @@ public class PostDAO {
 		posts.put(post.getId(), post);
 		writeFile();
 	}
+
 	// PO00001
 	public String generateId() {
 		StringBuilder sb = new StringBuilder();
-		String number = String.format("%05d", findAll().size()+1);
+		String number = String.format("%05d", findAll().size() + 1);
 		sb.append("PO");
 		sb.append(number);
 		return sb.toString();
@@ -61,7 +66,8 @@ public class PostDAO {
 
 	void writeFile() {
 		try {
-			CSVWriter writer = new CSVWriter(new FileWriter(this.path + "/resources/" + CSV_FILE), ';',
+			OutputStream os = new FileOutputStream(this.path + "/resources/" + CSV_FILE);
+			CSVWriter writer = new CSVWriter(new PrintWriter(new OutputStreamWriter(os, "UTF-8")), ';',
 					CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.DEFAULT_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END);
 			List<String[]> data = new ArrayList<String[]>();
 			data.add(new String[] { "id", "authorID", "picture", "description", "posted", "commentIDs", "deleted",
@@ -80,8 +86,9 @@ public class PostDAO {
 	}
 
 	void readFile() {
-		try (CSVReader csvr = new CSVReader(new FileReader(this.path + "/resources/" + CSV_FILE), ';',
-				CSVWriter.NO_QUOTE_CHARACTER, 1)) {
+		try (CSVReader csvr = new CSVReader(
+				new InputStreamReader(new FileInputStream(this.path + "/resources/" + CSV_FILE), "UTF-8"), ';', '\'',
+				1);) {
 			// String[] columns = new String[]
 			// {"id","authorID","picture","description","posted","commentIDs","deleted",
 			// "isPicture"};

@@ -1,9 +1,15 @@
 package dao.friendRequest;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -24,7 +30,6 @@ import enums.FriendRequestState;
 public class FriendRequestDAO {
 	static final String CSV_FILE = "friendRequests.csv";
 	private Map<String, FriendRequest> friendRequests = new HashMap<>();
-	private Map<String, ArrayList<FriendRequest>> usersRequests = new HashMap<String, ArrayList<FriendRequest>>();
 	private String path;
 
 	public FriendRequestDAO(String contextPath) {
@@ -34,13 +39,16 @@ public class FriendRequestDAO {
 
 	public static void main(String[] args) {
 		FriendRequestDAO dao = new FriendRequestDAO("src");
-		dao.add(new FriendRequest(dao.generateId(), "send", "reciever", LocalDateTime.now(), FriendRequestState.ACCEPTED));
-		dao.add(new FriendRequest(dao.generateId(), "send", "reciever", LocalDateTime.now(), FriendRequestState.ACCEPTED));
+		dao.add(new FriendRequest(dao.generateId(), "send", "reciever", LocalDateTime.now(),
+				FriendRequestState.ACCEPTED));
+		dao.add(new FriendRequest(dao.generateId(), "send", "reciever", LocalDateTime.now(),
+				FriendRequestState.ACCEPTED));
 	}
 
 	public Collection<FriendRequest> findAll() {
 		return friendRequests.values();
 	}
+
 	public FriendRequest getById(String id) {
 		return friendRequests.get(id);
 	}
@@ -49,19 +57,19 @@ public class FriendRequestDAO {
 		friendRequests.put(fr.getId(), fr);
 		writeFile();
 	}
-	
+
 	public ArrayList<FriendRequest> getPending(User user) {
 		ArrayList<FriendRequest> pendingFriendRequests = new ArrayList<FriendRequest>();
 		for (String r : user.getFriendRequests()) {
 			FriendRequest friendRequest = getById(r);
-			if (friendRequest.getState()==FriendRequestState.PENDING) {
+			if (friendRequest.getState() == FriendRequestState.PENDING) {
 				pendingFriendRequests.add(friendRequest);
 			}
 		}
 		return pendingFriendRequests;
 	}
-	
-	//FR000002
+
+	// FR000002
 	public String generateId() {
 		StringBuilder sb = new StringBuilder();
 		String number = String.format("%06d", findAll().size() + 1);
@@ -81,7 +89,8 @@ public class FriendRequestDAO {
 
 	void writeFile() {
 		try {
-			CSVWriter writer = new CSVWriter(new FileWriter(this.path + "/resources/" + CSV_FILE), ';',
+			OutputStream os = new FileOutputStream(this.path + "/resources/" + CSV_FILE);
+			CSVWriter writer = new CSVWriter(new PrintWriter(new OutputStreamWriter(os, "UTF-8")), ';',
 					CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.DEFAULT_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END);
 			List<String[]> data = new ArrayList<String[]>();
 			data.add(new String[] { "id", "senderID", "recieverID", "dateOfRequest", "state" });
@@ -98,8 +107,9 @@ public class FriendRequestDAO {
 	}
 
 	void readFile() {
-		try (CSVReader csvr = new CSVReader(new FileReader(this.path + "/resources/" + CSV_FILE), ';',
-				CSVWriter.NO_QUOTE_CHARACTER, 1)) {
+		try (CSVReader csvr = new CSVReader(
+				new InputStreamReader(new FileInputStream(this.path + "/resources/" + CSV_FILE), "UTF-8"), ';', '\'',
+				1);) {
 			String[] nextLine;
 			// String[] columns = new String[]
 			// {"id","senderID","recieverID","dateOfRequest","state"};
