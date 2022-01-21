@@ -35,6 +35,7 @@ public class UserDAO {
 
 	public User findById(String id) {
 		for (User user : findAll()) {
+			System.out.println(id + " " + user.getId());
 			if (user.getId().equals(id)) {
 				return user;
 			}

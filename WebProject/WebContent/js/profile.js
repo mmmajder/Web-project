@@ -13,49 +13,18 @@ $('#posts').click(function() {
     clear();
     $(this).addClass('active');
     $('.posts').addClass('visible');
-
     $.ajax({
         url: "rest/profile/posts",
         type: "GET",
         contentType: "application/json",
-        dataType: "json",
         complete: function(data) {
             var userPosts = data.responseJSON;
-            if (userPosts.length == 0)
-                return;
-            var author = userPosts[0].author;
-            //var profilePicture = '"images/userPictures/' + author + '/' + userPosts[i].profilePicture + '"';
-            var profilePicture = "images/default.jpg";
-
-            for (let i = userPosts.length - 1; i >= 0; i--) {
-                var postPhoto = '"images/userPictures/' + author + '/' + userPosts[i].picture + '"';
-                var postID = userPosts[i].id;
-
-                $('#feeds').html($('<div>', { class: 'feed', id: postID }));
-                $('#' + postID).html($('<div>', { class: 'head' }));
-                $('#' + postID + " .head").html($('<div>', { class: 'user' }));
-                $('#' + postID + " .head .user").html($('<div>', { class: 'profile-picture' }));
-                $('#' + postID + " .head .user .profile-picture").append('<img src=' + profilePicture + '>');
-                $('#' + postID + " .head .user").html($('<div>', { class: 'ingo' }));
-                $('#' + postID + " .head .user .ingo").append('<h3>' + userPosts[i].id + '</h3>');
-                $('#' + postID + " .head .user .ingo").append('<small>' + userPosts[i].posted + '</small>');
-                $('#' + postID + " .head").html($('<div>', { class: 'edit' }));
-                $('#' + postID + " .head .edit").append('<i class="uil uil-ellipsis-h"></i>');
-
-                $('#' + postID).html($('<div>', { class: 'caption' }));
-                $('#' + postID + " .caption").append('<p>' + userPosts[i].caption + '</p>');
-
-                $('#' + postID).html($('<div>', { class: 'interaction' }));
-                //$('#' + postID + " .interaction").html($('<div>', { class: 'interaction-buttons' }));
-                //$('#' + postID + " .interaction .interaction-buttons").append('<span class="like"><i class="uil uil-thumbs-up"></i></span>');
-                //$('#' + postID + " .interaction .interaction-buttons").append('<p>' + userPosts[i].likedBy);
-
-                $('#' + postID).html($('<div>', { class: 'comments text-muted', id: 'view-comments' }));
-                $('#' + postID + "#view-comments").append('<p>View all ' + userPosts[i].comments.length + ' comments</p>');
-
-                $('#' + postID).html($('<div>', { class: 'add-comment' }));
-                $('#' + postID + ".add-comment").append('<input type="text" placeholder="Type comment..." id="comment-text"><span><i id="add-comment" class="uil uil-enter"></i></span>');
-            }
+            var cards = $();
+            userPosts.forEach(function(item) {
+                cards = cards.add(createPost(item));
+            });
+            $('#feeds').empty();
+            $('#feeds').append(cards);
         }
     });
 });
@@ -164,3 +133,39 @@ $(".post-image").click(function() {
     $(".photo-details-card").fadeIn();
     $('body').addClass('stop-scrolling');
 })
+
+
+function createPost(postData) {
+	$.ajax({
+        url: "rest/search/userById",
+        type: "POST",
+        data: { id: postData.author },
+        contentType: "application/json",
+        dataType: "json",
+        complete: function(data) {
+			user = data.responseJSON;
+			makeCardTemplate(user);
+        }
+    });
+}
+
+function makeCardTemplate(user) {
+	var cardTemplate = [
+        '<div class="feed"><div class="head"><div class="user"><div class="profile-picture">',
+        '<img src="',
+        'images/userPictures/' + user.id + '/' + user.profilePicture,
+        '"></div><div class="ingo">',
+        '<h3>' + user.username + '</h3>',
+        '<small>' + postData.posted + '</small>',
+        '</div></div><span class="edit"><i class="uil uil-ellipsis-h"></i></span></div><br><div class="caption">',
+        '<p>' + postData.description + '</p></div>',
+        '<div class="comments text-muted" id="view-comments">',
+        '<p>View all ' + postData.comments.length + ' comments</p>',
+        '</div><div class="add-comment">',
+        '<input type="text" placeholder="Type comment..." id="comment-text"><span><i id="add-comment" class="uil uil-enter"></i></span>',
+        '</div>'
+    ];
+    return $(cardTemplate.join(''));
+}
+
+
