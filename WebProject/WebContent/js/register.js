@@ -28,7 +28,6 @@ function register() {
 				$("#resultRegister").empty();
 				$("#resultRegister").append("User with this username already exist");
 			}
-            window.open("feed.html", '_self').focus();
         }
     });
 }

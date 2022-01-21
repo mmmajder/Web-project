@@ -10,45 +10,47 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
+import beans.FriendRequest;
 import beans.User;
+import dao.chat.ChatDAO;
 import dao.comment.CommentDAO;
+import dao.dm.DmDAO;
+import dao.friendRequest.FriendRequestDAO;
 import dao.person.UserDAO;
+import dao.post.PostDAO;
 
 @Path("/login")
 public class LoginService {
-	
+
 	@Context
 	ServletContext ctx;
-	
+
 	@PostConstruct
 	public void init() {
 		if (ctx.getAttribute("userDAO") == null) {
-	    	String contextPath = ctx.getRealPath("");
-	    	System.out.println();
+			String contextPath = ctx.getRealPath("");
 			ctx.setAttribute("userDAO", new UserDAO(contextPath));
 		}
-		if (ctx.getAttribute("commentDAO") == null) {
-	    	String contextPath = ctx.getRealPath("");
-	    	System.out.println();
-			ctx.setAttribute("commentDAO", new CommentDAO(contextPath));
-		}
 	}
-	
-	@POST 
-	@Path("/login") 
+
+	@POST
+	@Path("/login")
 	@Produces(MediaType.APPLICATION_JSON)
 	public User login(@Context HttpServletRequest request, LoginUser temp) {
 		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");
 		User retUser = dao.find(temp.getUsername(), temp.getPassword());
-		if (retUser!=null) {
+		System.out.println(retUser);
+		if (retUser != null) {
 			request.getSession().setAttribute("logged", retUser);
-			/*if (temp.getRemember()!=null) {
-				
-			}*/
+			/*
+			 * if (temp.getRemember()!=null) {
+			 * 
+			 * }
+			 */
 		}
 		return retUser;
 	}
-	
+
 	@GET
 	@Path("/testlogin")
 	@Produces(MediaType.APPLICATION_JSON)

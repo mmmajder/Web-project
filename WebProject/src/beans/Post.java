@@ -11,9 +11,10 @@ public class Post {
 	private LocalDateTime posted;
 	private ArrayList<String> comments;
 	private boolean isDeleted;
+	private boolean isPicture;
 
 	public Post(String id, String author, String picture, String description, LocalDateTime posted,
-			ArrayList<String> comments, boolean isDeleted) {
+			ArrayList<String> comments, boolean isDeleted, boolean isPicture) {
 		super();
 		this.id = id;
 		this.author = author;
@@ -22,8 +23,16 @@ public class Post {
 		this.posted = posted;
 		this.comments = comments;
 		this.isDeleted = isDeleted;
+		this.isPicture = isPicture;
 	}
 
+	public boolean isPicture() {
+		return isPicture;
+	}
+
+	public void setPicture(boolean isPicture) {
+		this.isPicture = isPicture;
+	}
 
 	public String getId() {
 		return id;

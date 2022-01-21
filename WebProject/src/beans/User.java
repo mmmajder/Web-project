@@ -51,15 +51,24 @@ public class User {
 	}
 
 	public User(String id, String username, String email, String name, String surname, Gender gender, String password,
-			boolean isAdmin) {
+			boolean isAdmin, LocalDate dateOfBirth) {
 		this.id = id;
 		this.username = username;
+		this.password = password;
 		this.email = email;
 		this.name = name;
 		this.surname = surname;
 		this.gender = gender;
-		this.password = password;
 		this.isAdmin = isAdmin;
+		this.dateOfBirth = dateOfBirth;
+		this.profilePicture = "";
+		this.biography = "No biography";
+		this.friends = new ArrayList<String>();
+		this.friendRequests = new ArrayList<String>();
+		this.posts = new ArrayList<String>();
+		this.chats = new ArrayList<String>();
+		this.isPrivate = true;
+		this.isBlocked = false;
 	}
 
 	public String getId() {

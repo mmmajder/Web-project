@@ -26,7 +26,7 @@ public class CommentDAO {
 	}
 	public static void main(String[] args) {
 		CommentDAO dao = new CommentDAO("src");
-		dao.addComment(new Comment("COM-00000004", "Cao%20lepa", "U00001", LocalDateTime.of(2022, 01, 20, 23, 44, 15),LocalDateTime.of(2022, 01, 20, 23, 44, 15), false));
+		dao.addComment(new Comment(dao.generateId(), "Cao%20lepa", "U00001", LocalDateTime.now(),LocalDateTime.now(), false));
 	}
 	
 	public Collection<Comment> findAll() {
@@ -35,9 +35,7 @@ public class CommentDAO {
 	}
 	
 	public void addComment(Comment comment) {
-		System.out.println(comment);
 		comments.put(comment.getId(), comment);
-		System.out.println(findAll().size());
 		writeFile();
 	}
 	
@@ -85,13 +83,6 @@ public class CommentDAO {
 			String[] nextLine;
 			//csvr.readNext();	// skip first line
 			while ((nextLine = csvr.readNext()) != null) {
-				System.out.println(nextLine[0]);
-				System.out.println(nextLine[1]);
-				System.out.println(nextLine[2]);
-				System.out.println(nextLine[3]);
-				System.out.println(nextLine[4]);
-				System.out.println(nextLine[5]);
-				
 				LocalDateTime created = getDateTime(nextLine[3]);
 				LocalDateTime lastEdited = getDateTime(nextLine[4]);
 				Comment comment = new Comment(nextLine[0], nextLine[1], nextLine[2], created, lastEdited, getBool(nextLine[5]));
