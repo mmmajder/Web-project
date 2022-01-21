@@ -629,6 +629,19 @@ h4 {
 }
 
 
+/**Search**/
+
+.date-of-birth-search {
+    display: flex;
+    padding: 1rem;
+    text-align: center;
+}
+
+.date-of-birth-search input {
+    width: 200px;
+}
+
+
 /**New post**/
 
 
