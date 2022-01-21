@@ -548,22 +548,22 @@ main .container .right {
     bottom: 0;
 }
 
-.right .new-people {
+.middle .new-people {
     background: var(--color-white);
     border-radius: var(--card-border-radius);
     padding: var(--card-padding);
 }
 
-.right .new-people i {
+.middle .new-people i {
     font-size: 1.4rem;
 }
 
-.right .new-people .search-bar {
+.middle .new-people .search-bar {
     display: flex;
     margin-bottom: 1rem;
 }
 
-.right .new-people .person {
+.middle .new-people .person {
     display: flex;
     gap: 1rem;
     margin-bottom: 1rem;
@@ -579,15 +579,15 @@ main .container .right {
     border-radius: 50%;
 }
 
-.right .new-people .person:last-child {
+.middle .new-people .person:last-child {
     margin: 0;
 }
 
-.right .new-people .person p {
+.middle .new-people .person p {
     font-size: 0.8rem;
 }
 
-.right .new-people .person .profile-picture .active {
+.middle .new-people .person .profile-picture .active {
     width: 0.8rem;
     height: 0.8rem;
     border-radius: 50%;
@@ -605,7 +605,7 @@ main .container .right {
     margin-top: 1rem;
 }
 
-.right h4 {
+h4 {
     color: var(--color-grey);
     margin: 1rem 0;
 }
