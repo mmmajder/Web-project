@@ -39,6 +39,12 @@ public class UserDAO {
 		}
 		return null;
 	}
+	
+	public void add(User user) {
+		users.put(user.getUsername(), user);
+		System.out.println(user);
+		System.out.println(findAll().size());
+	}
 
 	public User find(String username, String password) {
 		if (!users.containsKey(username)) {
@@ -49,6 +55,14 @@ public class UserDAO {
 			return null;
 		}
 		return user;
+	}
+	// example of id = U00001
+	public String generateId() {
+		String number = String.format("%08d", findAll().size()+1);
+		StringBuilder sb = new StringBuilder();
+		sb.append("U");
+		sb.append(number);
+		return sb.toString();
 	}
 	
 	void readFile() {
@@ -81,7 +95,7 @@ public class UserDAO {
 
 	}
 	
-	private Gender getGender(String stringGender) {
+	public Gender getGender(String stringGender) {
 		if (stringGender=="MALE") {
 			return Gender.MALE;
 		} 

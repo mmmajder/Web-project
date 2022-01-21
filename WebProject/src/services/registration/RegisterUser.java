@@ -7,7 +7,7 @@ public class RegisterUser {
 	private String email;
 	private String name;
 	private String surname;
-	private Gender gender;
+	private String gender;
 	private String password;
 	
 
@@ -35,10 +35,10 @@ public class RegisterUser {
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
-	public Gender getGender() {
+	public String getGender() {
 		return gender;
 	}
-	public void setGender(Gender gender) {
+	public void setGender(String gender) {
 		this.gender = gender;
 	}
 	public String getPassword() {

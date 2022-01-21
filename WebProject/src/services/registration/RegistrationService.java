@@ -30,27 +30,24 @@ public class RegistrationService {
 	
 	
 	// TODO
-	/*@POST
-	@Path("/register")
+	@POST
+	@Path("/")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public User register(@Context HttpServletRequest request, RegisterUser registerUser) {
 		UserDAO userDao = (UserDAO) ctx.getAttribute("userDAO");
 		User existingUser = userDao.find(registerUser.getUsername(), registerUser.getPassword());
 		if (existingUser==null) {
-			return new User(generateId(), registerUser.getUsername(), registerUser.getEmail(), registerUser.getName(), registerUser.getSurname(), registerUser.getGender(), registerUser.getPassword(), false);
+			User retUser = new User(userDao.generateId(), registerUser.getUsername(), registerUser.getEmail(), registerUser.getName(), registerUser.getSurname(), userDao.getGender(registerUser.getGender()), registerUser.getPassword(), false);
+			request.getSession().setAttribute("logged", retUser);
+			userDao.add(retUser);
+			return retUser;
 		}
 		return null;
-	}*/
-	
-	// example of id = U00001
-	private String generateId() {
-		UserDAO  dao = (UserDAO) ctx.getAttribute("usersDAO");
-		StringBuilder sb = new StringBuilder();
-		sb.append("U");
-		sb.append(new Integer(dao.findAll().size()+1));
-		return sb.toString();
 	}
+	
+	
+	
 	
 
 }

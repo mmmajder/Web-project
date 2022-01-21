@@ -15,12 +15,19 @@ function register() {
 
     var s = JSON.stringify(data);
     $.ajax({
-        url: "rest/demo/register",
+        url: "rest/register/",
         type: "POST",
         data: s,
         contentType: "application/json",
         dataType: "json",
         complete: function(data) {
+			console.log(data.responseText);
+			if (data.responseText) {
+				window.open("feed.html", '_self').focus(); 
+			} else {
+				$("#resultRegister").empty();
+				$("#resultRegister").append("User with this username already exist");
+			}
             window.open("feed.html", '_self').focus();
         }
     });

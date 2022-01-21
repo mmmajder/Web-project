@@ -25,7 +25,6 @@ function login() {
 			console.log(data.responseText);
 			if (data.responseText) {
 				window.open("feed.html", '_self').focus(); 
-				localStorage.user = data.responseText;
 			} else {
 				$("#resultLogin").empty();
 				$("#resultLogin").append("Wrong username or password.");
