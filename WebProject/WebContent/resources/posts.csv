@@ -1,4 +1,4 @@
-id;authorID;picture;description;posted;commentIDs;deleted;isPicture
+id;authorID;pictureLocation;description;posted;commentIDs;deleted;isPicture
 PO00001;U00001;;Mnogo dobar post 1;2020-01-01 11:00:00;;false;false
 PO00002;U00001;;Mnogo dobar post 2;2020-01-01 12:00:00;;false;false
 PO00003;U00001;;Mnogo dobar post 3;2020-01-01 13:00:00;;false;false

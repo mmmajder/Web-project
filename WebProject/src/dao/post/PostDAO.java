@@ -65,7 +65,7 @@ public class PostDAO {
 			CSVWriter writer = new CSVWriter(new FileWriter(this.path + "/resources/" + CSV_FILE), ';',
 					CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.DEFAULT_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END);
 			List<String[]> data = new ArrayList<String[]>();
-			data.add(new String[] { "id", "authorID", "picture", "description", "posted", "commentIDs", "deleted",
+			data.add(new String[] { "id", "authorID", "pictureLocation", "description", "posted", "commentIDs", "deleted",
 					"isPicture" });
 			for (Post p : findAll()) {
 				data.add(new String[] { p.getId(), p.getAuthor(), p.getPicture(), p.getDescription(),
