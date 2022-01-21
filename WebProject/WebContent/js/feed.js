@@ -14,6 +14,10 @@ function goToMyProfile() {
     window.location.href = "profile.html";
 }
 
+function goToSearch() {
+    window.location.href = "search.html";
+}
+
 function goToMessages() {
     window.location.href = "messages.html";
 }

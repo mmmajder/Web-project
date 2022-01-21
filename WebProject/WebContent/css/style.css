@@ -197,12 +197,14 @@ img {
     opacity: 0.8;
 }
 
-#cancel-edit {
+#cancel-edit,
+#cancel-photo {
     cursor: pointer;
     font-size: 1.5rem;
 }
 
-#cancel-edit:hover {
+#cancel-edit:hover,
+#cancel-photo:hover {
     color: var(--color-primary);
 }
 
@@ -563,22 +565,22 @@ main .container .right {
     bottom: 0;
 }
 
-.right .new-people {
+.middle .new-people {
     background: var(--color-white);
     border-radius: var(--card-border-radius);
     padding: var(--card-padding);
 }
 
-.right .new-people i {
+.middle .new-people i {
     font-size: 1.4rem;
 }
 
-.right .new-people .search-bar {
+.middle .new-people .search-bar {
     display: flex;
     margin-bottom: 1rem;
 }
 
-.right .new-people .person {
+.middle .new-people .person {
     display: flex;
     gap: 1rem;
     margin-bottom: 1rem;
@@ -594,15 +596,15 @@ main .container .right {
     border-radius: 50%;
 }
 
-.right .new-people .person:last-child {
+.middle .new-people .person:last-child {
     margin: 0;
 }
 
-.right .new-people .person p {
+.middle .new-people .person p {
     font-size: 0.8rem;
 }
 
-.right .new-people .person .profile-picture .active {
+.middle .new-people .person .profile-picture .active {
     width: 0.8rem;
     height: 0.8rem;
     border-radius: 50%;
@@ -620,7 +622,7 @@ main .container .right {
     margin-top: 1rem;
 }
 
-.right h4 {
+h4 {
     color: var(--color-grey);
     margin: 1rem 0;
 }
@@ -644,12 +646,26 @@ main .container .right {
 }
 
 
+/**Search**/
+
+.date-of-birth-search {
+    display: flex;
+    padding: 1rem;
+    text-align: center;
+}
+
+.date-of-birth-search input {
+    width: 200px;
+}
+
+
 /**New post**/
 
 
 /**Edit profile**/
 
-.edit-profile-card {
+.edit-profile-card,
+.photo-details-card {
     background: rgba(255, 255, 255, 0.5);
     position: fixed;
     top: 10%;
@@ -665,19 +681,16 @@ main .container .right {
     border: 2px solid var(--color-primary);
 }
 
+.photo-details-card {
+    padding: 0.5rem;
+}
+
 .view-comments {
     cursor: pointer;
 }
 
-.edit-profile-card .left {
-    width: 50%;
-    height: auto;
-    text-align: center;
-    padding: 15px;
-    float: left;
-}
-
-.edit-profile-card .row {
+.edit-profile-card .row,
+.photo-details-card .row {
     display: -ms-flexbox;
     display: flex;
     -ms-flex-wrap: wrap;
@@ -689,7 +702,8 @@ main .container .right {
     justify-content: space-between;
 }
 
-.edit-profile-card .row .column {
+.edit-profile-card .row .column,
+.photo-details-card .row .column {
     width: 50%;
     padding: 4rem;
     align-content: center;
@@ -698,6 +712,46 @@ main .container .right {
 
 .edit-profile-card .buttons {
     align-content: center;
+}
+
+
+/**Photo details**/
+
+#post-image img {
+    width: 100%;
+    position: sticky;
+}
+
+#image-description {
+    float: left;
+}
+
+.photo-comments {
+    overflow-y: scroll;
+    border-bottom: 1px solid #F5F5F7;
+    border-top: 1px solid #F5F5F7;
+    height: 250px;
+    position: fixed;
+}
+
+.stop-scrolling {
+    height: 100%;
+    overflow: hidden;
+}
+
+.photo-details-card .add-comment {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1rem;
+    background: var(--color-white);
+    padding: var(--card-padding);
+}
+
+#add-comment {
+    font-size: 1.5rem;
+    color: var(--color-primary);
+    padding: 1rem;
 }
 
 
@@ -886,6 +940,7 @@ main .container .right {
     margin-top: 8px;
     vertical-align: middle;
     width: 100%;
+    cursor: pointer;
 }
 
 .middle .showing .photos,
@@ -1017,7 +1072,8 @@ main .messages-container .left {
     right: 0;
 }
 
-.chat {
+.chat,
+.photo-comments {
     background: var(--color-white);
     border-radius: var(--card-border-radius);
     padding: var(--card-padding);
@@ -1077,11 +1133,13 @@ main .messages-container .left {
     display: flex;
 }
 
-.message-container .profile-picture {
+.message-container .profile-picture,
+.add-comment .profile-picture {
     margin: 5px;
     width: 30px;
     height: 30px;
     border-radius: 50px;
+    overflow: hidden;
 }
 
 .message-right {
