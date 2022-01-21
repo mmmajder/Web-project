@@ -10,14 +10,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
-import beans.FriendRequest;
 import beans.User;
-import dao.chat.ChatDAO;
-import dao.comment.CommentDAO;
-import dao.dm.DmDAO;
-import dao.friendRequest.FriendRequestDAO;
 import dao.person.UserDAO;
-import dao.post.PostDAO;
 
 @Path("/login")
 public class LoginService {
