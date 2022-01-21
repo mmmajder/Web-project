@@ -1,15 +1,18 @@
 package services.search;
 
-import java.time.LocalDate;
-
 public class SearchData {
 	private String name;
 	private String lastName;
-	private LocalDate start;
-	private LocalDate end;
+	private String start;
+	private String end;
 
 	public String getName() {
 		return name;
+	}
+
+	@Override
+	public String toString() {
+		return "SearchData [name=" + name + ", lastName=" + lastName + ", start=" + start + ", end=" + end + "]";
 	}
 
 	public void setName(String name) {
@@ -24,19 +27,19 @@ public class SearchData {
 		this.lastName = lastName;
 	}
 
-	public LocalDate getStart() {
+	public String getStart() {
 		return start;
 	}
 
-	public void setStart(LocalDate start) {
+	public void setStart(String start) {
 		this.start = start;
 	}
 
-	public LocalDate getEnd() {
+	public String getEnd() {
 		return end;
 	}
 
-	public void setEnd(LocalDate end) {
+	public void setEnd(String end) {
 		this.end = end;
 	}
 }

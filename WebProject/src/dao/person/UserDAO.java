@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import javax.sound.midi.Soundbank;
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane.IconifyAction;
 import javax.validation.constraints.Size;
 
@@ -112,20 +113,37 @@ public class UserDAO {
 
 	public ArrayList<UserSearchData> searchUsers(SearchData data, User loggedUser) {
 		ArrayList<UserSearchData> list = new ArrayList<UserSearchData>();
+		if(data == null)
+			System.out.println("null je data");
+		if(data.getName() == "")
+			System.out.println("'' je data");
+		if(data.getName() == null)
+			System.out.println("null je data.name");
+		System.out.println(data);
 		for (User user : findAll()) {
-			if (user.getName().contains(data.getName()) && user.getSurname().contains(data.getLastName())) {
-				LocalDate startDate = data.getStart() == null ? LocalDate.MIN : data.getStart();
-				LocalDate endDate = data.getEnd() == null ? LocalDate.MAX : data.getEnd();
+			if (user.getName().toLowerCase().contains(data.getName().toLowerCase()) && user.getSurname().toLowerCase().contains(data.getLastName().toLowerCase())) {
+				LocalDate startDate = LocalDate.MIN;
+				if(!data.getStart().isEmpty())
+					startDate = LocalDate.parse(data.getStart());
+				System.out.println(startDate);
+				LocalDate endDate = LocalDate.MAX;
+				if(!data.getEnd().isEmpty())
+					endDate = LocalDate.parse(data.getEnd());
+				System.out.println(endDate);
 				if (user.getDateOfBirth().isAfter(startDate) && user.getDateOfBirth().isBefore(endDate)) {
 					UserSearchData newUser = new UserSearchData(user.getId(), user.getName(), user.getSurname(), user.getProfilePicture(), getNumberOfMutualFriends(loggedUser, user));
 					list.add(newUser);
 				}
 			}
 		}
+		for (UserSearchData userSearchData : list) {
+			System.out.println(userSearchData);			
+		}
 		return list;
 	}
 	
 	public int getNumberOfMutualFriends(User loggedUser, User otherUser) {
+		System.out.println(loggedUser);
 		return loggedUser.getFriends().stream()
 			    .filter(otherUser.getFriends()::contains)
 			    .collect(Collectors

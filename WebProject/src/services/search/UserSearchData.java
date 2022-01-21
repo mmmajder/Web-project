@@ -7,6 +7,12 @@ public class UserSearchData {
 	private String profilePicture;
 	private int numberOfMutualFriends;
 
+	@Override
+	public String toString() {
+		return "UserSearchData [id=" + id + ", name=" + name + ", surname=" + surname + ", profilePicture="
+				+ profilePicture + ", numberOfMutualFriends=" + numberOfMutualFriends + "]";
+	}
+
 	public UserSearchData(String id, String name, String surname, String profilePicture, int numberOfMutualFriends) {
 		super();
 		this.id = id;
