@@ -5,7 +5,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -13,15 +12,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import javax.sound.midi.Soundbank;
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane.IconifyAction;
-import javax.validation.constraints.Size;
-
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
-import au.com.bytecode.opencsv.bean.ColumnPositionMappingStrategy;
-import au.com.bytecode.opencsv.bean.CsvToBean;
-import beans.DM;
 import beans.User;
 import enums.Gender;
 import services.search.SearchData;
@@ -37,19 +29,6 @@ public class UserDAO {
 		readFile();
 	}
 
-<<<<<<< HEAD
-	/*public static void main(String[] args) {
-		UserDAO userDAO = new UserDAO("src");
-		ArrayList<String> f = new ArrayList<String>();
-		f.add("1");
-		f.add("drugi");
-		User user = new User(userDAO.generateId(), "username", "password", "email", "name", "surname", LocalDate.now(),
-				Gender.MALE, "profilePicture", "biography", f, f, f, f, false, false, false);
-		userDAO.add(user);
-	}*/
-
-=======
->>>>>>> search
 	public Collection<User> findAll() {
 		return users.values();
 	}
@@ -90,7 +69,6 @@ public class UserDAO {
 		return user;
 	}
 
-<<<<<<< HEAD
 	// example of id = U00001
 	public String generateId() {
 		String number = String.format("%05d", findAll().size() + 1);
@@ -123,6 +101,39 @@ public class UserDAO {
 			e.printStackTrace();
 		}
 	}
+	
+	void readFile() {
+        try (CSVReader csvr = new CSVReader(new FileReader(this.path + "/resources/" + CSV_FILE), ';',
+                CSVWriter.NO_QUOTE_CHARACTER, 1)) {
+            String[] nextLine;
+            /*
+             * String[] columns = new String[] { "id", "username", "password", "email",
+             * "name", "surname", "dateOfBirth", "gender", "profilePicture", "biography",
+             * "friendIDs", "friendRequestIDs", "postIDs", "pictureIDs", "chats",
+             * "isPrivate", "isBlocked", "isAdmin" };
+             */
+            while ((nextLine = csvr.readNext()) != null) {
+                LocalDate date = getDate(nextLine[6]);
+                Gender gender = getGender(nextLine[7]);
+                ArrayList<String> friends = getList(nextLine[10]);
+                ArrayList<String> friendRequests = getList(nextLine[11]);
+                ArrayList<String> posts = getList(nextLine[12]);
+                ArrayList<String> chats = getList(nextLine[13]);
+                User user = new User(nextLine[0], nextLine[1], nextLine[2], nextLine[3], nextLine[4], nextLine[5], date,
+                        gender, nextLine[8], nextLine[9], friends, friendRequests, posts, chats,
+                        new Boolean(nextLine[14]), new Boolean(nextLine[15]), new Boolean(nextLine[16]));
+                System.out.println(user);
+                users.put(user.getUsername(), user);
+            }
+            csvr.close();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 
 	private String printList(List<?> elems) {
 		StringBuilder sb = new StringBuilder();
@@ -136,81 +147,14 @@ public class UserDAO {
 		return sb.toString();
 	}
 
-	void readFile() {
-		try (CSVReader csvr = new CSVReader(new FileReader(this.path + "/resources/" + CSV_FILE), ';',
-				CSVWriter.NO_QUOTE_CHARACTER, 1)) {
-			String[] nextLine;
-			/*
-			 * String[] columns = new String[] { "id", "username", "password", "email",
-			 * "name", "surname", "dateOfBirth", "gender", "profilePicture", "biography",
-			 * "friendIDs", "friendRequestIDs", "postIDs", "pictureIDs", "chats",
-			 * "isPrivate", "isBlocked", "isAdmin" };
-			 */
-			while ((nextLine = csvr.readNext()) != null) {
-				LocalDate date = getDate(nextLine[6]);
-				Gender gender = getGender(nextLine[7]);
-				ArrayList<String> friends = getList(nextLine[10]);
-				ArrayList<String> friendRequests = getList(nextLine[11]);
-				ArrayList<String> posts = getList(nextLine[12]);
-				ArrayList<String> chats = getList(nextLine[13]);
-				User user = new User(nextLine[0], nextLine[1], nextLine[2], nextLine[3], nextLine[4], nextLine[5], date,
-						gender, nextLine[8], nextLine[9], friends, friendRequests, posts, chats,
-						new Boolean(nextLine[14]), new Boolean(nextLine[15]), new Boolean(nextLine[16]));
-=======
-	void readFile() {
-		try (CSVReader csvr = new CSVReader(new FileReader(this.path + "/resources/" + CSV_FILE), ';',
-				CSVWriter.NO_QUOTE_CHARACTER, 1)) {
-			ColumnPositionMappingStrategy<PersonRepo> strategy = new ColumnPositionMappingStrategy<>();
-			strategy.setType(PersonRepo.class);
-			String[] columns = new String[] { "id", "username", "password", "email", "name", "surname", "dateOfBirth",
-					"gender", "profilePicture", "biography", "friendIDs", "friendRequestIDs", "postIDs", "pictureIDs",
-					"chats", "isPrivate", "isBlocked", "isAdmin" };
-			strategy.setColumnMapping(columns);
 
-			CsvToBean<PersonRepo> csv = new CsvToBean<>();
-			List<PersonRepo> tempUsers = csv.parse(strategy, csvr);
-
-			for (PersonRepo tempUser : tempUsers) {
-				LocalDate date = LocalDate.of(Integer.parseInt(tempUser.getDateOfBirth().split("-")[0]),
-						Integer.parseInt(tempUser.getDateOfBirth().split("-")[1]),
-						Integer.parseInt(tempUser.getDateOfBirth().split("-")[2]));
-				Gender gender = getGender(tempUser.getGender());
-				ArrayList<String> friendIDs = getList(tempUser.getFriendIDs());
-				ArrayList<String> friendRequestIDs = getList(tempUser.getFriendRequestIDs());
-				ArrayList<String> postIDs = getList(tempUser.getPostIDs());
-				ArrayList<String> chats = getList(tempUser.getChats());
-
-				User user = new User(tempUser.getId(), tempUser.getUsername(), tempUser.getPassword(),
-						tempUser.getEmail(), tempUser.getName(), tempUser.getSurname(), date, gender,
-						tempUser.getProfilePicture(), tempUser.getBiography(), friendIDs, friendRequestIDs, postIDs,
-						chats, tempUser.getIsPrivate(), tempUser.getIsBlocked(), tempUser.isAdmin());
-				users.put(tempUser.getUsername(), user);
->>>>>>> search
-				System.out.println(user);
-				users.put(user.getUsername(), user);
-			}
-			csvr.close();
-
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-	}
-
-<<<<<<< HEAD
 	public LocalDate getDate(String s) {
 		return LocalDate.of(Integer.parseInt(s.split("-")[0]), Integer.parseInt(s.split("-")[1]),
 				Integer.parseInt(s.split("-")[2]));
 	}
 
 	public Gender getGender(String stringGender) {
-		if (stringGender.equals("MALE")) {
-=======
-	private Gender getGender(String stringGender) {
 		if (stringGender == "MALE") {
->>>>>>> search
 			return Gender.MALE;
 		}
 		return Gender.FEMALE;
@@ -226,31 +170,19 @@ public class UserDAO {
 
 	public ArrayList<UserSearchData> searchUsers(SearchData data, User loggedUser) {
 		ArrayList<UserSearchData> list = new ArrayList<UserSearchData>();
-		if(data == null)
-			System.out.println("null je data");
-		if(data.getName() == "")
-			System.out.println("'' je data");
-		if(data.getName() == null)
-			System.out.println("null je data.name");
-		System.out.println(data);
 		for (User user : findAll()) {
 			if (user.getName().toLowerCase().contains(data.getName().toLowerCase()) && user.getSurname().toLowerCase().contains(data.getLastName().toLowerCase())) {
 				LocalDate startDate = LocalDate.MIN;
 				if(!data.getStart().isEmpty())
 					startDate = LocalDate.parse(data.getStart());
-				System.out.println(startDate);
 				LocalDate endDate = LocalDate.MAX;
 				if(!data.getEnd().isEmpty())
 					endDate = LocalDate.parse(data.getEnd());
-				System.out.println(endDate);
 				if (user.getDateOfBirth().isAfter(startDate) && user.getDateOfBirth().isBefore(endDate)) {
 					UserSearchData newUser = new UserSearchData(user.getId(), user.getName(), user.getSurname(), user.getProfilePicture(), getNumberOfMutualFriends(loggedUser, user));
 					list.add(newUser);
 				}
 			}
-		}
-		for (UserSearchData userSearchData : list) {
-			System.out.println(userSearchData);			
 		}
 		return list;
 	}

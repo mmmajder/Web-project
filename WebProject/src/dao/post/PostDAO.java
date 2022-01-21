@@ -17,6 +17,7 @@ import au.com.bytecode.opencsv.bean.ColumnPositionMappingStrategy;
 import au.com.bytecode.opencsv.bean.CsvToBean;
 import beans.Comment;
 import beans.Post;
+import beans.User;
 
 public class PostDAO {
 	static final String CSV_FILE = "posts.csv";
@@ -130,6 +131,26 @@ public class PostDAO {
 				Integer.parseInt(date.split("-")[2]), Integer.parseInt(time.split(":")[0]),
 				Integer.parseInt(time.split(":")[1]));
 
+	}
+	
+	public ArrayList<Post> getUserPhotos(User u) {
+		ArrayList<Post> photos = new ArrayList<Post>();
+		for (String post : u.getPosts()) {
+			if(posts.get(post).isPicture()) {
+				photos.add(posts.get(post));
+				System.out.println(posts.get(post));
+			}
+		}
+		return photos;
+	}
+	
+	public ArrayList<Post> getUserPosts(User u) {
+		ArrayList<Post> retPosts = new ArrayList<Post>();
+		for (String post : u.getPosts()) {
+			if(!posts.get(post).isPicture())
+				retPosts.add(posts.get(post));
+		}
+		return retPosts;
 	}
 
 }
