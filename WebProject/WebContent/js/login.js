@@ -29,8 +29,6 @@ function login() {
 				$("#resultLogin").empty();
 				$("#resultLogin").append("Wrong username or password.");
 			}
-            
-            //$( "#resultLogin" ).html( s );
         }
     });
 }

@@ -1,12 +1,4 @@
-/services/
-<<<<<<< HEAD
-=======
-/app/
-/repo/
->>>>>>> front
-/dao/
-/resources/
 /beans/
-=======
 /dao/
->>>>>>> search
+/services/
+/enums/
