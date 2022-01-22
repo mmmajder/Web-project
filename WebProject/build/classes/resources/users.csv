@@ -1,0 +1,9 @@
+id;username;password;email;name;surname;dateOfBirth;gender;profilePicture;biography;friendIDs;friendRequestIDs;postIDs;pictureIDs;chats;isPrivate;isBlocked;isAdmin
+A00002;administrator2;administrator2;admin2@gmail.com;Marko;Markovic;1978-02-02;MALE;admin2.png;Works at: Sam svoj gazda;;;;;true;false;true
+U00007;username;password;email;name;surname;2022-01-21;MALE;profilePicture;biography;1|drugi;1|drugi;1|drugi;1|drugi;false;false;false
+A00001;administrator1;administrator1;admin1@gmail.com;Stana;Stanic;1990-01-01;FEMALE;admin1.jpg;Ne nemoj mi prici;;;;;true;false;true
+U00006;username;password;email;name;surname;2022-01-21;MALE;profilePicture;biography;1|drugi;1|drugi;1|drugi;1|drugi;false;false;false
+U00003;jova;jova12345;jova@gmail.com;Jova;Jovic;1965-05-05;MALE;user3.jpg;Mlad lep zgodan 2.;U00002;;PO00005|PO00006;C000001;false;false;false
+U00001;pera;pera12345;pera@gmail.com;Pera;Peric;2000-01-01;MALE;user1.png;Mlad lep zgodan;;FR000001|FR000002;PO00001|PO00002|PO00003;;true;false;false
+U00002;ana;ana12345;ana@gmail.com;Ana;Anic;1998-01-01;FEMALE;user2.jpg;Kuvam perem peglam;U00003;;PO00004;C000001;false;false;false
+U00008;username;password;email;name;surname;2022-01-21;MALE;profilePicture;biography;1|drugi;1|drugi;1|drugi;1|drugi;false;false;false
