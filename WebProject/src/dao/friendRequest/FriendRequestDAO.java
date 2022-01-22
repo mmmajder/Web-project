@@ -3,8 +3,6 @@ package dao.friendRequest;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -19,13 +17,11 @@ import java.util.Map;
 
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
-import au.com.bytecode.opencsv.bean.ColumnPositionMappingStrategy;
-import au.com.bytecode.opencsv.bean.CsvToBean;
-import beans.Comment;
 import beans.FriendRequest;
 import beans.User;
 import dao.person.UserDAO;
 import enums.FriendRequestState;
+import services.search.UserSearchData;
 
 public class FriendRequestDAO {
 	static final String CSV_FILE = "friendRequests.csv";
@@ -35,14 +31,6 @@ public class FriendRequestDAO {
 	public FriendRequestDAO(String contextPath) {
 		this.path = contextPath;
 		readFile();
-	}
-
-	public static void main(String[] args) {
-		FriendRequestDAO dao = new FriendRequestDAO("src");
-		dao.add(new FriendRequest(dao.generateId(), "send", "reciever", LocalDateTime.now(),
-				FriendRequestState.ACCEPTED));
-		dao.add(new FriendRequest(dao.generateId(), "send", "reciever", LocalDateTime.now(),
-				FriendRequestState.ACCEPTED));
 	}
 
 	public Collection<FriendRequest> findAll() {
@@ -62,8 +50,10 @@ public class FriendRequestDAO {
 		ArrayList<FriendRequest> pendingFriendRequests = new ArrayList<FriendRequest>();
 		for (String r : user.getFriendRequests()) {
 			FriendRequest friendRequest = getById(r);
-			if (friendRequest.getState() == FriendRequestState.PENDING) {
-				pendingFriendRequests.add(friendRequest);
+			if (friendRequest != null) {
+				if (friendRequest.getState() == FriendRequestState.PENDING) {
+					pendingFriendRequests.add(friendRequest);
+				}
 			}
 		}
 		return pendingFriendRequests;
@@ -143,6 +133,15 @@ public class FriendRequestDAO {
 		return LocalDateTime.of(Integer.parseInt(date.split("-")[0]), Integer.parseInt(date.split("-")[1]),
 				Integer.parseInt(date.split("-")[2]), Integer.parseInt(time.split(":")[0]),
 				Integer.parseInt(time.split(":")[1]), (int) Double.parseDouble(time.split(":")[2]));
+	}
 
+	public ArrayList<UserSearchData> getPrintData(User user, UserDAO dao) {
+		ArrayList<UserSearchData> data = new ArrayList<UserSearchData>();
+		for (FriendRequest friendRequest : getPending(user)) {
+			User sender = dao.findById(friendRequest.getSender());
+			data.add(new UserSearchData(sender.getId(), sender.getName(), sender.getSurname(),
+					sender.getProfilePicture(), dao.getNumberOfMutualFriends(user, sender)));
+		}
+		return data;
 	}
 }

@@ -45,11 +45,14 @@ public class UserDAO {
 	}
 
 	public User findById(String id) {
+		System.out.println("trazimo usera");
 		for (User user : findAll()) {
+			System.out.println(user.getId() + " " + id);
 			if (user.getId().equals(id)) {
 				return user;
 			}
 		}
+		System.out.println("nisam nasao");
 		return null;
 	}
 

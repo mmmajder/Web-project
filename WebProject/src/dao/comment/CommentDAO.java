@@ -1,19 +1,13 @@
 package dao.comment;
 
-import java.io.BufferedOutputStream;
-import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -117,14 +111,10 @@ public class CommentDAO {
 		return LocalDateTime.of(Integer.parseInt(date.split("-")[0]), Integer.parseInt(date.split("-")[1]),
 				Integer.parseInt(date.split("-")[2]), Integer.parseInt(time.split(":")[0]),
 				Integer.parseInt(time.split(":")[1]), (int) Double.parseDouble(time.split(":")[2]));
-
 	}
 
 	private boolean getBool(String b) {
-		if (b.equals("false")) {
-			return false;
-		}
-		return true;
+		return b.equals("true");
 	}
 
 }

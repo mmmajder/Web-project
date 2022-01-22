@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Post {
 	private String id;
 	private String author;
-	private String picture;
+	private String pictureLocation;
 	private String description;
 	private LocalDateTime posted;
 	private ArrayList<String> comments;
@@ -18,7 +18,7 @@ public class Post {
 		super();
 		this.id = id;
 		this.author = author;
-		this.picture = picture;
+		this.pictureLocation = picture;
 		this.description = description;
 		this.posted = posted;
 		this.comments = comments;
@@ -42,12 +42,12 @@ public class Post {
 		this.id = id;
 	}
 
-	public String getPicture() {
-		return picture;
+	public String getPictureLocation() {
+		return pictureLocation;
 	}
 
-	public void setPicture(String picture) {
-		this.picture = picture;
+	public void setPictureLocation(String picture) {
+		this.pictureLocation = picture;
 	}
 
 	public String getDescription() {
@@ -92,8 +92,10 @@ public class Post {
 
 	@Override
 	public String toString() {
-		return "Post [id=" + id + ", authorID=" + author + ", picture=" + picture + ", description=" + description
-				+ ", posted=" + posted + ", commentIDs=" + comments + ", isDeleted=" + isDeleted + "]";
+		return "Post [id=" + id + ", author=" + author + ", pictureLocation=" + pictureLocation + ", description="
+				+ description + ", posted=" + posted + ", comments=" + comments + ", isDeleted=" + isDeleted
+				+ ", isPicture=" + isPicture + "]";
 	}
+
 
 }
