@@ -1,9 +1,14 @@
 package dao.person;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -11,6 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
 
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
@@ -23,6 +29,11 @@ public class UserDAO {
 	static final String CSV_FILE = "users.csv";
 	private Map<String, User> users = new HashMap<>();
 	private String path;
+	
+	public static void main(String[] args) {
+		UserDAO dao = new UserDAO("src");
+		dao.writeFile();
+	}
 
 	public UserDAO(String contextPath) {
 		this.path = contextPath;
@@ -35,7 +46,6 @@ public class UserDAO {
 
 	public User findById(String id) {
 		for (User user : findAll()) {
-			System.out.println(id + " " + user.getId());
 			if (user.getId().equals(id)) {
 				return user;
 			}
@@ -57,7 +67,7 @@ public class UserDAO {
 	}
 
 	public User find(String username, String password) {
-		for (String user : users.keySet() ) {
+		for (String user : users.keySet()) {
 			System.out.println(user);
 		}
 		if (!users.containsKey(username)) {
@@ -82,13 +92,18 @@ public class UserDAO {
 
 	public void writeFile() {
 		try {
-			CSVWriter writer = new CSVWriter(new FileWriter(this.path + "/resources/" + CSV_FILE), ';',
-					CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.DEFAULT_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END);
+			OutputStream os = new FileOutputStream(this.path + "/resources/" + CSV_FILE);
+			CSVWriter writer = new CSVWriter(new PrintWriter(new OutputStreamWriter(os, "UTF-8")), ';',
+			        CSVWriter.NO_QUOTE_CHARACTER,
+			        CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+			        CSVWriter.DEFAULT_LINE_END);
 			List<String[]> data = new ArrayList<String[]>();
 			data.add(new String[] { "id", "username", "password", "email", "name", "surname", "dateOfBirth", "gender",
 					"profilePicture", "biography", "friendIDs", "friendRequestIDs", "postIDs", "pictureIDs", "chats",
 					"isPrivate", "isBlocked", "isAdmin" });
+			System.out.println("----------------");
 			for (User u : findAll()) {
+				System.out.println(u);
 				data.add(new String[] { u.getId(), u.getUsername(), u.getPassword(), u.getEmail(), u.getName(),
 						u.getSurname(), u.getDateOfBirth().toString(), u.getGender().toString(), u.getProfilePicture(),
 						u.getBiography(), printList(u.getFriends()), printList(u.getFriendRequests()),
@@ -102,11 +117,12 @@ public class UserDAO {
 			e.printStackTrace();
 		}
 	}
-	
+
 	void readFile() {
-        try (CSVReader csvr = new CSVReader(new FileReader(this.path + "/resources/" + CSV_FILE), ';',
-                CSVWriter.NO_QUOTE_CHARACTER, 1)) {
-            String[] nextLine;
+		try {
+			CSVReader csvr = new CSVReader(new InputStreamReader(new FileInputStream(this.path + "/resources/" + CSV_FILE), "UTF-8"), 
+				    ';', '\'', 1);
+			String[] nextLine;
             /*
              * String[] columns = new String[] { "id", "username", "password", "email",
              * "name", "surname", "dateOfBirth", "gender", "profilePicture", "biography",
@@ -126,15 +142,16 @@ public class UserDAO {
                 System.out.println(user);
                 users.put(user.getUsername(), user);
             }
-            csvr.close();
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
+		} catch (UnsupportedEncodingException | FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+            
+          
 
 	private String printList(List<?> elems) {
 		StringBuilder sb = new StringBuilder();
@@ -147,7 +164,6 @@ public class UserDAO {
 		}
 		return sb.toString();
 	}
-
 
 	public LocalDate getDate(String s) {
 		return LocalDate.of(Integer.parseInt(s.split("-")[0]), Integer.parseInt(s.split("-")[1]),
@@ -172,28 +188,28 @@ public class UserDAO {
 	public ArrayList<UserSearchData> searchUsers(SearchData data, User loggedUser) {
 		ArrayList<UserSearchData> list = new ArrayList<UserSearchData>();
 		for (User user : findAll()) {
-			if (user.getName().toLowerCase().contains(data.getName().toLowerCase()) && user.getSurname().toLowerCase().contains(data.getLastName().toLowerCase())) {
+			if (user.getName().toLowerCase().contains(data.getName().toLowerCase())
+					&& user.getSurname().toLowerCase().contains(data.getLastName().toLowerCase())) {
 				LocalDate startDate = LocalDate.MIN;
-				if(!data.getStart().isEmpty())
+				if (!data.getStart().isEmpty())
 					startDate = LocalDate.parse(data.getStart());
 				LocalDate endDate = LocalDate.MAX;
-				if(!data.getEnd().isEmpty())
+				if (!data.getEnd().isEmpty())
 					endDate = LocalDate.parse(data.getEnd());
 				if (user.getDateOfBirth().isAfter(startDate) && user.getDateOfBirth().isBefore(endDate)) {
-					UserSearchData newUser = new UserSearchData(user.getId(), user.getName(), user.getSurname(), user.getProfilePicture(), getNumberOfMutualFriends(loggedUser, user));
+					UserSearchData newUser = new UserSearchData(user.getId(), user.getName(), user.getSurname(),
+							user.getProfilePicture(), getNumberOfMutualFriends(loggedUser, user));
 					list.add(newUser);
 				}
 			}
 		}
 		return list;
 	}
-	
+
 	public int getNumberOfMutualFriends(User loggedUser, User otherUser) {
 		System.out.println(loggedUser);
-		return loggedUser.getFriends().stream()
-			    .filter(otherUser.getFriends()::contains)
-			    .collect(Collectors
-			    .toList()).size();
+		return loggedUser.getFriends().stream().filter(otherUser.getFriends()::contains).collect(Collectors.toList())
+				.size();
 	}
 
 }
