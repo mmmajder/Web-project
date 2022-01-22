@@ -9,26 +9,6 @@ $('#photos').click(function() {
     $('.photos').addClass('visible');
 });
 
-$('#posts').click(function() {
-    clear();
-    $(this).addClass('active');
-    $('.posts').addClass('visible');
-    $.ajax({
-        url: "rest/profile/posts",
-        type: "GET",
-        contentType: "application/json",
-        complete: function(data) {
-            var userPosts = data.responseJSON;
-            var cards = $();
-            userPosts.forEach(function(item) {
-                cards = cards.add(createPost(item));
-            });
-            $('#feeds').empty();
-            $('#feeds').append(cards);
-        }
-    });
-});
-
 $('#friends').click(function() {
     clear();
     $(this).addClass('active');
@@ -134,8 +114,29 @@ $(".post-image").click(function() {
     $('body').addClass('stop-scrolling');
 })
 
+$('#posts').click(function() {
+    clear();
+    $(this).addClass('active');
+    $('.posts').addClass('visible');
+    $.ajax({
+        url: "rest/profile/posts",
+        type: "GET",
+        contentType: "application/json",
+        complete: function(data) {
+			$('#feeds').empty();
+            var userPosts = data.responseJSON;
+            userPosts.forEach(function(item) {
+				createPost(item, function(data1) {
+					$('#feeds').append(data1);
+				} )
+            });
+            //$('#feeds').append(cards);
+        }
+    });
+});
 
-function createPost(postData) {
+
+var createPost = function(postData, callback) {
 	$.ajax({
         url: "rest/search/userById",
         type: "POST",
@@ -144,12 +145,12 @@ function createPost(postData) {
         dataType: "json",
         complete: function(data) {
 			user = data.responseJSON;
-			makeCardTemplate(user);
+			callback(makeCardTemplate(user, postData));
         }
     });
 }
 
-function makeCardTemplate(user) {
+function makeCardTemplate(user, postData) {
 	var cardTemplate = [
         '<div class="feed"><div class="head"><div class="user"><div class="profile-picture">',
         '<img src="',
