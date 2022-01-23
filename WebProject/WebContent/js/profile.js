@@ -23,7 +23,7 @@ function setBio(user) {
      $("#date-of-birth").html(user.dateOfBirth);
      $("#profile-bio-text").html(user.biography);
      $(".profile-info .profile-photo img").attr("src", "images/userPictures/" + user.id + "/" + user.profilePicture);
-       
+     $(".profile-name-surname").html(user.name + " " + user.surname)
 }
 
 $(document).ready(function() {
@@ -137,8 +137,12 @@ $(".btn-primary").click(function() {
         dataType: "json",
 		complete: function(ret) {
         	console.log(ret);
+			var data = JSON.parse(ret.responseText);
 			$("#resultEdit").html("Successfully edited profile");
-        }
+        	$("#date-of-birth").html(data.dateOfBirth);
+		    $("#profile-bio-text").html(data.biography);
+		    $(".profile-name-surname").html(data.name + " " + data.surname)
+		}
 	});
 	
 });

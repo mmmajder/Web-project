@@ -59,11 +59,10 @@ public class ProfileService {
 	@Path("editProfile")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public boolean editUser(@Context HttpServletRequest request, EditProfileData data) {
+	public User editUser(@Context HttpServletRequest request, EditProfileData data) {
 		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");
 		User user = (User) request.getSession().getAttribute("logged");
-		dao.editUser(user.getId(), data);
-		return true;
+		return dao.editUser(user.getId(), data);
 	}
 
 }

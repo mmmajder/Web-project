@@ -1,10 +1,7 @@
 package dao.person;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -38,11 +35,21 @@ public class UserDAO {
 
 	public static void main(String[] args) {
 		UserDAO dao = new UserDAO("src");
-		/*dao.add(new User(dao.generateId(), dao.generateId(),"password","email","name","surname",LocalDate.now(),Gender.MALE,"profilePicture","biography",new ArrayList<>(),new ArrayList<>(),new ArrayList<>(),new ArrayList<>(),false,false,false));
-		dao.add(new User(dao.generateId(), dao.generateId(),"password","email","name","surname",LocalDate.now(),Gender.MALE,"profilePicture","biography",new ArrayList<>(),new ArrayList<>(),new ArrayList<>(),new ArrayList<>(),false,false,false));
-		dao.add(new User(dao.generateId(), dao.generateId(),"password","email","name","surname",LocalDate.now(),Gender.MALE,"profilePicture","biography",new ArrayList<>(),new ArrayList<>(),new ArrayList<>(),new ArrayList<>(),false,false,false));
-		*/
-		
+		/*
+		 * dao.add(new User(dao.generateId(),
+		 * dao.generateId(),"password","email","name","surname",LocalDate.now(),Gender.
+		 * MALE,"profilePicture","biography",new ArrayList<>(),new ArrayList<>(),new
+		 * ArrayList<>(),new ArrayList<>(),false,false,false)); dao.add(new
+		 * User(dao.generateId(),
+		 * dao.generateId(),"password","email","name","surname",LocalDate.now(),Gender.
+		 * MALE,"profilePicture","biography",new ArrayList<>(),new ArrayList<>(),new
+		 * ArrayList<>(),new ArrayList<>(),false,false,false)); dao.add(new
+		 * User(dao.generateId(),
+		 * dao.generateId(),"password","email","name","surname",LocalDate.now(),Gender.
+		 * MALE,"profilePicture","biography",new ArrayList<>(),new ArrayList<>(),new
+		 * ArrayList<>(),new ArrayList<>(),false,false,false));
+		 */
+
 		EditProfileData data = new EditProfileData();
 		data.setBiography("biography");
 		data.setDateOfBirth("2020-11-11");
@@ -73,7 +80,7 @@ public class UserDAO {
 		writeFile();
 	}
 
-	public void editUser(String id, EditProfileData data) {
+	public User editUser(String id, EditProfileData data) {
 		User user = findById(id);
 		System.out.println(data.getPrivacy());
 		user.setName(data.getName());
@@ -90,6 +97,7 @@ public class UserDAO {
 			user.setPrivate(false);
 		}
 		writeFile();
+		return user;
 	}
 
 	public User findByUsername(String username) {
@@ -144,7 +152,6 @@ public class UserDAO {
 			writer.writeAll(data);
 			writer.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -176,7 +183,6 @@ public class UserDAO {
 				users.put(user.getUsername(), user);
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -208,7 +214,7 @@ public class UserDAO {
 	private ArrayList<String> getList(String s) {
 		ArrayList<String> elems = new ArrayList<String>();
 		for (String elem : s.split("\\|")) {
-			if(!elem.equals("")) {
+			if (!elem.equals("")) {
 				elems.add(elem);
 			}
 		}
