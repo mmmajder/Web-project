@@ -197,14 +197,13 @@
                     <label for="biography">Biography</label>
                     <input type="text" placeholder="Biography" id="biography" name="biography">
 
-                    <label for="new-profile-photo">New Profile Photo</label><br>
-                    <label for="add-img">
-                        <i class="uil uil-image-plus"></i>
-                    </label>
-                    <input style="visibility: none; display: none;" onchange="getImage(this);" type="file" id="new-profile-photo" name="add-img" accept="image/png, image/jpg">
-
+                    <label for="privacy">Privacy</label><br>
+					<select class="privacy" id="privacy" name="privacy" required>
+                        <option value="private">Private</option>
+                        <option value="public">Public</option>
+                    </select>
                 </div>
-                <br><label for="resultRegister"></label>
+                <br><label for="resultEdit" id="resultEdit"></label>
             </div>
             <div class="buttons">
                 <div class="btn btn-primary">

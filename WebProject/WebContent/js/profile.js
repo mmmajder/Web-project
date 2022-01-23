@@ -15,6 +15,17 @@ $('#friends').click(function() {
     $('.friends').addClass('visible');
 });
 
+function setBio(user) {
+	 $("#profile-user-name").html("@" + user.username);
+     $("#number-of-posts").html(user.posts.length + " Posts");
+     $("#number-of-photos").html(user.posts.length + " Photos"); // TODO
+     $("#number-of-friends").html(user.friends.length + " Friends"); // kada je nula izbaci 1 ?
+     $("#date-of-birth").html(user.dateOfBirth);
+     $("#profile-bio-text").html(user.biography);
+     $(".profile-info .profile-photo img").attr("src", "images/userPictures/" + user.id + "/" + user.profilePicture);
+       
+}
+
 $(document).ready(function() {
     $.ajax({
         url: "rest/profile/",
@@ -23,14 +34,8 @@ $(document).ready(function() {
         dataType: "json",
         complete: function(data) {
             var user = data.responseJSON;
-            $("#profile-user-name").html("@" + user.username);
-            $("#number-of-posts").html(user.posts.length + " Posts");
-            $("#number-of-photos").html(user.posts.length + " Photos"); // TODO
-            $("#number-of-friends").html(user.friends.length + " Friends"); // kada je nula izbaci 1 ?
-            $("#date-of-birth").html(user.dateOfBirth);
-            $("#profile-bio-text").html(user.biography);
-            $(".profile-info .profile-photo img").attr("src", "images/userPictures/" + user.id + "/" + user.profilePicture);
-        }
+			setBio(user);
+            }
     });
 
     $.ajax({
@@ -78,7 +83,7 @@ function logOut() {
     window.location.href = "index.html";
 }
 
-
+// edit profile
 $("#edit-profile").click(function() {
     $(".edit-profile-card").fadeIn();
     $.ajax({
@@ -92,9 +97,52 @@ $("#edit-profile").click(function() {
             $("#surname").val(user.surname);
             $("#dateOfBirth").val(user.dateOfBirth);
             $("#biography").val(user.biography);
+			$("#password").val("");
+			$("#password2").val("");
+			if (user.private) 
+				$("#privacy").val("private");
+			else 
+				$("#privacy").val("public");
+			if (user.gender == "MALE") 
+				$("#gender").val("male");
+			else 
+				$("#gender").val("female");
         }
     });
 })
+
+function getEditData() {
+	return {
+		name: $("#name").val(),
+        surname: $("#surname").val(),
+        dateOfBirth: $("#dateOfBirth").val(),
+        biography: $("#biography").val(),
+		password: $("#password").val(),
+		privacy: $("#privacy").val(),
+		gender: $("#gender").val()
+	};
+}
+
+
+$(".btn-primary").click(function() {
+	if ($("#password").val()!=$("#password2").val()) {
+		$("#resultEdit").html("Invalid input");
+		return;
+	}
+	$.ajax({
+		url: "rest/profile/editProfile",
+		type: "POST",
+		data: JSON.stringify(getEditData()),
+		contentType: "application/json",
+        dataType: "json",
+		complete: function(ret) {
+        	console.log(ret);
+			$("#resultEdit").html("Successfully edited profile");
+        }
+	});
+	
+});
+
 
 $(".cancel-btn").click(function() {
     $(".edit-profile-card").fadeOut();

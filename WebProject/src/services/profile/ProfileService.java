@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
@@ -51,6 +53,17 @@ public class ProfileService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<Post> getUserPosts(@Context HttpServletRequest request) {
 		return ((PostDAO) ctx.getAttribute("postDAO")).getUserPosts((User) request.getSession().getAttribute("logged"));
+	}
+	
+	@POST
+	@Path("editProfile")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public boolean editUser(@Context HttpServletRequest request, EditProfileData data) {
+		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");
+		User user = (User) request.getSession().getAttribute("logged");
+		dao.editUser(user.getId(), data);
+		return true;
 	}
 
 }
