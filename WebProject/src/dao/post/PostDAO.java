@@ -153,9 +153,25 @@ public class PostDAO {
 		}
 		return retPosts;
 	}
+	
+	public ArrayList<Post> getAllUserPosts(User u) {
+		ArrayList<Post> retPosts = new ArrayList<Post>();
+		for (String post : u.getPosts()) {
+			retPosts.add(posts.get(post));
+		}
+		return retPosts;
+	}
+	
+	public void addNewPost(User u, Post p) {
+		u.addPost(p.getId());
+		this.add(p);
+	}
 
 	public ArrayList<Post> getUserFeed(User u) {
-		ArrayList<Post> retPosts = findByAuthorId(u.getFriends());
+		ArrayList<String> people = u.getFriends();
+		people.add(u.getId());
+		ArrayList<Post> retPosts = findByAuthorId(people);
+		System.out.println(retPosts.size());
 		return (ArrayList<Post>) retPosts.stream()
 				  .sorted(Comparator.comparing(Post::getPosted).reversed())
 				  .collect(Collectors.toList());

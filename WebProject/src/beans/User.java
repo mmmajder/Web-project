@@ -176,6 +176,10 @@ public class User {
 	public void setPosts(ArrayList<String> posts) {
 		this.posts = posts;
 	}
+	
+	public void addPost(String p) {
+		this.posts.add(p);
+	}
 
 	public ArrayList<String> getChats() {
 		return chats;

@@ -26,6 +26,7 @@ public class FriendRequestService {
 		if (ctx.getAttribute("friendRequestDAO") == null) {
 			ctx.setAttribute("friendRequestDAO", new FriendRequestDAO(contextPath));
 		}
+		System.out.println("friendDAO");
 		if (ctx.getAttribute("userDAO") == null) {
 			ctx.setAttribute("userDAO", new UserDAO(contextPath));
 		}

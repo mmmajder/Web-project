@@ -26,7 +26,6 @@ public class RegistrationService {
 		}
 	}
 
-	// TODO
 	@POST
 	@Path("/")
 	@Produces(MediaType.APPLICATION_JSON)

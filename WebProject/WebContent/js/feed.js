@@ -1,13 +1,3 @@
-// messages search
-$(document).ready(function() {
-	$("#people-search").on("keyup", function() {
-		var value = $(this).val().toLowerCase();
-		$(".person h5").filter(function() {
-			$(this).parent().parent().toggle($(this).text().toLowerCase().indexOf(value) > -1)
-		});
-	});
-});
-
 // show friend requests
 function createFriendReqCard(cardData) {
 	console.log(cardData);
@@ -57,8 +47,46 @@ $(document).ready(function() {
 				} )
             });
         }
-    });
+	});
 });
+
+$("#post").click(function() {
+	event.preventDefault();
+	addNewPost("false");
+});
+$("#postAsPhoto").click(function() {
+	event.preventDefault();
+	addNewPost("true");
+});
+
+function addNewPost(postAsPicture) {
+	var picLoc = $("#add-img").val().split('\\').pop();
+	var des = $("#post-text").val();
+	if(des != "" || picLoc != "") {
+		$.ajax({
+	        url: "rest/feed/createNewPost",
+	        type: "POST",
+	        contentType: "application/json",
+	        data: {
+	        	pictureLocation: picLoc,
+	        	picture: postAsPicture,
+	        	description: des
+	        },
+	        complete: function(data) {
+	        	var newPost = data.responseJSON;
+	        	console.log(newPost);
+				createNewPost(newPost, function(p) {
+					$('#feeds').prepend(p);
+					console.log("prependovo sam");
+				});
+	        }
+	    });
+	}
+}
+
+$("#remove-pic").click(function() {
+	$("#add-img").val('');
+})
 
 // navbar icons
 function goToMyProfile() {
@@ -109,6 +137,19 @@ var createPost = function(postData, callback) {
         url: "rest/search/userById",
         type: "POST",
         data: { id: postData.author },
+        contentType: "application/json",
+        dataType: "json",
+        complete: function(data) {
+			user = data.responseJSON;
+			callback(makeCardTemplate(user, postData));
+        }
+    });
+}
+
+var createNewPost = function(postData, callback) {
+	$.ajax({
+        url: "rest/login/testlogin",
+        type: "GET",
         contentType: "application/json",
         dataType: "json",
         complete: function(data) {

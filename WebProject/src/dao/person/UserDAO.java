@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
 import beans.User;
@@ -29,7 +28,7 @@ public class UserDAO {
 	static final String CSV_FILE = "users.csv";
 	private Map<String, User> users = new HashMap<>();
 	private String path;
-	
+
 	public static void main(String[] args) {
 		UserDAO dao = new UserDAO("src");
 		dao.writeFile();
@@ -97,9 +96,7 @@ public class UserDAO {
 		try {
 			OutputStream os = new FileOutputStream(this.path + "/resources/" + CSV_FILE);
 			CSVWriter writer = new CSVWriter(new PrintWriter(new OutputStreamWriter(os, "UTF-8")), ';',
-			        CSVWriter.NO_QUOTE_CHARACTER,
-			        CSVWriter.DEFAULT_ESCAPE_CHARACTER,
-			        CSVWriter.DEFAULT_LINE_END);
+					CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.DEFAULT_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END);
 			List<String[]> data = new ArrayList<String[]>();
 			data.add(new String[] { "id", "username", "password", "email", "name", "surname", "dateOfBirth", "gender",
 					"profilePicture", "biography", "friendIDs", "friendRequestIDs", "postIDs", "pictureIDs", "chats",
@@ -122,31 +119,34 @@ public class UserDAO {
 	}
 
 	void readFile() {
-        /*try (CSVReader csvr = new CSVReader(new FileReader(this.path + "/resources/" + CSV_FILE), ';',
-                CSVWriter.NO_QUOTE_CHARACTER, 1)) {*/
+		/*
+		 * try (CSVReader csvr = new CSVReader(new FileReader(this.path + "/resources/"
+		 * + CSV_FILE), ';', CSVWriter.NO_QUOTE_CHARACTER, 1)) {
+		 */
 		try {
-			CSVReader csvr = new CSVReader(new InputStreamReader(new FileInputStream(this.path + "/resources/" + CSV_FILE), "UTF-8"), 
-				    ';', '\'', 1);
+			CSVReader csvr = new CSVReader(
+					new InputStreamReader(new FileInputStream(this.path + "/resources/" + CSV_FILE), "UTF-8"), ';',
+					'\'', 1);
 			String[] nextLine;
-            /*
-             * String[] columns = new String[] { "id", "username", "password", "email",
-             * "name", "surname", "dateOfBirth", "gender", "profilePicture", "biography",
-             * "friendIDs", "friendRequestIDs", "postIDs", "pictureIDs", "chats",
-             * "isPrivate", "isBlocked", "isAdmin" };
-             */
-            while ((nextLine = csvr.readNext()) != null) {
-                LocalDate date = getDate(nextLine[6]);
-                Gender gender = getGender(nextLine[7]);
-                ArrayList<String> friends = getList(nextLine[10]);
-                ArrayList<String> friendRequests = getList(nextLine[11]);
-                ArrayList<String> posts = getList(nextLine[12]);
-                ArrayList<String> chats = getList(nextLine[13]);
-                User user = new User(nextLine[0], nextLine[1], nextLine[2], nextLine[3], nextLine[4], nextLine[5], date,
-                        gender, nextLine[8], nextLine[9], friends, friendRequests, posts, chats,
-                        new Boolean(nextLine[14]), new Boolean(nextLine[15]), new Boolean(nextLine[16]));
-                System.out.println(user);
-                users.put(user.getUsername(), user);
-            }
+			/*
+			 * String[] columns = new String[] { "id", "username", "password", "email",
+			 * "name", "surname", "dateOfBirth", "gender", "profilePicture", "biography",
+			 * "friendIDs", "friendRequestIDs", "postIDs", "pictureIDs", "chats",
+			 * "isPrivate", "isBlocked", "isAdmin" };
+			 */
+			while ((nextLine = csvr.readNext()) != null) {
+				LocalDate date = getDate(nextLine[6]);
+				Gender gender = getGender(nextLine[7]);
+				ArrayList<String> friends = getList(nextLine[10]);
+				ArrayList<String> friendRequests = getList(nextLine[11]);
+				ArrayList<String> posts = getList(nextLine[12]);
+				ArrayList<String> chats = getList(nextLine[13]);
+				User user = new User(nextLine[0], nextLine[1], nextLine[2], nextLine[3], nextLine[4], nextLine[5], date,
+						gender, nextLine[8], nextLine[9], friends, friendRequests, posts, chats,
+						new Boolean(nextLine[14]), new Boolean(nextLine[15]), new Boolean(nextLine[16]));
+				System.out.println(user);
+				users.put(user.getUsername(), user);
+			}
 		} catch (UnsupportedEncodingException | FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -155,8 +155,6 @@ public class UserDAO {
 			e.printStackTrace();
 		}
 	}
-            
-          
 
 	private String printList(List<?> elems) {
 		StringBuilder sb = new StringBuilder();
@@ -185,7 +183,9 @@ public class UserDAO {
 	private ArrayList<String> getList(String s) {
 		ArrayList<String> elems = new ArrayList<String>();
 		for (String elem : s.split("\\|")) {
-			elems.add(elem);
+			if (!elem.equals("")) {
+				elems.add(elem);
+			}
 		}
 		return elems;
 	}
