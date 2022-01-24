@@ -15,8 +15,6 @@ import au.com.bytecode.opencsv.CSVWriter;
 import au.com.bytecode.opencsv.bean.ColumnPositionMappingStrategy;
 import au.com.bytecode.opencsv.bean.CsvToBean;
 import beans.Chat;
-import beans.DM;
-import beans.User;
 
 public class ChatDAO {
 	static final String CSV_FILE = "chats.csv";

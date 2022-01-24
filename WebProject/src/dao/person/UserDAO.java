@@ -248,4 +248,19 @@ public class UserDAO {
 				.size();
 	}
 
+	public ArrayList<User> getFriends(User user) {
+		ArrayList<User> users = new ArrayList<User>();
+		System.out.println("stigao " + user);
+		for (String u : user.getFriends()) {
+			System.out.println(u);
+			try {
+				users.add(findById(u));
+				System.out.println(findById(u));
+			} catch (Exception e) {
+			}
+		}
+		// TODO Auto-generated method stub
+		return users;
+	}
+
 }

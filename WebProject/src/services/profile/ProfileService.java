@@ -10,6 +10,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
@@ -56,7 +57,7 @@ public class ProfileService {
 	}
 	
 	@POST
-	@Path("editProfile")
+	@Path("/editProfile")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public User editUser(@Context HttpServletRequest request, EditProfileData data) {
@@ -64,5 +65,20 @@ public class ProfileService {
 		User user = (User) request.getSession().getAttribute("logged");
 		return dao.editUser(user.getId(), data);
 	}
+	
+	@GET
+	@Path("/friends")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<User> getFriends(@Context HttpServletRequest request) {
+		return ((UserDAO) ctx.getAttribute("userDAO")).getFriends((User) request.getSession().getAttribute("logged"));
+	}
+	
+	@GET
+	@Path("/viewOtherProfile")
+	public String getBooks(@QueryParam("num") int num) {
+		return "/rest/demo/books received QueryParam 'num': " + num;
+	}
+	
+	
 
 }
