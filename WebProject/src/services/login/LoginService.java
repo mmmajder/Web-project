@@ -25,6 +25,7 @@ public class LoginService {
 			String contextPath = ctx.getRealPath("");
 			ctx.setAttribute("userDAO", new UserDAO(contextPath));
 		}
+		System.out.println("userDAO");
 	}
 
 	@POST
@@ -36,11 +37,6 @@ public class LoginService {
 		System.out.println(retUser);
 		if (retUser != null) {
 			request.getSession().setAttribute("logged", retUser);
-			/*
-			 * if (temp.getRemember()!=null) {
-			 * 
-			 * }
-			 */
 		}
 		return retUser;
 	}

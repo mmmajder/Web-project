@@ -465,6 +465,7 @@ main .container .left .profile {
 }
 
 .middle .create-post #post,
+.middle .create-post #postAsPhoto,
 .middle .create-post label {
     margin-top: 0.5rem;
     height: 2rem;

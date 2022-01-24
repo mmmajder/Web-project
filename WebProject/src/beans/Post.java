@@ -42,11 +42,11 @@ public class Post {
 		this.id = id;
 	}
 
-	public String getPicture() {
+	public String getPictureLocation() {
 		return pictureLocation;
 	}
 
-	public void setPicture(String picture) {
+	public void setPictureLocation(String picture) {
 		this.pictureLocation = picture;
 	}
 

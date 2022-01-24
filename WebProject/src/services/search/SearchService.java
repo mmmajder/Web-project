@@ -38,15 +38,13 @@ public class SearchService {
 		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");
 		return dao.searchUsers(data, (User) request.getSession().getAttribute("logged"));
 	}
-	
+
 	@POST
 	@Path("/userById")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public User getUserById(@Context HttpServletRequest request, String id) {
 		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");
-		System.out.println(id.split("=")[1]);
-		System.out.println(dao.findById(id));
 		return dao.findById(id.split("=")[1]);
 	}
 }

@@ -7,15 +7,14 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
-import au.com.bytecode.opencsv.bean.ColumnPositionMappingStrategy;
-import au.com.bytecode.opencsv.bean.CsvToBean;
-import beans.Comment;
 import beans.Post;
 import beans.User;
 
@@ -27,11 +26,6 @@ public class PostDAO {
 	public PostDAO(String contextPath) {
 		this.path = contextPath;
 		readFile();
-	}
-
-	public static void main(String[] args) {
-		PostDAO dao = new PostDAO("src");
-		dao.add(new Post(dao.generateId(), "author", "picture", "description", LocalDateTime.now(), new ArrayList<>(), false, false));
 	}
 
 	public Collection<Post> findAll() {
@@ -59,6 +53,16 @@ public class PostDAO {
 		}
 		return null;
 	}
+	
+	public ArrayList<Post> findByAuthorId(ArrayList<String> ids) {
+		ArrayList<Post> x = new ArrayList<Post>(); 
+		for (Post post : findAll()) {
+			if (ids.contains(post.getAuthor())) {
+				x.add(post);
+			}
+		}
+		return x;
+	}
 
 	void writeFile() {
 		try {
@@ -68,7 +72,7 @@ public class PostDAO {
 			data.add(new String[] { "id", "authorID", "pictureLocation", "description", "posted", "commentIDs", "deleted",
 					"isPicture" });
 			for (Post p : findAll()) {
-				data.add(new String[] { p.getId(), p.getAuthor(), p.getPicture(), p.getDescription(),
+				data.add(new String[] { p.getId(), p.getAuthor(), p.getPictureLocation(), p.getDescription(),
 						p.getPosted().toString().replace('T', ' '), printList(p.getComments()),
 						new Boolean(p.isDeleted()).toString(), new Boolean(p.isPicture()).toString() });
 			}
@@ -84,7 +88,7 @@ public class PostDAO {
 		try (CSVReader csvr = new CSVReader(new FileReader(this.path + "/resources/" + CSV_FILE), ';',
 				CSVWriter.NO_QUOTE_CHARACTER, 1)) {
 			// String[] columns = new String[]
-			// {"id","authorID","picture","description","posted","commentIDs","deleted",
+			// {"id","authorID","pictureLocation","description","posted","commentIDs","deleted",
 			// "isPicture"};
 			String[] nextLine;
 			// csvr.readNext(); // skip first line
@@ -93,7 +97,6 @@ public class PostDAO {
 				Post post = new Post(nextLine[0], nextLine[1], nextLine[2], nextLine[3], posted, getList(nextLine[5]),
 						new Boolean(nextLine[6]), new Boolean(nextLine[7]));
 				posts.put(post.getId(), post);
-				System.out.println(post);
 			}
 			csvr.close();
 		} catch (FileNotFoundException e) {
@@ -130,7 +133,6 @@ public class PostDAO {
 		return LocalDateTime.of(Integer.parseInt(date.split("-")[0]), Integer.parseInt(date.split("-")[1]),
 				Integer.parseInt(date.split("-")[2]), Integer.parseInt(time.split(":")[0]),
 				Integer.parseInt(time.split(":")[1]));
-
 	}
 	
 	public ArrayList<Post> getUserPhotos(User u) {
@@ -138,7 +140,6 @@ public class PostDAO {
 		for (String post : u.getPosts()) {
 			if(posts.get(post).isPicture()) {
 				photos.add(posts.get(post));
-				System.out.println(posts.get(post));
 			}
 		}
 		return photos;
@@ -151,6 +152,29 @@ public class PostDAO {
 				retPosts.add(posts.get(post));
 		}
 		return retPosts;
+	}
+	
+	public ArrayList<Post> getAllUserPosts(User u) {
+		ArrayList<Post> retPosts = new ArrayList<Post>();
+		for (String post : u.getPosts()) {
+			retPosts.add(posts.get(post));
+		}
+		return retPosts;
+	}
+	
+	public void addNewPost(User u, Post p) {
+		u.addPost(p.getId());
+		this.add(p);
+	}
+
+	public ArrayList<Post> getUserFeed(User u) {
+		ArrayList<String> people = u.getFriends();
+		people.add(u.getId());
+		ArrayList<Post> retPosts = findByAuthorId(people);
+		System.out.println(retPosts.size());
+		return (ArrayList<Post>) retPosts.stream()
+				  .sorted(Comparator.comparing(Post::getPosted).reversed())
+				  .collect(Collectors.toList());
 	}
 
 }
