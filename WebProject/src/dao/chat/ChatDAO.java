@@ -21,8 +21,6 @@ import au.com.bytecode.opencsv.CSVWriter;
 import au.com.bytecode.opencsv.bean.ColumnPositionMappingStrategy;
 import au.com.bytecode.opencsv.bean.CsvToBean;
 import beans.Chat;
-import beans.DM;
-import beans.User;
 
 public class ChatDAO {
 	static final String CSV_FILE = "chats.csv";
@@ -119,7 +117,7 @@ public class ChatDAO {
 			List<ChatRepo> tempChats = csv.parse(strategy, csvr);
 
 			for (ChatRepo tempChat : tempChats) {
-				ArrayList<String> chatDms = getDMs(tempChat.getDmIDs());
+				ArrayList<String> chatDms = getList(tempChat.getDmIDs());
 				Chat chat = new Chat(tempChat.getId(), chatDms);
 				chats.put(tempChat.getId(), chat);
 				System.out.println(chat);
@@ -132,12 +130,14 @@ public class ChatDAO {
 
 	}
 
-	private ArrayList<String> getDMs(String s) {
-		ArrayList<String> dms = new ArrayList<String>();
+	private ArrayList<String> getList(String s) {
+		ArrayList<String> elems = new ArrayList<String>();
 		for (String elem : s.split("\\|")) {
-			dms.add(elem);
+			if(!elem.equals("")) {
+				elems.add(elem);
+			}
 		}
-		return dms;
+		return elems;
 	}
 
 }

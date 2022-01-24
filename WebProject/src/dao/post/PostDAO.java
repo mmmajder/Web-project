@@ -122,7 +122,9 @@ public class PostDAO {
 	private ArrayList<String> getList(String s) {
 		ArrayList<String> elems = new ArrayList<String>();
 		for (String elem : s.split("\\|")) {
-			elems.add(elem);
+			if(!elem.equals("")) {
+				elems.add(elem);
+			}
 		}
 		return elems;
 	}
