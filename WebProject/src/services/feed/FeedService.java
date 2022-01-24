@@ -64,7 +64,7 @@ public class FeedService {
 	@Path("/createNewPost")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Post createNewPost(@Context HttpServletRequest request, PostData postData) {
+	public Post createNewPost(PostData postData, @Context HttpServletRequest request) {
 		System.out.println(postData.getDescription());
 		System.out.println(postData.getPictureLocation());
 		System.out.println(postData.getPicture());

@@ -62,16 +62,17 @@ $("#postAsPhoto").click(function() {
 function addNewPost(postAsPicture) {
 	var picLoc = $("#add-img").val().split('\\').pop();
 	var des = $("#post-text").val();
+	var d = JSON.stringify({
+						    	pictureLocation: picLoc,
+						    	picture: postAsPicture,
+						    	description: des
+						    });
 	if(des != "" || picLoc != "") {
 		$.ajax({
 	        url: "rest/feed/createNewPost",
 	        type: "POST",
 	        contentType: "application/json",
-	        data: {
-	        	pictureLocation: picLoc,
-	        	picture: postAsPicture,
-	        	description: des
-	        },
+	        data: d,
 	        complete: function(data) {
 	        	var newPost = data.responseJSON;
 	        	console.log(newPost);
