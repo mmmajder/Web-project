@@ -177,6 +177,8 @@ body {
 
 .profile-photo img {
 	object-fit: cover;
+	width: 15rem;
+    height: 15rem;
 }
 
 img {
