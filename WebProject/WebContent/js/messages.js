@@ -24,51 +24,7 @@ $(document).ready(function() {
 	});
 })
 $(document).ready(function() {
-	function send() {
-		var text = $('#new-message-text').val();
-		if (text=="") {
-			return ;
-		}
-		try {
-			socket.send(text);
-			message(text);
-		} catch(exception) {
-			message(exception);
-		}
-	}
 	
-	function message(msg) {
-		$('.chat-messages').append(makeDmsTemplate(msg, "left", item.otherUser));
-		//$('.chat-messages').append(msg+'</p>')
-	}
-	
-	$('#send-message').click(function() {
-		send();
-	})
-	
-	$('#new-message-text').keypress(function(event){
-		if (event.keyCode=='13') {
-			send();
-		}
-	})
-	var socket
-	try{
-		//var WebSocket = require('ws')
-		socket = new WebSocket("ws://localhost:9000/WebProject/websocket/echoAnnotation");
-		message('<p>connect: Socket Status: '+socket.readyState);
-		socket.onopen = function() {
-			message('<p>connect: Socket status: ' + socket.readyState + ' (open)');
-		}
-		socket.onmessage = function(msg) {
-			message('<p>on: Recieved: ' + msg.data);
-		}
-		socket.onclose = function() {
-			message('<p>onclose: Socket Status: '+socket.readyState+ ' (closed)');
-			socket = null;
-		}
-	} catch(exception) {
-		message('<p>Error: ' + exception);
-	}
 })
 
 
@@ -117,20 +73,47 @@ $(".messages").on('click', 'div.message', function() {
 					$('.chat-messages').append(makeDmsTemplate(item.dm.content, "left", item.otherUser));
 				}
 			})
+			function send() {
+				var text = $('#new-message-text').val();
+				if (text=="") {
+					return ;
+				}
+				try {
+					socket.send(text);
+					message(text, "right", chatDms[0].loggedUser);
+				} catch(exception) {
+					//message(exception);
+				}
+			}
+	
+			function message(msg, position, user) {
+				$('.chat-messages').append(makeDmsTemplate(msg, position, user));
+				//$('.chat-messages').append(msg+'</p>')
+			}
+			
+			$('#send-message').click(function() {
+				send();
+			})
+			
+			$('#new-message-text').keypress(function(event){
+				if (event.keyCode=='13') {
+					send();
+				}
+			})
 			
 			var socket
 			try{
 				//var WebSocket = require('ws')
 				socket = new WebSocket("ws://localhost:9000/WebProject/websocket/echoAnnotation");
-				message('<p>connect: Socket Status: '+socket.readyState);
+				//message('<p>connect: Socket Status: '+socket.readyState);
 				socket.onopen = function() {
-					message('<p>connect: Socket status: ' + socket.readyState + ' (open)');
+					//message('<p>connect: Socket status: ' + socket.readyState + ' (open)');
 				}
 				socket.onmessage = function(msg) {
-					message('<p>on: Recieved: ' + msg.data);
+					message(msg.data, "left", chatDms[0].otherUser);
 				}
 				socket.onclose = function() {
-					message('<p>onclose: Socket Status: '+socket.readyState+ ' (closed)');
+					//message('<p>onclose: Socket Status: '+socket.readyState+ ' (closed)');
 					socket = null;
 				}
 			} catch(exception) {
