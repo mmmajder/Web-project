@@ -4,9 +4,6 @@ function loadUser(user, logged) {
 
 }
 
-
-
-
 function clear() {
 	$('.showing div').removeClass('visible');
 	$('.navbar label').removeClass('active');
