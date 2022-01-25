@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
+import beans.Post;
 import beans.User;
 import enums.Gender;
 import services.profile.EditProfileData;
@@ -261,6 +262,28 @@ public class UserDAO {
 		}
 		// TODO Auto-generated method stub
 		return users;
+	}
+
+	public void deletePost(String userID, String postID) {
+		for (User user : findAll()) {
+			if (user.getId().equals(userID)) {
+				user.deletePost(postID);
+				this.writeFile();
+				System.out.println("Obrisao sam post.");
+			}
+		}
+	}
+
+	public String changeProfilePicture(Post photo) {
+		for (User user : findAll()) {
+			if (user.getId().equals(photo.getAuthor())) {
+				user.setProfilePicture(photo.getPictureLocation());
+				this.writeFile();
+				System.out.println("Promenio sam profilnu.");
+				return "images/userPictures/" + user.getId() + "/" + photo.getPictureLocation();
+			}
+		}
+		return null;
 	}
 
 }

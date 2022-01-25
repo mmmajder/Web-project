@@ -4,9 +4,6 @@ function loadUser(user, logged) {
 
 }
 
-
-
-
 function clear() {
 	$('.showing div').removeClass('visible');
 	$('.navbar label').removeClass('active');
@@ -56,22 +53,32 @@ $(document).ready(function() {
 			var userPhotos = data.responseJSON;
 			if (userPhotos.length == 0)
 				return;
-			var author = userPhotos[0].author;
-			for (let i = userPhotos.length - 1; i >= 0; i -= 3) {
-				var src1 = '"images/userPictures/' + author + '/' + userPhotos[i].picture + '"';
-				$("#c1").append('<img class="post-image" src=' + src1 + '>');
-				if (i - 1 >= 0) {
-					var src2 = '"images/userPictures/' + author + '/' + userPhotos[i - 1].picture + '"';
-					$("#c2").append('<img class="post-image" src=' + src2 + '>');
-				}
-				if (i - 2 >= 0) {
-					var src3 = '"images/userPictures/' + author + '/' + userPhotos[i - 2].picture + '"';
-					$("#c3").append('<img class="post-image" src=' + src3 + '>');
-				}
-			}
+			loadPhotos(userPhotos);
 		}
 	});
 })
+
+function loadPhotos(userPhotos) {
+	var file = '"images/userPictures/' + userPhotos[0].author + '/';
+	$("#c1").empty();
+	$("#c2").empty();
+	$("#c3").empty();
+	for (let i = userPhotos.length - 1; i >= 0; i -= 3) {
+		var src1 = file + userPhotos[i].pictureLocation + '"';
+		var id1 = userPhotos[i].id;
+		$("#c1").append('<img class="post-image" onclick="viewdetails()" id="' + id1 + '" src=' + src1 + '>');
+		if (i - 1 >= 0) {
+			var src2 = file + userPhotos[i - 1].pictureLocation + '"';
+			var id2 = userPhotos[i - 1].id;
+			$("#c2").append('<img class="post-image" onclick="viewdetails()" id="' + id2 + '" src=' + src2 + '>');
+		}
+		if (i - 2 >= 0) {
+			var src3 = file + userPhotos[i - 2].pictureLocation + '"';
+			var id3 = userPhotos[i - 2].id;
+			$("#c3").append('<img class="post-image" onclick="viewdetails()" id="' + id3 + '" src=' + src3 + '>');
+		}
+	}
+}
 
 
 // friendship filter
@@ -133,7 +140,7 @@ function getEditData() {
 }
 
 
-$(".btn-primary").click(function() {
+$("#edit-profile-save-changed").click(function() {
 	var pass1 = $("#password").val();
 	var pass2 = $("#password2").val();
 	if (pass1 != pass2) {
@@ -172,10 +179,59 @@ $("#cancel-photo").click(function() {
 	$('body').removeClass('stop-scrolling');
 })
 
-$(".post-image").click(function() {
+$("#photos").on('click', 'img', function() {
 	$(".photo-details-card").fadeIn();
 	$('body').addClass('stop-scrolling');
 })
+
+function viewdetails() {
+	$(".photo-details-card").fadeIn();
+	$('body').addClass('stop-scrolling');
+	var postID = JSON.stringify({ id: event.target.id });
+	$.ajax({
+        url: "rest/profile/photoDetails",
+        type: "POST",
+        data: postID,
+        contentType: "application/json",
+        complete: function(data) {
+        	var x = data.responseJSON;
+        	$("#post-image img").attr("src", "images/userPictures/" + x.author + "/" + x.pictureLocation);
+        	$("#posted").html(x.posted);
+        	$("#image-description").html(x.description);
+        	$("#post-image img").attr("id", x.id);
+        }
+    });
+}
+
+function deletePost() {
+	var x = $("#post-image img").attr("id");
+	var postID = JSON.stringify({ id: x });
+	$.ajax({
+        url: "rest/profile/delete",
+        type: "DELETE",
+        data: postID,
+        contentType: "application/json",
+        complete: function(data) {
+        	alert("photo deleted.");
+        	loadPhotos(data.responseJSON);
+        }
+    });
+}
+
+function setProfilePhoto() {
+	var x = $("#post-image img").attr("id");
+	var postID = JSON.stringify({ id: x });
+	$.ajax({
+        url: "rest/profile/setProfilePhoto",
+        type: "POST",
+        data: postID,
+        contentType: "application/json",
+        complete: function(data) {
+        	$(".profile-photo img").attr("src", data.responseText);
+        	alert("profile photo changed.");
+        }
+    });
+}
 
 $('#posts').click(function() {
     clear();

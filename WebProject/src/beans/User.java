@@ -24,8 +24,6 @@ public class User {
 	private boolean isBlocked;
 	private boolean isAdmin;
 
-	
-
 	public User(String id, String username, String password, String email, String name, String surname,
 			LocalDate dateOfBirth, Gender gender, String profilePicture, String biography, ArrayList<String> friends,
 			ArrayList<String> friendRequests, ArrayList<String> posts, ArrayList<String> chats, boolean isPrivate,
@@ -61,8 +59,8 @@ public class User {
 		this.gender = gender;
 		this.isAdmin = isAdmin;
 		this.dateOfBirth = dateOfBirth;
-		this.profilePicture = "";
-		this.biography = "No biography";
+		this.profilePicture = "images/default.jpg";
+		this.biography = "Click to Edit Profile to add your biography!";
 		this.friends = new ArrayList<String>();
 		this.friendRequests = new ArrayList<String>();
 		this.posts = new ArrayList<String>();
@@ -151,8 +149,6 @@ public class User {
 		this.biography = biography;
 	}
 
-	
-
 	public ArrayList<String> getFriends() {
 		return friends;
 	}
@@ -179,6 +175,10 @@ public class User {
 	
 	public void addPost(String p) {
 		this.posts.add(p);
+	}
+	
+	public void deletePost(String p) {
+		this.posts.remove(p);
 	}
 
 	public ArrayList<String> getChats() {

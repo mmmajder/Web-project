@@ -81,6 +81,10 @@ public class Post {
 	public void setComments(ArrayList<String> comments) {
 		this.comments = comments;
 	}
+	
+	public void addComment(String cId) {
+		this.comments.add(cId);
+	}
 
 	public boolean isDeleted() {
 		return isDeleted;

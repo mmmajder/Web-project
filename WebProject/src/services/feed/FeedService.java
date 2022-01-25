@@ -33,23 +33,26 @@ public class FeedService {
 		if (ctx.getAttribute("commentDAO") == null) {
 			ctx.setAttribute("commentDAO", new CommentDAO(contextPath));
 		}
-		System.out.println("commentDAO");
 		if (ctx.getAttribute("postDAO") == null) {
 			ctx.setAttribute("postDAO", new PostDAO(contextPath));
 		}
-		System.out.println("postDAO");
+		if (ctx.getAttribute("userDAO") == null) {
+			ctx.setAttribute("userDAO", new UserDAO(contextPath));
+		}
 	}
 
 	@POST
 	@Path("/addComment")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Comment addComment(@Context HttpServletRequest request, String text) {
-		CommentDAO dao = (CommentDAO) ctx.getAttribute("commentDAO");
-		System.out.println("broj kom " + dao.findAll().size());
+		CommentDAO commentDAO = (CommentDAO) ctx.getAttribute("commentDAO");
+		PostDAO postDAO = (PostDAO) ctx.getAttribute("postDAO");
+		System.out.println("broj kom " + commentDAO.findAll().size());
 		User user = (User) request.getSession().getAttribute("logged");
-		Comment comment = new Comment(dao.generateId(), text, user.getId(), LocalDateTime.now(), LocalDateTime.now(),
+		Comment comment = new Comment(commentDAO.generateId(), text, user.getId(), LocalDateTime.now(), LocalDateTime.now(),
 				false);
-		dao.addComment(comment);
+		commentDAO.addComment(comment);
+		//postDAO.addComment(post, comment); TODO
 		return comment;
 	}
 
@@ -65,16 +68,13 @@ public class FeedService {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Post createNewPost(PostData postData, @Context HttpServletRequest request) {
-		System.out.println(postData.getDescription());
-		System.out.println(postData.getPictureLocation());
-		System.out.println(postData.getPicture());
 		PostDAO postDAO = (PostDAO) ctx.getAttribute("postDAO");
+		UserDAO userDAO = (UserDAO) ctx.getAttribute("userDAO");
 		User currentlyLogged = (User) request.getSession().getAttribute("logged");
 		Post newPost = new Post(postDAO.generateId(), currentlyLogged.getId(), postData.getPictureLocation(),
 				postData.getDescription(), LocalDateTime.now(), new ArrayList<String>(), false, postData.getPicture().equals("true"));
 		postDAO.addNewPost(currentlyLogged, newPost);
-		System.out.println("DODAO SAM NOVI POST: " + newPost);
+		userDAO.writeFile();
 		return newPost;
 	}
-
 }

@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.sound.midi.Soundbank;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -66,6 +68,17 @@ public class ProfileService {
 		return dao.editUser(user.getId(), data);
 	}
 	
+	@POST
+	@Path("/photoDetails")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public PhotoDetailsData editUser(@Context HttpServletRequest request, String photoID) {
+		PostDAO postDAO = (PostDAO) ctx.getAttribute("postDAO");
+		// {"id":"PO00006"} je photoID
+		Post post = postDAO.findById(photoID.split(":")[1].replace("\"", "").replace("}", ""));
+		return new PhotoDetailsData(post.getId(), post.getAuthor(), post.getPictureLocation(), post.getDescription(), post.getPosted());
+	}
+	
 	@GET
 	@Path("/friends")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -79,6 +92,30 @@ public class ProfileService {
 		return "/rest/demo/books received QueryParam 'num': " + num;
 	}
 	
+	@DELETE
+	@Path("/delete")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public ArrayList<Post> deletePost(@Context HttpServletRequest request, String postID) {
+		PostDAO postDAO = (PostDAO) ctx.getAttribute("postDAO");
+		String post = postID.split(":")[1].replace("\"", "").replace("}", "");
+		Post p = postDAO.findById(post);
+		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");
+		User user = dao.findById(p.getAuthor());
+		dao.deletePost(postDAO.delete(post), post);
+		return postDAO.getUserPhotos(user);
+	}
 	
-
+	@POST
+	@Path("/setProfilePhoto")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public String setProfilePhoto(@Context HttpServletRequest request, String photoID) {
+		PostDAO postDAO = (PostDAO) ctx.getAttribute("postDAO");
+		// {"id":"PO00006"} je photoID
+		Post post = postDAO.findById(photoID.split(":")[1].replace("\"", "").replace("}", ""));
+		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");
+		return dao.changeProfilePicture(post);
+	}
+	
 }

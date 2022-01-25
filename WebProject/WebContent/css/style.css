@@ -60,7 +60,7 @@ textarea {
     overflow-y: scroll;
     width: 100%;
     padding: 10px;
-    margin: 8px 0;
+    margin: 8px 2px;
     display: inline-block;
     border: 1px solid #ccc;
     box-sizing: border-box;
@@ -168,9 +168,15 @@ body {
 
 .profile-photo {
     width: 15rem;
+    height: 15rem;
     aspect-ratio: 1/1;
     border-radius: 50%;
     overflow: hidden;
+    text-align: center;
+}
+
+.profile-photo img {
+	object-fit: cover;
 }
 
 img {
@@ -461,7 +467,12 @@ main .container .left .profile {
 
 .middle .create-post .inline-part {
     display: flex;
-    margin-top: 0.5rem;
+    float: right;
+}
+
+.middle .inline-part #post,
+.middle .inline-part #postAsPhoto {
+    margin: 0.5rem;
 }
 
 .middle .create-post #post,
@@ -473,11 +484,10 @@ main .container .left .profile {
 
 .middle .create-post textarea {
     justify-self: start;
-    width: 100%;
+    width: 96%;
     padding-left: 1rem;
     background: transparent;
     color: var(--color-dark);
-    margin-right: 1rem;
     margin-left: 1rem;
 }
 
@@ -521,7 +531,6 @@ main .container .left .profile {
     display: flex;
 }
 
-
 .middle .liked-by span {
     width: 1.4rem;
     height: 1.4rem;
@@ -541,10 +550,11 @@ main .container .left .profile {
 }
 
 .middle .add-comment {
-	display: flex;
+    display: flex;
 }
+
 .middle .add-comment span {
-	width: 2.7rem;
+    width: 2.7rem;
     height: 2.7rem;
     display: block;
     border-radius: 50%;
@@ -552,10 +562,13 @@ main .container .left .profile {
     border: 2px solid var(--color-white);
     margin-left: -0.6rem;
 }
+
+
 /*.middle .uil-enter {
 	width: 12.7rem;
     height: 12.7rem;
 }*/
+
 
 /**RIGHT**/
 
@@ -715,6 +728,10 @@ h4 {
     align-content: center;
 }
 
+#resultEdit {
+	text-align: center;
+}
+
 
 /**Photo details**/
 
@@ -725,14 +742,20 @@ h4 {
 
 #image-description {
     float: left;
+    font-size: 11px;
 }
 
 .photo-comments {
     overflow-y: scroll;
     border-bottom: 1px solid #F5F5F7;
     border-top: 1px solid #F5F5F7;
-    height: 250px;
+    height: 200px;
     position: fixed;
+}
+
+.column #posted {
+	font-size: 8px;
+	float: left;
 }
 
 .stop-scrolling {
@@ -856,9 +879,9 @@ h4 {
 /**User account page**/
 
 .middle .profile-info {
-    display: flex;
+    display: inline-flex;
+    width: 100%;
     align-items: center;
-    justify-content: space-between;
     margin-top: 5rem;
     background: var(--color-white);
     border-top-left-radius: var(--card-border-radius);
@@ -868,16 +891,16 @@ h4 {
 
 .middle .profile-info .profile-photo {
     margin-left: 4rem;
-}
-
-.middle .profile-user-settings .btn {
-    float: right;
-    top: 0;
-    right: 0;
+    display: inline-block;
+    float: left;
 }
 
 .middle .user-info {
     padding: var(--card-padding);
+    display: block;
+    float: left;
+    width: auto;
+    overflow: hidden;
 }
 
 .navbar {

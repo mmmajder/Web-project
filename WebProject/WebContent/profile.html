@@ -34,12 +34,12 @@
                         <img src="" alt="images/default.jpg">
                     </div>
                     <div class="user-info">
+                        <button id="edit-profile" class="btn"><i class="uil uil-edit-alt"></i> Edit Profile</button>
                         <div class="profile-user-settings">
-                            <button id="edit-profile" class="btn"><i class="uil uil-edit-alt"></i> Edit Profile</button>
                             <h1 class="profile-user-name" id="profile-user-name"></h1>
                         </div>
                         <div>
-                        	<label class="profile-name-surname"></label>
+                            <label class="profile-name-surname"></label>
                         </div>
                         <div class="profile-stats text-muted">
                             <label id="number-of-posts"></label>
@@ -53,7 +53,6 @@
                             <p id="profile-bio-text"></p>
                         </div>
                     </div>
-
                 </div>
                 <!--Navbar-->
                 <div class="menu">
@@ -83,80 +82,7 @@
                                 <i class="uil uil-search"></i>
                                 <input type="search" placeholder="Search friends" id="friends-search">
                             </div>
-                            <div class="friendships">
-                                <div class="friendship">
-                                    <div class="profile-picture">
-                                        <img src="images/profile-1.jpg">
-                                    </div>
-                                    <div>
-                                        <h3 id="friend-data">Milan Ajder</h3>
-                                    </div>
-                                    <div class="buttons">
-                                        <div class="btn" id="open-chat">
-                                            <i class="uil uil-message"></i>
-                                            <label>Send a Message</label>
-                                        </div>
-                                        <div class="btn" id="remove-friend">
-                                            <i class="uil uil-multiply"></i>
-                                            <label>Remove Friend</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="friendship">
-                                    <div class="profile-picture">
-                                        <img src="images/profile-1.jpg">
-                                    </div>
-                                    <div>
-                                        <h3 id="friend-data">Milan Ajder</h3>
-                                    </div>
-                                    <div class="buttons">
-                                        <div class="btn" id="open-chat">
-                                            <i class="uil uil-message"></i>
-                                            <label>Send a Message</label>
-                                        </div>
-                                        <div class="btn" id="remove-friend">
-                                            <i class="uil uil-multiply"></i>
-                                            <label>Remove Friend</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="friendship">
-                                    <div class="profile-picture">
-                                        <img src="images/profile-1.jpg">
-                                    </div>
-                                    <div>
-                                        <h3 id="friend-data">Pera Peric</h3>
-                                    </div>
-                                    <div class="buttons">
-                                        <div class="btn" id="open-chat">
-                                            <i class="uil uil-message"></i>
-                                            <label>Send a Message</label>
-                                        </div>
-                                        <div class="btn" id="remove-friend">
-                                            <i class="uil uil-multiply"></i>
-                                            <label>Remove Friend</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="friendship">
-                                    <div class="profile-picture">
-                                        <img src="images/profile-1.jpg">
-                                    </div>
-                                    <div>
-                                        <h3 id="friend-data">Mika Mikic</h3>
-                                    </div>
-                                    <div class="buttons">
-                                        <div class="btn" id="open-chat">
-                                            <i class="uil uil-message"></i>
-                                            <label>Send a Message</label>
-                                        </div>
-                                        <div class="btn" id="remove-friend">
-                                            <i class="uil uil-multiply"></i>
-                                            <label>Remove Friend</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <div class="friendships"></div>
                         </div>
                     </div>
                 </div>
@@ -201,7 +127,7 @@
                     <input type="text" placeholder="Biography" id="biography" name="biography">
 
                     <label for="privacy">Privacy</label><br>
-					<select class="privacy" id="privacy" name="privacy" required>
+                    <select class="privacy" id="privacy" name="privacy" required>
                         <option value="private">Private</option>
                         <option value="public">Public</option>
                     </select>
@@ -209,7 +135,7 @@
                 <br><label for="resultEdit" id="resultEdit"></label>
             </div>
             <div class="buttons">
-                <div class="btn btn-primary">
+                <div class="btn btn-primary" id="edit-profile-save-changed">
                     <span>Save changes</span>
                 </div>
                 <div class="btn cancel-btn">
@@ -230,7 +156,8 @@
                     </div>
                 </div>
                 <div class="column">
-                    <label id="image-description">Ovo je opis slike</label><br>
+                    <label id="image-description"></label><br>
+                    <label id="posted" class="text-muted"></label><br>
                     <div class="photo-comments">
                         <div class="comments-content">
                             <div class="message-left">
@@ -291,10 +218,10 @@
                     </div>
 
                     <div class="buttons">
-                        <div class="btn btn-primary">
+                        <div class="btn btn-primary" id="set-profile-photo" onclick="setProfilePhoto()">
                             <span>Set as profile photo</span>
                         </div>
-                        <div class="btn cancel-btn">
+                        <div class="btn cancel-btn" id="delete-photo" onclick="deletePost()">
                             <span>Delete photo</span>
                         </div>
                     </div>

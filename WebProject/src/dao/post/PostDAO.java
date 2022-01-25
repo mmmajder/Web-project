@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
+import beans.Comment;
 import beans.Post;
 import beans.User;
 
@@ -36,10 +37,11 @@ public class PostDAO {
 		posts.put(post.getId(), post);
 		writeFile();
 	}
+
 	// PO00001
 	public String generateId() {
 		StringBuilder sb = new StringBuilder();
-		String number = String.format("%05d", findAll().size()+1);
+		String number = String.format("%05d", findAll().size() + 1);
 		sb.append("PO");
 		sb.append(number);
 		return sb.toString();
@@ -53,24 +55,24 @@ public class PostDAO {
 		}
 		return null;
 	}
-	
+
 	public ArrayList<Post> findByAuthorId(ArrayList<String> ids) {
-		ArrayList<Post> x = new ArrayList<Post>(); 
+		ArrayList<Post> x = new ArrayList<Post>();
 		for (Post post : findAll()) {
-			if (ids.contains(post.getAuthor())) {
+			if (ids.contains(post.getAuthor()) && !post.isPicture()) {
 				x.add(post);
 			}
 		}
 		return x;
 	}
 
-	void writeFile() {
+	public void writeFile() {
 		try {
 			CSVWriter writer = new CSVWriter(new FileWriter(this.path + "/resources/" + CSV_FILE), ';',
 					CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.DEFAULT_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END);
 			List<String[]> data = new ArrayList<String[]>();
-			data.add(new String[] { "id", "authorID", "pictureLocation", "description", "posted", "commentIDs", "deleted",
-					"isPicture" });
+			data.add(new String[] { "id", "authorID", "pictureLocation", "description", "posted", "commentIDs",
+					"deleted", "isPicture" });
 			for (Post p : findAll()) {
 				data.add(new String[] { p.getId(), p.getAuthor(), p.getPictureLocation(), p.getDescription(),
 						p.getPosted().toString().replace('T', ' '), printList(p.getComments()),
@@ -122,7 +124,7 @@ public class PostDAO {
 	private ArrayList<String> getList(String s) {
 		ArrayList<String> elems = new ArrayList<String>();
 		for (String elem : s.split("\\|")) {
-			if(!elem.equals("")) {
+			if (!elem.equals("")) {
 				elems.add(elem);
 			}
 		}
@@ -136,47 +138,68 @@ public class PostDAO {
 				Integer.parseInt(date.split("-")[2]), Integer.parseInt(time.split(":")[0]),
 				Integer.parseInt(time.split(":")[1]));
 	}
-	
+
 	public ArrayList<Post> getUserPhotos(User u) {
 		ArrayList<Post> photos = new ArrayList<Post>();
 		for (String post : u.getPosts()) {
-			if(posts.get(post).isPicture()) {
-				photos.add(posts.get(post));
+			if (posts.get(post).isPicture()) {
+				Post p = posts.get(post);
+				if (!p.isDeleted())
+					photos.add(posts.get(post));
 			}
 		}
 		return photos;
 	}
-	
+
 	public ArrayList<Post> getUserPosts(User u) {
 		ArrayList<Post> retPosts = new ArrayList<Post>();
 		for (String post : u.getPosts()) {
-			if(!posts.get(post).isPicture())
+			if (!posts.get(post).isPicture()) {
+				Post p = posts.get(post);
+				if (!p.isDeleted())
+					retPosts.add(posts.get(post));
+			}
+		}
+		return retPosts;
+	}
+
+	public ArrayList<Post> getAllUserPosts(User u) {
+		ArrayList<Post> retPosts = new ArrayList<Post>();
+		for (String post : u.getPosts()) {
+			Post p = posts.get(post);
+			if (!p.isDeleted())
 				retPosts.add(posts.get(post));
 		}
 		return retPosts;
 	}
-	
-	public ArrayList<Post> getAllUserPosts(User u) {
-		ArrayList<Post> retPosts = new ArrayList<Post>();
-		for (String post : u.getPosts()) {
-			retPosts.add(posts.get(post));
-		}
-		return retPosts;
-	}
-	
+
 	public void addNewPost(User u, Post p) {
 		u.addPost(p.getId());
 		this.add(p);
+	}
+
+	public void addComment(Post p, Comment c) {
+		p.addComment(c.getId());
+		this.writeFile();
 	}
 
 	public ArrayList<Post> getUserFeed(User u) {
 		ArrayList<String> people = u.getFriends();
 		people.add(u.getId());
 		ArrayList<Post> retPosts = findByAuthorId(people);
-		System.out.println(retPosts.size());
-		return (ArrayList<Post>) retPosts.stream()
-				  .sorted(Comparator.comparing(Post::getPosted).reversed())
-				  .collect(Collectors.toList());
+		return (ArrayList<Post>) retPosts.stream().sorted(Comparator.comparing(Post::getPosted).reversed())
+				.collect(Collectors.toList());
+	}
+
+	public String delete(String postID) {
+		for (Post post : findAll()) {
+			if (post.getId().equals(postID)) {
+				post.setDeleted(true);
+				this.writeFile();
+				return post.getAuthor();
+			}
+		}
+		return null;
 	}
 
 }
