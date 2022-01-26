@@ -5,12 +5,16 @@ public class UserSearchData {
 	private String name;
 	private String surname;
 	private String profilePicture;
+	private String dateOfBirth;
 	private int numberOfMutualFriends;
 
-	@Override
-	public String toString() {
-		return "UserSearchData [id=" + id + ", name=" + name + ", surname=" + surname + ", profilePicture="
-				+ profilePicture + ", numberOfMutualFriends=" + numberOfMutualFriends + "]";
+	public UserSearchData(String id, String name, String surname, String profilePicture, String dateOfBirth) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.surname = surname;
+		this.profilePicture = profilePicture;
+		this.dateOfBirth = dateOfBirth;
 	}
 
 	public UserSearchData(String id, String name, String surname, String profilePicture, int numberOfMutualFriends) {
@@ -52,6 +56,14 @@ public class UserSearchData {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public String getDateOfBirth() {
+		return dateOfBirth;
+	}
+
+	public void setDateOfBirth(String dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
 	}
 
 	public int getNumberOfMutualFriends() {

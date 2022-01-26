@@ -34,7 +34,6 @@ public class SearchService {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public ArrayList<UserSearchData> searchUsers(@Context HttpServletRequest request, SearchData data) {
-		System.out.println(data.toString());
 		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");
 		return dao.searchUsers(data, (User) request.getSession().getAttribute("logged"));
 	}

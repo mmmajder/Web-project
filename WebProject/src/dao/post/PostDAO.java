@@ -174,7 +174,6 @@ public class PostDAO {
 	}
 
 	public void addNewPost(User u, Post p) {
-		u.addPost(p.getId());
 		this.add(p);
 	}
 

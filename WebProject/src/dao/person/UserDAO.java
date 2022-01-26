@@ -8,6 +8,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -235,7 +236,7 @@ public class UserDAO {
 					endDate = LocalDate.parse(data.getEnd());
 				if (user.getDateOfBirth().isAfter(startDate) && user.getDateOfBirth().isBefore(endDate)) {
 					UserSearchData newUser = new UserSearchData(user.getId(), user.getName(), user.getSurname(),
-							user.getProfilePicture(), getNumberOfMutualFriends(loggedUser, user));
+							user.getProfilePicture(), user.getDateOfBirth().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")).toString());
 					list.add(newUser);
 				}
 			}
@@ -284,6 +285,16 @@ public class UserDAO {
 			}
 		}
 		return null;
+	}
+
+	public void addNewPost(User currentlyLogged, Post newPost) {
+		for (User user : findAll()) {
+			if (user.getId().equals(currentlyLogged.getId())) {
+				user.addPost(newPost.getId());
+				this.writeFile();
+				System.out.println("Dodao sam post.");
+			}
+		}		
 	}
 
 }

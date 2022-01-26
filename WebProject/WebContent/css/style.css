@@ -184,6 +184,7 @@ body {
 img {
     display: block;
     width: 100%;
+    object-fit: cover;
 }
 
 .logo {
@@ -601,6 +602,32 @@ main .container .right {
     gap: 1rem;
     margin-bottom: 1rem;
     align-items: start;
+}
+
+.middle .date-of-birth-search,
+.middle .sorting {
+	display: inline-flex;
+	text-align: center;
+	width: 100%;
+}
+
+.middle .sorting button {
+    padding: var(--btn-padding);
+    display: inline-flex;
+    float: right;
+    font-weight: 500;
+    cursor: pointer;
+    font-size: 1rem;
+    text-align: center;
+}
+
+.middle .sorting button:hover {
+	background: var(--color-primary);
+    color: white;
+}
+
+.middle .sorting i {
+	font-size: 1rem;
 }
 
 .right .message .profile-picture {

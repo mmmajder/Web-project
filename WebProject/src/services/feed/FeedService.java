@@ -74,7 +74,7 @@ public class FeedService {
 		Post newPost = new Post(postDAO.generateId(), currentlyLogged.getId(), postData.getPictureLocation(),
 				postData.getDescription(), LocalDateTime.now(), new ArrayList<String>(), false, postData.getPicture().equals("true"));
 		postDAO.addNewPost(currentlyLogged, newPost);
-		userDAO.writeFile();
+		userDAO.addNewPost(currentlyLogged, newPost);
 		return newPost;
 	}
 }

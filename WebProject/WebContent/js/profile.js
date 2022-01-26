@@ -268,22 +268,27 @@ var createPost = function(postData, callback) {
 }
 
 function makeCardTemplate(user, postData) {
+	var postPic = '';
+	if(postData.picture) {
+		postPic = '<div class="post-photo"><img src="images/userPictures/' + postData.author + '/' + postData.pictureLocation + '"></div>';
+	}
 	var cardTemplate = [
-		'<div class="feed"><div class="head"><div class="user"><div class="profile-picture">',
-		'<img src="',
-		'images/userPictures/' + user.id + '/' + user.profilePicture,
-		'"></div><div class="ingo">',
-		'<h3>' + user.username + '</h3>',
-		'<small>' + postData.posted + '</small>',
-		'</div></div><span class="edit"><i class="uil uil-ellipsis-h"></i></span></div><br><div class="caption">',
-		'<p>' + postData.description + '</p></div>',
-		'<div class="comments text-muted" id="view-comments">',
-		'<p>View all ' + postData.comments.length + ' comments</p>',
-		'</div><div class="add-comment">',
-		'<input type="text" placeholder="Type comment..." id="comment-text"><span><i id="add-comment" class="uil uil-enter"></i></span>',
-		'</div>'
-	];
-	return $(cardTemplate.join(''));
+        '<div class="feed"><div class="head"><div class="user"><div class="profile-picture">',
+        '<img src="',
+        'images/userPictures/' + user.id + '/' + user.profilePicture,
+        '"></div><div class="ingo">',
+        '<h3>' + user.name + ' ' + user.surname + '</h3>',
+        '<small>' + postData.posted + '</small>',
+        '</div></div><span class="edit"><i class="uil uil-ellipsis-h"></i></span></div><br><div class="caption">',
+        '<p>' + postData.description + '</p></div>',
+        postPic,
+        '<div class="comments text-muted" id="view-comments">',
+        '<p>View all comments</p>',
+        '</div><div class="add-comment">',
+        '<input type="text" placeholder="Type comment..." id="comment-text"><span><i id="add-comment" class="uil uil-enter"></i></span>',
+        '</div>'
+    ];
+    return $(cardTemplate.join(''));
 }
 
 // get friends
