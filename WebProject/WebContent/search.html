@@ -72,22 +72,32 @@
                         <i class="uil uil-search"></i>
                         <input type="search" placeholder="Search people by last name" id="people-search-last-name">
                     </div>
-                    <h5>Choose birth date range:</h5>
+                    
                     <div class="date-of-birth-search">
-                        <p> from </p>
-                        <input type="date" id="start-date">
-                        <p> to </p>
-                        <input type="date" id="end-date">
-                        <button id="search-btn" class="btn btn-primary">Search</button>
-                    </div>
-                    <h5>Sort by:</h5><br>
-                    <div class="sorting">
-                        <button id="sort-name-asc"><i class="uil uil-arrow-up"></i> Name</button>
-                        <button id="sort-name-dsc"><i class="uil uil-arrow-down"></i> Name</button>
-                        <button id="sort-surname-asc"><i class="uil uil-arrow-up"></i> Surname</button>
-                        <button id="sort-surname-dsc"><i class="uil uil-arrow-down"></i> Surname</button>
-                        <button id="sort-birth-asc"><i class="uil uil-arrow-up"></i> Birthdate</button>
-                        <button id="sort-birth-dsc"><i class="uil uil-arrow-down"></i> Birthdate</button>
+	                    <table>
+		                    <tr>
+			                    <td colspan="2"><h5>Choose birth date range:</h5></td>
+			                    <td colspan="2"><h5>Sort by:</h5></td>
+		                    </tr>
+		                    <tr>
+		                    	<td><h5>Start date:</h5></td> 
+		                        <td><input type="date" id="start-date"></td>
+		                        <td><button id="sort-name-asc" class="btn"><i class="uil uil-arrow-up"></i> Name</button></td>
+		                        <td><button id="sort-surname-asc" class="btn"><i class="uil uil-arrow-up"></i> Surname</button></td>
+		                        <td><button id="sort-birth-asc" class="btn"><i class="uil uil-arrow-up"></i> Birthdate</button></td>
+		                    </tr>
+		                    <tr>
+		                        <td><h5>End date:</h5></td>
+		                        <td><input type="date" id="end-date"></td>
+		                        <td><button id="sort-name-dsc" class="btn"><i class="uil uil-arrow-down"></i> Name</button></td>
+		                        <td><button id="sort-surname-dsc" class="btn"><i class="uil uil-arrow-down"></i> Surname</button></td>
+		                        <td><button id="sort-birth-dsc" class="btn"><i class="uil uil-arrow-down"></i> Birthdate</button></td>
+		                    </tr>
+		                    <tr>
+		                        <td colspan="2"><button id="search-btn" class="btn btn-primary">Search</button>
+		                        <button id="clear-btn" class="btn">Clear</button></td>
+		                    </tr>
+	                    </table>
                     </div>
                     <div id="users">
                     </div>

@@ -24,10 +24,83 @@ $("#search-btn").click(function search() {
     });
 })
 
+function compare(an, bn) {
+	if(an > bn) {
+		return 1;
+	}
+	if(an < bn) {
+		return -1;
+	}
+	return 0;
+}
+
+function clear() {
+	$("#sort-name-asc").removeClass('active-sort');
+	$("#sort-name-dsc").removeClass('active-sort');
+	$("#sort-surname-asc").removeClass('active-sort');
+	$("#sort-surname-dsc").removeClass('active-sort');
+	$("#sort-birth-asc").removeClass('active-sort');
+	$("#sort-birth-dsc").removeClass('active-sort');
+}
+
 $("#sort-name-asc").click(function() {
-	$('#users').find('.person').sort(function (a, b) {
-		   return $(a).attr('data-name') - $(b).attr('data-name');
-		}).appendTo('#users');
+	var items = $('div .person');
+	items.sort(function(a, b){
+		return compare($(a).attr('data-name'), $(b).attr('data-name'))
+	});
+	items.appendTo('#users');
+	clear();
+	$("#sort-name-asc").addClass('active-sort');
+})
+
+$("#sort-name-dsc").click(function() {
+	var items = $('div .person');
+	items.sort(function(a, b){
+		return compare($(b).attr('data-name'), $(a).attr('data-name'))
+	});
+	items.appendTo('#users');
+	clear();
+	$("#sort-name-dsc").addClass('active-sort');
+})
+
+$("#sort-surname-asc").click(function() {
+	var items = $('div .person');
+	items.sort(function(a, b){
+		return compare($(a).attr('data-surname'), $(b).attr('data-surname'))
+	});
+	items.appendTo('#users');
+	clear();
+	$("#sort-surname-asc").addClass('active-sort');
+})
+
+$("#sort-surname-dsc").click(function() {
+	var items = $('div .person');
+	items.sort(function(a, b){
+		return compare($(b).attr('data-surname'), $(a).attr('data-surname'))
+	});
+	items.appendTo('#users');
+	clear();
+	$("#sort-surname-dsc").addClass('active-sort');
+})
+
+$("#sort-birth-asc").click(function() {
+	var items = $('div .person');
+	items.sort(function(a, b){
+		return compare($(a).attr('data-date'), $(b).attr('data-date'))
+	});
+	items.appendTo('#users');
+	clear();
+	$("#sort-birth-asc").addClass('active-sort');	
+})
+
+$("#sort-birth-dsc").click(function() {
+	var items = $('div .person');
+	items.sort(function(a, b){
+		return compare($(b).attr('data-date'), $(b=a).attr('data-date'))
+	});
+	items.appendTo('#users');
+	clear();
+	$("#sort-birth-dsc").addClass('active-sort');
 })
 
 // navbar icons
@@ -51,7 +124,7 @@ function fillData(x) {
 	$("#users").empty();
 	for(var user of x) {
 		$("#users").append('<div class="person" data-name="$' + user.name + '" data-surname="$' + user.surname + '" data-date="' + 
-				user.dateOfBirth + '"<div class="profile-picture"><img src="images/userPictures/' + user.id + '/' + user.profilePicture + '">'
+				user.dateOfBirth + '"><div class="profile-picture"><img src="images/userPictures/' + user.id + '/' + user.profilePicture + '">'
 				+ '</div><div class="person-body"><h5>' + user.name + ' ' + user.surname + '</h5><p class="text-muted">' + user.dateOfBirth + '</p></div></div>');
 	}
 }
