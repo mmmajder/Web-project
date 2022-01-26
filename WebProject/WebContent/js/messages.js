@@ -54,23 +54,23 @@ function makeChatTemplate(chat) {
 
 //enter chat
 $(".messages").on('click', 'div.message', function() {
-	var id = $(this).attr('id');
+	var chatId = $(this).attr('id');
 	$.ajax({
 		url: "rest/messages/chat",
 		type: "POST",
-		data: id,
+		data: chatId,
 		dataType: "json",
 		contentType: "application/json",
 		complete: function(data) {
 			$('.chat-messages').empty();
 			var chatDms = data.responseJSON;
-			$("#profile-picture-top").attr("src","images/userPictures/" + chatDms[0].otherUser.id + "/" + chatDms[0].otherUser.profilePicture);
-			$("#profile-name-top").html(chatDms[0].otherUser.name + " " + chatDms[0].otherUser.surname);
-			chatDms.forEach(function(item) {
-				if (item.dm.sender == item.loggedUser.id) {
-					$('.chat-messages').append(makeDmsTemplate(item.dm.content, "right", item.loggedUser));
+			$("#profile-picture-top").attr("src","images/userPictures/" + chatDms.otherUser.id + "/" + chatDms.otherUser.profilePicture);
+			$("#profile-name-top").html(chatDms.otherUser.name + " " + chatDms.otherUser.surname);
+			chatDms.dms.forEach(function(item) {
+				if (item.sender == chatDms.loggedUser.id) {
+					$('.chat-messages').append(makeDmsTemplate(item.content, "right", chatDms.loggedUser));
 				} else {
-					$('.chat-messages').append(makeDmsTemplate(item.dm.content, "left", item.otherUser));
+					$('.chat-messages').append(makeDmsTemplate(item.content, "left", chatDms.otherUser));
 				}
 			})
 			function send() {
@@ -80,44 +80,42 @@ $(".messages").on('click', 'div.message', function() {
 				}
 				try {
 					socket.send(text);
-					message(text, "right", chatDms[0].loggedUser);
+				//	chatDms.dms.append()
+				//	save(text, chatDms.chat, chatDms.loggedUser)
+					message(text, "right", chatDms.loggedUser);
 				} catch(exception) {
-					//message(exception);
 				}
 			}
 	
 			function message(msg, position, user) {
 				$('.chat-messages').append(makeDmsTemplate(msg, position, user));
-				//$('.chat-messages').append(msg+'</p>')
 			}
 			
 			$('#send-message').click(function() {
 				send();
+				$('#new-message-text').val("");
 			})
 			
 			$('#new-message-text').keypress(function(event){
 				if (event.keyCode=='13') {
 					send();
+					$('#new-message-text').val("");
 				}
 			})
 			
 			var socket
 			try{
-				//var WebSocket = require('ws')
 				socket = new WebSocket("ws://localhost:9000/WebProject/websocket/echoAnnotation");
-				//message('<p>connect: Socket Status: '+socket.readyState);
 				socket.onopen = function() {
 					//message('<p>connect: Socket status: ' + socket.readyState + ' (open)');
 				}
 				socket.onmessage = function(msg) {
-					message(msg.data, "left", chatDms[0].otherUser);
+					message(msg.data, "left", chatDms.otherUser);
 				}
 				socket.onclose = function() {
-					//message('<p>onclose: Socket Status: '+socket.readyState+ ' (closed)');
 					socket = null;
 				}
 			} catch(exception) {
-				message('<p>Error: ' + exception);
 			}
 			
 		}
@@ -167,6 +165,18 @@ function makeDmsTemplate(content, position, sender) {
 	return $(cardTemplate.join(''));
 }
 
+//save message in file
+function save(content, chat, sender) {
+	data
+	$.ajax({
+		url: "rest/messages/saveMessage",
+		type: "POST",
+		data: chatId,
+		dataType: "json",
+		contentType: "application/json",
+		complete: function(data) {
+		}
+});
 
 
 function goToHomepage() {

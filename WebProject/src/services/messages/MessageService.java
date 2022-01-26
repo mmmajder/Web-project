@@ -52,7 +52,7 @@ public class MessageService {
 	@Path("/chat")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public ArrayList<DmData> getChatContent(@Context HttpServletRequest request, String id) {
+	public DmData getChatContent(@Context HttpServletRequest request, String id) {
 		User user = (User) request.getSession().getAttribute("logged");
 		ChatDAO chatDao = (ChatDAO) ctx.getAttribute("chatDAO");
 		DmDAO dmDAO = (DmDAO) ctx.getAttribute("dmDAO");

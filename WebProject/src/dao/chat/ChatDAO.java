@@ -81,18 +81,18 @@ public class ChatDAO {
 		return null;
 	}
 	
-	public ArrayList<DmData> getDmData(String chatId, DmDAO dmDao, UserDAO userDAO, User user) {
+	public DmData getDmData(String chatId, DmDAO dmDao, UserDAO userDAO, User user) {
 		Chat chat = findById(chatId);
 		System.out.println(chat);
-		ArrayList<DmData> list = new ArrayList<DmData>();
+		ArrayList<DM> dms = new ArrayList<DM>();
 		User otherParticipant = userDAO.findById(getOtherParticipant(user, chat));
 		for (String dmId : chat.getDms()) {
 			System.out.println(dmId);
 			DM dm = dmDao.findById(dmId);
 			System.out.println(dm);
-			list.add(new DmData(dm, user, otherParticipant));
+			dms.add(dmDao.findById(dmId));
 		}
-		return list;
+		return new DmData(chat, dms, user, otherParticipant);
 	}
 
 	public ArrayList<ChatHeadData> getChatsForUser(User user, UserDAO userDAO) {
