@@ -53,7 +53,7 @@ public class DmDAO {
 		return null;
 	}
 
-	void addDM(DM dm) {
+	public void addDM(DM dm) {
 		dms.put(dm.getId(), dm);
 		writeFile();
 	}
@@ -69,6 +69,7 @@ public class DmDAO {
 
 	void writeFile() {
 		try {
+			System.out.println("stigao");
 			OutputStream os = new FileOutputStream(this.path + "/resources/" + CSV_FILE);
 			CSVWriter writer = new CSVWriter(new PrintWriter(new OutputStreamWriter(os, "UTF-8")), ';',
 					CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.DEFAULT_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END);
@@ -113,7 +114,7 @@ public class DmDAO {
 		String time = s.split(" ")[1];
 		return LocalDateTime.of(Integer.parseInt(date.split("-")[0]), Integer.parseInt(date.split("-")[1]),
 				Integer.parseInt(date.split("-")[2]), Integer.parseInt(time.split(":")[0]),
-				Integer.parseInt(time.split(":")[1]), (int) Double.parseDouble(time.split(":")[2]));
+				Integer.parseInt(time.split(":")[1]));
 
 	}
 }

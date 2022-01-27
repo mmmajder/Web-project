@@ -1,5 +1,6 @@
 package services.messages;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import javax.annotation.PostConstruct;
@@ -13,6 +14,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
+import beans.Chat;
+import beans.DM;
 import beans.User;
 import dao.chat.ChatDAO;
 import dao.dm.DmDAO;
@@ -32,7 +35,7 @@ public class MessageService {
 		if (ctx.getAttribute("userDAO") == null) {
 			ctx.setAttribute("userDAO", new UserDAO(contextPath));
 		}
-		
+
 		if (ctx.getAttribute("dmDAO") == null) {
 			ctx.setAttribute("dmDAO", new DmDAO(contextPath));
 		}
@@ -47,7 +50,7 @@ public class MessageService {
 		UserDAO userDAO = (UserDAO) ctx.getAttribute("userDAO");
 		return chatDao.getChatsForUser(user, userDAO);
 	}
-	
+
 	@POST
 	@Path("/chat")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -60,6 +63,32 @@ public class MessageService {
 		System.out.println("-------------------");
 		System.out.println("chatId " + id);
 		return chatDao.getDmData(id, dmDAO, userDAO, user);
+	}
+
+	@POST
+	@Path("/saveMessage")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public boolean addDm(@Context HttpServletRequest request, DmAddition data) {
+		try {
+			DmDAO dmDAO = (DmDAO) ctx.getAttribute("dmDAO");
+			DM dm = new DM(dmDAO.generateId(), data.getContent(), LocalDateTime.now(), data.getSender().getId(),
+					data.getReciever().getId());
+			System.out.println(dm);
+			dmDAO.addDM(dm);
+			ChatDAO chatDao = (ChatDAO) ctx.getAttribute("chatDAO");
+			chatDao.addDM(dm, data.getChat());
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+	
+	@POST
+	@Path("/seen")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void getChat(@Context HttpServletRequest request, Chat chat) {
+		ChatDAO chatDao = (ChatDAO) ctx.getAttribute("chatDAO");
+		chatDao.seenMessage(chat);
 	}
 
 }

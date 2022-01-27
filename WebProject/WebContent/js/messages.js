@@ -6,10 +6,60 @@ $(document).ready(function() {
 		});
 	});
 });
+var socket
+$(document).ready(function() {
+	try{
+		socket = new WebSocket("ws://localhost:9000/WebProject/websocket/echoAnnotation");
+		socket.onopen = function() {
+			console.log("otvoren soket")
+		}
+		socket.onmessage = function(msg) {
+			receiveMessage(msg.data, "left");
+		}
+		socket.onclose = function() {
+			console.log("zatvoren soket")
+			socket = null;
+		}
+	} catch(exception) {
+		console.log(exception);
+	}
+})
+
+function receiveMessage(msg, position) {
+	var sender = msg.split("recieverId")[0].split("senderId")[1];
+	var receiver = msg.split("recieverId")[1];
+	var realMessage = msg.split("senderId")[0];
+	if (selectedChat) {
+		if (selectedChat.loggedUser.id==receiver && selectedChat.otherUser.id==sender) {
+			seenMessage();
+			$('.chat-messages').append(makeDmsTemplate(realMessage, position, selectedChat.otherUser));
+		}
+		else {
+			initChats();
+		}
+	} else {
+		initChats();
+	}
+	
+}
+
+function seenMessage(){
+	var s = JSON.stringify(selectedChat.chat);
+	$.ajax({
+		url: "rest/messages/seen",
+		type: "POST",
+		data: s,
+		contentType: "application/json",
+		dataType: "json",
+		complete: function() {
+			$('.chat-messages').append("<p>Seen</p>");
+		}
+	})
+}
 
 
 // chats
-$(document).ready(function() {
+function initChats() {
 	$.ajax({
 		url: "rest/messages/chats",
 		type: "GET",
@@ -22,19 +72,27 @@ $(document).ready(function() {
 			});
 		}
 	});
-})
+}
+
+
+
 $(document).ready(function() {
-	
+	initChats();
 })
-
-
 
 
 function makeChatTemplate(chat) {
+	var color = 'white';
+	if (chat.seen) {
+		color = 'grey';
+	}
 	var cardTemplate = [
 		'<div class="message" id="',
 		chat.chat.id,
-		'"><div class="profile-picture">',
+		'" style="background-color:',
+		color,
+		';"',
+		'><div class="profile-picture">',
 		'<img src="images/userPictures/',
 		chat.otherParticipant.id + "/" + chat.otherParticipant.profilePicture,
 		'">',
@@ -51,6 +109,7 @@ function makeChatTemplate(chat) {
 	return $(cardTemplate.join(''));
 }
 
+var selectedChat;
 
 //enter chat
 $(".messages").on('click', 'div.message', function() {
@@ -64,6 +123,8 @@ $(".messages").on('click', 'div.message', function() {
 		complete: function(data) {
 			$('.chat-messages').empty();
 			var chatDms = data.responseJSON;
+			selectedChat = chatDms;
+			seenMessage();
 			$("#profile-picture-top").attr("src","images/userPictures/" + chatDms.otherUser.id + "/" + chatDms.otherUser.profilePicture);
 			$("#profile-name-top").html(chatDms.otherUser.name + " " + chatDms.otherUser.surname);
 			chatDms.dms.forEach(function(item) {
@@ -79,16 +140,20 @@ $(".messages").on('click', 'div.message', function() {
 					return ;
 				}
 				try {
-					socket.send(text);
-				//	chatDms.dms.append()
-				//	save(text, chatDms.chat, chatDms.loggedUser)
-					message(text, "right", chatDms.loggedUser);
+					var editedText = text + "senderId" + chatDms.loggedUser.id + "recieverId" + selectedChat.otherUser.id;
+					socket.send(editedText);			
+					save(chatDms, text);
+					sendMessage(editedText, "right");
 				} catch(exception) {
+					console.log(exception);
 				}
 			}
 	
-			function message(msg, position, user) {
-				$('.chat-messages').append(makeDmsTemplate(msg, position, user));
+			function sendMessage(msg, position) {
+				var sender = msg.split("recieverId")[0].split("senderId")[1];
+				var receiver = msg.split("recieverId")[1];
+				var realMessage = msg.split("senderId")[0];
+				$('.chat-messages').append(makeDmsTemplate(realMessage, position, chatDms.loggedUser));
 			}
 			
 			$('#send-message').click(function() {
@@ -101,23 +166,7 @@ $(".messages").on('click', 'div.message', function() {
 					send();
 					$('#new-message-text').val("");
 				}
-			})
-			
-			var socket
-			try{
-				socket = new WebSocket("ws://localhost:9000/WebProject/websocket/echoAnnotation");
-				socket.onopen = function() {
-					//message('<p>connect: Socket status: ' + socket.readyState + ' (open)');
-				}
-				socket.onmessage = function(msg) {
-					message(msg.data, "left", chatDms.otherUser);
-				}
-				socket.onclose = function() {
-					socket = null;
-				}
-			} catch(exception) {
-			}
-			
+			})			
 		}
 	});
 });
@@ -166,18 +215,27 @@ function makeDmsTemplate(content, position, sender) {
 }
 
 //save message in file
-function save(content, chat, sender) {
-	data
+function save(chatDms, content) {
+	data = {
+		chat: chatDms.chat,
+		sender: chatDms.loggedUser,
+		reciever: chatDms.otherUser, 
+		content: content
+	};
+	var s = JSON.stringify(data);
 	$.ajax({
 		url: "rest/messages/saveMessage",
 		type: "POST",
-		data: chatId,
+		data: s,
 		dataType: "json",
 		contentType: "application/json",
-		complete: function(data) {
+		complete: function(retData) {
+			if (!retData) {
+				console.log("puce");
+			}
 		}
 });
-
+}
 
 function goToHomepage() {
 	window.location.href = "feed.html";

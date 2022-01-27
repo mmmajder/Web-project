@@ -24,8 +24,6 @@ public class User {
 	private boolean isBlocked;
 	private boolean isAdmin;
 
-	
-
 	public User(String id, String username, String password, String email, String name, String surname,
 			LocalDate dateOfBirth, Gender gender, String profilePicture, String biography, ArrayList<String> friends,
 			ArrayList<String> friendRequests, ArrayList<String> posts, ArrayList<String> chats, boolean isPrivate,
@@ -48,6 +46,10 @@ public class User {
 		this.isPrivate = isPrivate;
 		this.isBlocked = isBlocked;
 		this.isAdmin = isAdmin;
+	}
+
+	public User() {
+		super();
 	}
 
 	public User(String id, String username, String email, String name, String surname, Gender gender, String password,
@@ -151,8 +153,6 @@ public class User {
 		this.biography = biography;
 	}
 
-	
-
 	public ArrayList<String> getFriends() {
 		return friends;
 	}
@@ -176,7 +176,7 @@ public class User {
 	public void setPosts(ArrayList<String> posts) {
 		this.posts = posts;
 	}
-	
+
 	public void addPost(String p) {
 		this.posts.add(p);
 	}

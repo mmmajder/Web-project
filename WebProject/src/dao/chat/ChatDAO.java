@@ -40,11 +40,11 @@ public class ChatDAO {
 		ArrayList<String> participants = new ArrayList<String>();
 		participants.add("U000001");
 		participants.add("U000002");
-		dao.add(new Chat(dao.generateId(), new ArrayList<>(), participants));
+		dao.add(new Chat(dao.generateId(), new ArrayList<>(), participants, true));
 		ArrayList<String> dms = new ArrayList<String>();
 		dms.add("DM1");
 		dms.add("DM2");
-		dao.add(new Chat(dao.generateId(), dms, participants));
+		dao.add(new Chat(dao.generateId(), dms, participants, true));
 		dao.writeFile();
 	}
 
@@ -59,6 +59,13 @@ public class ChatDAO {
 
 	public void add(Chat chat) {
 		chats.put(chat.getId(), chat);
+		writeFile();
+	}
+	
+	public void addDM(DM dm, Chat chat) {
+		Chat selectedChat = findById(chat.getId());
+		selectedChat.getDms().add(dm.getId());
+		selectedChat.setSeen(false);
 		writeFile();
 	}
 
@@ -121,9 +128,10 @@ public class ChatDAO {
 			CSVWriter writer = new CSVWriter(new PrintWriter(new OutputStreamWriter(os, "UTF-8")), ';',
 					CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.DEFAULT_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END);
 			List<String[]> data = new ArrayList<String[]>();
-			data.add(new String[] { "id", "participants", "dmIDs" });
+			data.add(new String[] { "id", "participants", "dmIDs", "seen" });
 			for (Chat c : findAll()) {
-				data.add(new String[] { c.getId(), printList(c.getParticipants()), printList(c.getDms()) });
+				data.add(new String[] { c.getId(), printList(c.getParticipants()), printList(c.getDms()), new Boolean(c.isSeen()).toString()});
+				System.out.println(c);
 			}
 			writer.writeAll(data);
 			writer.close();
@@ -153,7 +161,7 @@ public class ChatDAO {
 				ArrayList<String> chatDms = getList(nextLine[2]);
 				ArrayList<String> participants = getList(nextLine[1]);
 
-				Chat chat = new Chat(nextLine[0], chatDms, participants);
+				Chat chat = new Chat(nextLine[0], chatDms, participants, new Boolean(nextLine[3]));
 				chats.put(chat.getId(), chat);
 				System.out.println(chat);
 			}
@@ -174,6 +182,11 @@ public class ChatDAO {
 			}
 		}
 		return elems;
+	}
+
+	public void seenMessage(Chat chat) {
+		findById(chat.getId()).setSeen(true);
+		
 	}
 
 	

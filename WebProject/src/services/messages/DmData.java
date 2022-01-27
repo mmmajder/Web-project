@@ -20,6 +20,10 @@ public class DmData {
 		this.otherUser = otherUser;
 	}
 
+	public DmData() {
+		super();
+	}
+
 	public Chat getChat() {
 		return chat;
 	}
