@@ -1,18 +1,16 @@
 package services.feed;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.channels.FileChannel;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
+import java.io.OutputStream;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.constraints.Size;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -21,16 +19,13 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.xml.bind.DatatypeConverter;
-import java.io.*;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
+
 import beans.Comment;
 import beans.Post;
 import beans.User;
 import dao.comment.CommentDAO;
 import dao.person.UserDAO;
 import dao.post.PostDAO;
-import services.registration.RegisterUser;
 
 @Path("/feed")
 public class FeedService {
@@ -59,10 +54,10 @@ public class FeedService {
 		PostDAO postDAO = (PostDAO) ctx.getAttribute("postDAO");
 		System.out.println("broj kom " + commentDAO.findAll().size());
 		User user = (User) request.getSession().getAttribute("logged");
-		Comment comment = new Comment(commentDAO.generateId(), text, user.getId(), LocalDateTime.now(), LocalDateTime.now(),
-				false);
+		Comment comment = new Comment(commentDAO.generateId(), text, user.getId(), LocalDateTime.now(),
+				LocalDateTime.now(), false);
 		commentDAO.addComment(comment);
-		//postDAO.addComment(post, comment); TODO
+		// postDAO.addComment(post, comment); TODO
 		return comment;
 	}
 
@@ -82,37 +77,40 @@ public class FeedService {
 		UserDAO userDAO = (UserDAO) ctx.getAttribute("userDAO");
 		User currentlyLogged = (User) request.getSession().getAttribute("logged");
 		System.out.println(postData.getPictureLocation());
-		
+
 		String base64String = postData.getPictureLocation();
-        String[] strings = base64String.split(",");
-        String extension;
-        switch (strings[0]) {//check image's extension
-            case "data:image/jpeg;base64":
-                extension = "jpeg";
-                break;
-            case "data:image/png;base64":
-                extension = "png";
-                break;
-            default://should write cases for more images types
-                extension = "jpg";
-                break;
-        }
-        //convert base64 string to binary data
-        byte[] data = DatatypeConverter.parseBase64Binary(strings[1]);
-        //String path = "C:\\Users\\Lenovo\\Desktop\\Web\\Projekat\\web-project\\WebProject\\WebContent\\images\\test_image." + extension;
-        String photoName = "photo" + currentlyLogged.getPosts().size() + "." + extension;
-        String path = "C:/Users/Lenovo/Desktop/Web/Projekat/web-project/WebProject/WebContent/images/userPictures/" + currentlyLogged.getId() + "/" + photoName;
-        File file = new File(path);
-        try (OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(file))) {
-            outputStream.write(data);
-            System.out.println("hoce da radi");
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("nece da radi");
-        }
-		
-		Post newPost = new Post(postDAO.generateId(), currentlyLogged.getId(), photoName,
-				postData.getDescription(), LocalDateTime.now(), new ArrayList<String>(), false, postData.getPicture().equals("true"));
+		String[] strings = base64String.split(",");
+		String extension;
+		switch (strings[0]) {// check image's extension
+		case "data:image/jpeg;base64":
+			extension = "jpeg";
+			break;
+		case "data:image/png;base64":
+			extension = "png";
+			break;
+		default:// should write cases for more images types
+			extension = "jpg";
+			break;
+		}
+		// convert base64 string to binary data
+		byte[] data = DatatypeConverter.parseBase64Binary(strings[1]);
+		// String path =
+		// "C:\\Users\\Lenovo\\Desktop\\Web\\Projekat\\web-project\\WebProject\\WebContent\\images\\test_image."
+		// + extension;
+		String photoName = "photo" + currentlyLogged.getPosts().size() + "." + extension;
+		String path = "C:/Users/Lenovo/Desktop/Web/Projekat/web-project/WebProject/WebContent/images/userPictures/"
+				+ currentlyLogged.getId() + "/" + photoName;
+		File file = new File(path);
+		try (OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(file))) {
+			outputStream.write(data);
+			System.out.println("hoce da radi");
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println("nece da radi");
+		}
+
+		Post newPost = new Post(postDAO.generateId(), currentlyLogged.getId(), photoName, postData.getDescription(),
+				LocalDateTime.now(), new ArrayList<String>(), false, postData.getPicture().equals("true"));
 		postDAO.addNewPost(currentlyLogged, newPost);
 		userDAO.addNewPost(currentlyLogged, newPost);
 		return newPost;

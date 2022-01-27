@@ -25,7 +25,10 @@ function setBio(user) {
 	$("#profile-user-name").html("@" + user.username);
 	$("#number-of-posts").html(user.posts.length + " Posts");
 	$("#number-of-photos").html(user.posts.length + " Photos"); // TODO
-	$("#number-of-friends").html(user.friends.length + " Friends"); // kada je nula izbaci 1 ?
+	$("#number-of-friends").html(user.friends.length + " Friends"); // kada je
+																	// nula
+																	// izbaci 1
+																	// ?
 	$("#date-of-birth").html(user.dateOfBirth);
 	$("#profile-bio-text").html(user.biography);
 	$(".profile-info .profile-photo img").attr("src", "images/userPictures/" + user.id + "/" + user.profilePicture);
@@ -201,6 +204,27 @@ function viewdetails() {
         	$("#post-image img").attr("id", x.id);
         }
     });
+	
+	// load comments
+	$.ajax({
+        url: "rest/profile/loadComments",
+        type: "POST",
+        data: postID,
+        contentType: "application/json",
+        complete: function(data) {
+        	var comments = data.responseJSON;
+        	$("#comments-content").empty();
+        	if (comments.length == 0)
+				return;
+			loadComments(comments);
+        }
+    });
+}
+
+function loadComments(comments) {
+	for (let i = comments.length - 1; i >= 0; i -= 1) {
+		$("#comments-content").append(makeComment(comments[i]));
+	}
 }
 
 function deletePost() {
@@ -305,9 +329,10 @@ $("#friends").click(function() {
 			var userFriends = data.responseJSON;
 			userFriends.forEach(function(item) {
 				$('.friendships').append(makeFriendTemplate(item));
-				/*createFriendCard(item, function(data1) {
-					$('.friendships').append(data1);
-				} )*/
+				/*
+				 * createFriendCard(item, function(data1) {
+				 * $('.friendships').append(data1); } )
+				 */
 			});
 		}
 	});
@@ -373,3 +398,36 @@ $(".friend-name").click(function() {
 		}
 	});
 });
+
+$("#add-comment").click(function() {
+	var t = $("#comment-text").val();
+	var id = $("#post-image img").attr("id");
+	var c = JSON.stringify({text: t, postID: id});
+	$.ajax({
+		url: "rest/profile/addComment",
+		type: "POST",
+		data: c,
+		contentType: "application/json",
+		dataType: "json",
+		complete: function(data) {
+			comment = data.responseJSON;
+			$("#comments-content").append(makeComment(comment));
+        }
+    });
+});
+
+function makeComment(comment) {
+	var cardTemplate = [
+		'<div class="message-left" id="' + comment.id + '">',
+        '<div class="message-container">',
+        '<div class="profile-picture">',
+        '<img src="images/userPictures/' + comment.authorId + '/' + comment.profilePicture + '">',
+        '</div><div>' + comment.name + ' ' + comment.lastname,
+        '</div><div class="message-text"><span>',
+        comment.text,
+        '</span></div></div></div>'
+	];
+	return $(cardTemplate.join(''));
+}
+
+

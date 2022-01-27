@@ -18,6 +18,9 @@ import java.util.Map;
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
 import beans.Comment;
+import beans.Post;
+import beans.User;
+import services.profile.CommentReturnData;
 
 public class CommentDAO {
 	static final String CSV_FILE = "comments.csv";
@@ -115,6 +118,16 @@ public class CommentDAO {
 
 	private boolean getBool(String b) {
 		return b.equals("true");
+	}
+
+	public ArrayList<CommentReturnData> getCommentsOnPost(Post post, User user) {
+		ArrayList<CommentReturnData> comments = new ArrayList<CommentReturnData>();
+		for(String id : post.getComments()) {
+			Comment comment = this.findById(id);
+			comments.add(new CommentReturnData(comment.getId(), comment.getText(), user.getId(), user.getName(),
+				user.getSurname(), comment.getCreated(), comment.getLastEdited(), user.getProfilePicture()));
+		}
+		return comments;
 	}
 
 }

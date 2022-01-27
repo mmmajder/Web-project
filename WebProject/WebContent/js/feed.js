@@ -170,7 +170,7 @@ function makeCardTemplate(user, postData) {
 		postPic = '<div class="post-photo"><img src="images/userPictures/' + postData.author + '/' + postData.pictureLocation + '"></div>';
 	}
 	var cardTemplate = [
-        '<div class="feed"><div class="head"><div class="user"><div class="profile-picture">',
+        '<div class="feed" id="' + postData.id + '"><div class="head"><div class="user"><div class="profile-picture">',
         '<img src="',
         'images/userPictures/' + user.id + '/' + user.profilePicture,
         '"></div><div class="ingo">',
@@ -179,13 +179,74 @@ function makeCardTemplate(user, postData) {
         '</div></div><span class="edit"><i class="uil uil-ellipsis-h"></i></span></div><br><div class="caption">',
         '<p>' + postData.description + '</p></div>',
         postPic,
-        '<div class="comments text-muted" id="view-comments">',
+        '<div class="comments text-muted" id="view-comments" onclick="viewComments(\'' + postData.id + '\')">',
         '<p>View all comments</p>',
         '</div><div class="add-comment">',
-        '<input type="text" placeholder="Type comment..." id="comment-text"><span><i id="add-comment" class="uil uil-enter"></i></span>',
+        '<input type="text" placeholder="Type comment..."><span><i id="add-comment" onclick="addComment(\'' + postData.id + '\')" class="uil uil-enter"></i></span>',
         '</div>'
     ];
     return $(cardTemplate.join(''));
 }
 
+function addComment(id) {
+	var value = $('#' + id + ' input').val();
+	if(value != '') {
+		var c = JSON.stringify({text: value, postID: id});
+		$.ajax({
+			url: "rest/profile/addComment",
+			type: "POST",
+			data: c,
+			contentType: "application/json",
+			dataType: "json",
+			complete: function(data) {
+				comment = data.responseJSON;
+				$('#' + id + ' .comments-content').append(makeComment(comment));
+				$('#' + id + ' input').val('');
+				event.preventDefault();
+	        }
+	    });
+	} else {
+		alert("You can't add empty comment.");
+	}
+}
 
+function makeComment(comment) {
+	var cardTemplate = [
+		'<div class="message-left" id="' + comment.id + '">',
+        '<div class="message-container">',
+        '<div class="profile-picture">',
+        '<img src="images/userPictures/' + comment.authorId + '/' + comment.profilePicture + '">',
+        '</div><div>' + comment.name + ' ' + comment.lastname,
+        '</div><div class="message-text" style="font-size: 10px;"><span>',
+        comment.text,
+        '</span></div></div></div>'
+	];
+	return $(cardTemplate.join(''));
+}
+
+function viewComments(postID) {
+	$.ajax({
+        url: "rest/profile/loadComments",
+        type: "POST",
+        data: postID,
+        contentType: "application/json",
+        complete: function(data) {
+        	var comments = data.responseJSON;
+        	$('#' + postID + ' #view-comments').empty();
+        	if (comments.length == 0) {
+        		$('#' + postID + ' #view-comments').append("<p>No comments here.</p>");
+        		event.preventDefault();
+        		return;
+        	}
+			loadComments(comments, postID);
+        	event.preventDefault();
+        }
+    });
+}
+
+function loadComments(comments, id) {
+	$('#' + id + ' #view-comments').append('<p>Comments</p><div class="comments-content"' + ' id="' + id + '"></div>');
+	for (let i = comments.length - 1; i >= 0; i -= 1) {
+		$('#' + id + ' #view-comments').append(makeComment(comments[i]));
+	}
+}

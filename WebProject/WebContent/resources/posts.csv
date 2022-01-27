@@ -1,6 +1,6 @@
 id;authorID;pictureLocation;description;posted;commentIDs;deleted;isPicture
 PO00001;U00001;;Mnogo dobar post 1;2020-01-01 11:00:00;;false;false
-PO00002;U00001;;Mnogo dobar post 2;2020-01-01 12:00:00;;false;false
+PO00002;U00001;;Mnogo dobar post 2;2020-01-01 12:00:00;COM-00000005|COM-00000006;false;false
 PO00003;U00001;;Mnogo dobar post 3;2020-01-01 13:00:00;;false;false
 PO00004;U00002;bear4.jpg;Mnogo dobar post 4;2020-01-01 14:00:00;;false;true
 PO00005;U00003;bear5.jpg;Mnogo dobar post 5;2020-01-01 15:00:00;;false;true

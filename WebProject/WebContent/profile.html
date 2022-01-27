@@ -2,236 +2,190 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meetply</title>
-    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.1.6/css/unicons.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="icon" href="images/logo.png">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meetply</title>
+<link rel="stylesheet"
+	href="https://unicons.iconscout.com/release/v2.1.6/css/unicons.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="images/logo.png">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
 <body>
-    <!--NAVBAR-->
-    <nav>
-        <div class="container">
-            <img src="images/Meeply.png" class="logo">
-            <div id="buttons">
-                <span><i id="homepage" class="uil uil-home" onclick="goToHomepage()"></i></span>
-                <span><i id="my-profile" class="uil uil-user-circle"></i></span>
-                <span><i id="log-out" class="uil uil-sign-out-alt" onclick="logOut()"></i></span>
-            </div>
-        </div>
-    </nav>
+	<!--NAVBAR-->
+	<nav>
+		<div class="container">
+			<img src="images/Meeply.png" class="logo">
+			<div id="buttons">
+				<span><i id="homepage" class="uil uil-home"
+					onclick="goToHomepage()"></i></span> <span><i id="my-profile"
+					class="uil uil-user-circle"></i></span> <span><i id="log-out"
+					class="uil uil-sign-out-alt" onclick="logOut()"></i></span>
+			</div>
+		</div>
+	</nav>
 
-    <div class="main">
-        <div class="container">
-            <div class="middle">
-                <!--User info-->
-                <div class="profile-info">
-                    <div class="profile-photo">
-                        <img src="" alt="images/default.jpg">
-                    </div>
-                    <div class="user-info">
-                        <button id="edit-profile" class="btn"><i class="uil uil-edit-alt"></i> Edit Profile</button>
-                        <div class="profile-user-settings">
-                            <h1 class="profile-user-name" id="profile-user-name"></h1>
-                        </div>
-                        <div>
-                            <label class="profile-name-surname"></label>
-                        </div>
-                        <div class="profile-stats text-muted">
-                            <label id="number-of-posts"></label>
-                            <label id="number-of-photos"></label>
-                            <label id="number-of-friends"></label>
-                        </div>
-                        <div class="date-of-birth">
-                            <p id="date-of-birth"></p>
-                        </div>
-                        <div class="profile-bio">
-                            <p id="profile-bio-text"></p>
-                        </div>
-                    </div>
-                </div>
-                <!--Navbar-->
-                <div class="menu">
-                    <div class="navbar">
-                        <label class="active" id="photos">Photos</label>
-                        <label id="posts">Posts</label>
-                        <label id="friends">Friends</label>
-                    </div>
-                </div>
-                <div class="showing">
-                    <!--Photos-->
-                    <div class="photos visible">
-                        <div class="row">
-                            <div class="column" id="c1"></div>
-                            <div class="column" id="c2"></div>
-                            <div class="column" id="c3"></div>
-                        </div>
-                    </div>
+	<div class="main">
+		<div class="container">
+			<div class="middle">
+				<!--User info-->
+				<div class="profile-info">
+					<div class="profile-photo">
+						<img src="" alt="images/default.jpg">
+					</div>
+					<div class="user-info">
+						<button id="edit-profile" class="btn">
+							<i class="uil uil-edit-alt"></i> Edit Profile
+						</button>
+						<div class="profile-user-settings">
+							<h1 class="profile-user-name" id="profile-user-name"></h1>
+						</div>
+						<div>
+							<label class="profile-name-surname"></label>
+						</div>
+						<div class="profile-stats text-muted">
+							<label id="number-of-posts"></label> <label id="number-of-photos"></label>
+							<label id="number-of-friends"></label>
+						</div>
+						<div class="date-of-birth">
+							<p id="date-of-birth"></p>
+						</div>
+						<div class="profile-bio">
+							<p id="profile-bio-text"></p>
+						</div>
+					</div>
+				</div>
+				<!--Navbar-->
+				<div class="menu">
+					<div class="navbar">
+						<label class="active" id="photos">Photos</label> <label id="posts">Posts</label>
+						<label id="friends">Friends</label>
+					</div>
+				</div>
+				<div class="showing">
+					<!--Photos-->
+					<div class="photos visible">
+						<div class="row">
+							<div class="column" id="c1"></div>
+							<div class="column" id="c2"></div>
+							<div class="column" id="c3"></div>
+						</div>
+					</div>
 
-                    <!--Posts-->
-                    <div class="container">
-                    	<div class="feeds posts" id="feeds"></div>
-                    </div>
+					<!--Posts-->
+					<div class="container">
+						<div class="feeds posts" id="feeds"></div>
+					</div>
 
-                    <!--Friends-->
-                    <div class="container">
-                        <div class="friends">
-                            <div class="search-bar search-bar-friends">
-                                <i class="uil uil-search"></i>
-                                <input type="search" placeholder="Search friends" id="friends-search">
-                            </div>
-                            <div class="friendships"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+					<!--Friends-->
+					<div class="container">
+						<div class="friends">
+							<div class="search-bar search-bar-friends">
+								<i class="uil uil-search"></i> <input type="search"
+									placeholder="Search friends" id="friends-search">
+							</div>
+							<div class="friendships"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
-        <!--Edit profile-->
-        <div class="edit-profile-card">
+		<!--Edit profile-->
+		<div class="edit-profile-card">
 
-            <div class="div">
-                <span style="float: right;"><i id="cancel-edit" class="uil uil-times"></i></span>
-                <h3>Edit profile</h3>
-            </div>
-            <div class="row">
-                <div class="column">
+			<div class="div">
+				<span style="float: right;"><i id="cancel-edit"
+					class="uil uil-times"></i></span>
+				<h3>Edit profile</h3>
+			</div>
+			<div class="row">
+				<div class="column">
 
-                    <label for="name">Name</label>
-                    <input type="text" placeholder="Enter Name" id="name" name="name" required><br>
+					<label for="name">Name</label> <input type="text"
+						placeholder="Enter Name" id="name" name="name" required><br>
 
-                    <label for="surname">Surname</label>
-                    <input type="text" placeholder="Enter Surname" id="surname" name="surname" required><br>
+					<label for="surname">Surname</label> <input type="text"
+						placeholder="Enter Surname" id="surname" name="surname" required><br>
 
-                    <label for="password">New Password</label>
-                    <input type="password" placeholder="Enter Password" id="password" name="password"><br>
+					<label for="password">New Password</label> <input type="password"
+						placeholder="Enter Password" id="password" name="password"><br>
 
-                    <label for="password2">Re-enter your new Password</label>
-                    <input type="password" placeholder="Re-Enter Password" id="password2" name="password2"><br>
+					<label for="password2">Re-enter your new Password</label> <input
+						type="password" placeholder="Re-Enter Password" id="password2"
+						name="password2"><br>
 
-                </div>
-                <div class="column">
+				</div>
+				<div class="column">
 
-                    <label for="gender">Gender</label><br>
-                    <select class="gender" id="gender" name="gender" required>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                    </select>
+					<label for="gender">Gender</label><br> <select class="gender"
+						id="gender" name="gender" required>
+						<option value="male">Male</option>
+						<option value="female">Female</option>
+					</select> <label for="dateOfBirth">Date of Birth</label> <input type="date"
+						id="dateOfBirth" name="dateOfBirth" required> <label
+						for="biography">Biography</label> <input type="text"
+						placeholder="Biography" id="biography" name="biography"> <label
+						for="privacy">Privacy</label><br> <select class="privacy"
+						id="privacy" name="privacy" required>
+						<option value="private">Private</option>
+						<option value="public">Public</option>
+					</select>
+				</div>
+				<br>
+				<label for="resultEdit" id="resultEdit"></label>
+			</div>
+			<div class="buttons">
+				<div class="btn btn-primary" id="edit-profile-save-changed">
+					<span>Save changes</span>
+				</div>
+				<div class="btn cancel-btn">
+					<span>Cancel</span>
+				</div>
+			</div>
+		</div>
 
-                    <label for="dateOfBirth">Date of Birth</label>
-                    <input type="date" id="dateOfBirth" name="dateOfBirth" required>
+		<!--Photo details-->
+		<div class="photo-details-card">
+			<div>
+				<span style="float: right;"><i id="cancel-photo"
+					class="uil uil-times"></i></span>
+			</div>
+			<div class="row">
+				<div class="column">
+					<div id="post-image">
+						<img src="images/logInBackground.jpg">
+					</div>
+				</div>
+				<div class="column">
+					<label id="image-description"></label><br> <label id="posted"
+						class="text-muted"></label><br>
+					<div class="photo-comments">
+						<div class="comments-content" id="comments-content"></div>
+					</div>
+					<div class="add-comment">
+						<input type="text" placeholder="Type comment..." id="comment-text">
+						<span><i id="add-comment" class="uil uil-enter"></i></span>
+					</div>
 
-                    <label for="biography">Biography</label>
-                    <input type="text" placeholder="Biography" id="biography" name="biography">
-
-                    <label for="privacy">Privacy</label><br>
-                    <select class="privacy" id="privacy" name="privacy" required>
-                        <option value="private">Private</option>
-                        <option value="public">Public</option>
-                    </select>
-                </div>
-                <br><label for="resultEdit" id="resultEdit"></label>
-            </div>
-            <div class="buttons">
-                <div class="btn btn-primary" id="edit-profile-save-changed">
-                    <span>Save changes</span>
-                </div>
-                <div class="btn cancel-btn">
-                    <span>Cancel</span>
-                </div>
-            </div>
-        </div>
-
-        <!--Photo details-->
-        <div class="photo-details-card">
-            <div>
-                <span style="float: right;"><i id="cancel-photo" class="uil uil-times"></i></span>
-            </div>
-            <div class="row">
-                <div class="column">
-                    <div id="post-image">
-                        <img src="images/logInBackground.jpg">
-                    </div>
-                </div>
-                <div class="column">
-                    <label id="image-description"></label><br>
-                    <label id="posted" class="text-muted"></label><br>
-                    <div class="photo-comments">
-                        <div class="comments-content">
-                            <div class="message-left">
-                                <div class="message-container">
-                                    <div class="profile-picture">
-                                        <img src="images/profile-1.jpg">
-                                    </div>
-                                    <div class="message-text">
-                                        <span>Hejj</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="message-left">
-                                <div class="message-container">
-                                    <div class="profile-picture">
-                                        <img src="images/profile-1.jpg">
-                                    </div>
-                                    <div class="message-text">
-                                        <span>Hejj</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="message-left">
-                                <div class="message-container">
-                                    <div class="profile-picture">
-                                        <img src="images/profile-1.jpg">
-                                    </div>
-                                    <div class="message-text">
-                                        <span>Hejj</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="message-left">
-                                <div class="message-container">
-                                    <div class="profile-picture">
-                                        <img src="images/profile-1.jpg">
-                                    </div>
-                                    <div class="message-text">
-                                        <span>Hejj</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="message-left">
-                                <div class="message-container">
-                                    <div class="profile-picture">
-                                        <img src="images/profile-1.jpg">
-                                    </div>
-                                    <div class="message-text">
-                                        <span>Hejj</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="add-comment">
-                        <input type="text" placeholder="Type comment..." id="comment-text">
-                        <span><i id="add-comment" class="uil uil-enter"></i></span>
-                    </div>
-
-                    <div class="buttons">
-                        <div class="btn btn-primary" id="set-profile-photo" onclick="setProfilePhoto()">
-                            <span>Set as profile photo</span>
-                        </div>
-                        <div class="btn cancel-btn" id="delete-photo" onclick="deletePost()">
-                            <span>Delete photo</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <script src="js/profile.js"></script>
+					<div class="buttons">
+						<div class="btn btn-primary" id="set-profile-photo"
+							onclick="setProfilePhoto()">
+							<span>Set as profile photo</span>
+						</div>
+						<div class="btn cancel-btn" id="delete-photo"
+							onclick="deletePost()">
+							<span>Delete photo</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="js/profile.js"></script>
 </body>
 
 </html>
