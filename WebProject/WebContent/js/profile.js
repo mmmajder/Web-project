@@ -269,7 +269,7 @@ var createPost = function(postData, callback) {
 
 function makeCardTemplate(user, postData) {
 	var postPic = '';
-	if(postData.picture) {
+	if (postData.pictureLocation != "") {
 		postPic = '<div class="post-photo"><img src="images/userPictures/' + postData.author + '/' + postData.pictureLocation + '"></div>';
 	}
 	var cardTemplate = [

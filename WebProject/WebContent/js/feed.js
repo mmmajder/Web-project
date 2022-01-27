@@ -60,7 +60,7 @@ $("#postAsPhoto").click(function() {
 });
 
 function addNewPost(postAsPicture) {
-	var picLoc = $("#add-img").val().split('\\').pop();
+	var picLoc = $('#add-post-image').attr('src');
 	var des = $("#post-text").val();
 	var d = JSON.stringify({
 						    	pictureLocation: picLoc,
@@ -77,16 +77,20 @@ function addNewPost(postAsPicture) {
 	        	var newPost = data.responseJSON;
 	        	console.log(newPost);
 				createNewPost(newPost, function(p) {
-					$('#feeds').prepend(p);
-					console.log("prependovo sam");
+					if(postAsPhoto == "false") {
+						$('#feeds').prepend(p);
+					}
 				});
 	        }
 	    });
+	} else {
+		alert("You can't add empty post.")
 	}
 }
 
 $("#remove-pic").click(function() {
 	$("#add-img").val('');
+	$('#add-post-image').attr('src', '');
 })
 
 // navbar icons
@@ -162,7 +166,7 @@ var createNewPost = function(postData, callback) {
 
 function makeCardTemplate(user, postData) {
 	var postPic = '';
-	if(postData.picture) {
+	if (postData.pictureLocation != "") {
 		postPic = '<div class="post-photo"><img src="images/userPictures/' + postData.author + '/' + postData.pictureLocation + '"></div>';
 	}
 	var cardTemplate = [
