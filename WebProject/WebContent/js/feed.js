@@ -216,10 +216,10 @@ function makeComment(comment) {
         '<div class="message-container">',
         '<div class="profile-picture">',
         '<img src="images/userPictures/' + comment.authorId + '/' + comment.profilePicture + '">',
-        '</div><div>' + comment.name + ' ' + comment.lastname,
-        '</div><div class="message-text" style="font-size: 10px;"><span>',
+        '</div><div>' + comment.name + ' ' + comment.lastname + '  ',
+        '</div><div class="message-text"><span style="font-size:10px;">',
         comment.text,
-        '</span></div></div></div>'
+        '</span></div></div><small style="font-size:8px;margin-left:1rem;color:black;">Last edited: ' + comment.lastEdited + '  </small><span class="edit"><i class="uil uil-edit"></i></span></div>'
 	];
 	return $(cardTemplate.join(''));
 }
