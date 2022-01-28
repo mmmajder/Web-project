@@ -141,8 +141,8 @@ $(".messages").on('click', 'div.message', function() {
 					return ;
 				}
 				try {
-					var editedText = text + "senderId" + chatDms.loggedUser.id + "recieverId" + selectedChat.otherUser.id;
-					save(chatDms, text);
+					var editedText = text + "senderId" + selectedChat.loggedUser.id + "recieverId" + selectedChat.otherUser.id;
+					save(selectedChat, text);
 					socket.send(editedText);			
 					sendMessage(text);
 					initChats();
