@@ -14,6 +14,7 @@ $(document).ready(function() {
 			console.log("otvoren soket")
 		}
 		socket.onmessage = function(msg) {
+			console.log("stigao")
 			receiveMessage(msg.data, "left");
 		}
 		socket.onclose = function() {
@@ -34,16 +35,12 @@ function receiveMessage(msg, position) {
 			seenMessage();
 			$('.chat-messages').append(makeDmsTemplate(realMessage, position, selectedChat.otherUser));
 		}
-		else {
-			initChats();
-		}
-	} else {
-		initChats();
 	}
-	
+	initChats();
 }
 
 function seenMessage(){
+	
 	var s = JSON.stringify(selectedChat.chat);
 	$.ajax({
 		url: "rest/messages/seen",
@@ -52,7 +49,6 @@ function seenMessage(){
 		contentType: "application/json",
 		dataType: "json",
 		complete: function() {
-			$('.chat-messages').append("<p>Seen</p>");
 		}
 	})
 }
@@ -80,29 +76,33 @@ $(document).ready(function() {
 	initChats();
 })
 
-
-function makeChatTemplate(chat) {
+function makeChatTemplate(dmData) {
 	var color = 'white';
-	if (chat.seen) {
+	if (!dmData.seen) {
 		color = 'grey';
 	}
 	var cardTemplate = [
 		'<div class="message" id="',
-		chat.chat.id,
+		dmData.chat.id,
 		'" style="background-color:',
 		color,
 		';"',
 		'><div class="profile-picture">',
 		'<img src="images/userPictures/',
-		chat.otherParticipant.id + "/" + chat.otherParticipant.profilePicture,
+		dmData.otherParticipant.id + "/" + dmData.otherParticipant.profilePicture,
 		'">',
 		'<div class="active"></div>',
 		'</div>',
 		'<div class="message-body">',
 		'<h5>',
-		chat.otherParticipant.name + " " + chat.otherParticipant.surname,
+		dmData.otherParticipant.name + " " + dmData.otherParticipant.surname,
 		'</h5>',
-		'<p class="text-muted">Volim te!</p>',
+		'<p class="text-muted">',
+		dmData.content,
+		'</p>',
+		'<p>',
+		dmData.lastMessage,
+		"</p>",
 		'</div>',
 		'</div>'
 	];
@@ -114,6 +114,7 @@ var selectedChat;
 //enter chat
 $(".messages").on('click', 'div.message', function() {
 	var chatId = $(this).attr('id');
+	$(this).css('background-color', 'white');
 	$.ajax({
 		url: "rest/messages/chat",
 		type: "POST",
@@ -124,7 +125,7 @@ $(".messages").on('click', 'div.message', function() {
 			$('.chat-messages').empty();
 			var chatDms = data.responseJSON;
 			selectedChat = chatDms;
-			seenMessage();
+			seenMessage();		
 			$("#profile-picture-top").attr("src","images/userPictures/" + chatDms.otherUser.id + "/" + chatDms.otherUser.profilePicture);
 			$("#profile-name-top").html(chatDms.otherUser.name + " " + chatDms.otherUser.surname);
 			chatDms.dms.forEach(function(item) {
@@ -141,19 +142,17 @@ $(".messages").on('click', 'div.message', function() {
 				}
 				try {
 					var editedText = text + "senderId" + chatDms.loggedUser.id + "recieverId" + selectedChat.otherUser.id;
-					socket.send(editedText);			
 					save(chatDms, text);
-					sendMessage(editedText, "right");
+					socket.send(editedText);			
+					sendMessage(text);
+					initChats();
 				} catch(exception) {
 					console.log(exception);
 				}
 			}
 	
-			function sendMessage(msg, position) {
-				var sender = msg.split("recieverId")[0].split("senderId")[1];
-				var receiver = msg.split("recieverId")[1];
-				var realMessage = msg.split("senderId")[0];
-				$('.chat-messages').append(makeDmsTemplate(realMessage, position, chatDms.loggedUser));
+			function sendMessage(msg) {
+				$('.chat-messages').append(makeDmsTemplate(msg, "right", chatDms.loggedUser));
 			}
 			
 			$('#send-message').click(function() {
@@ -230,8 +229,8 @@ function save(chatDms, content) {
 		dataType: "json",
 		contentType: "application/json",
 		complete: function(retData) {
-			if (!retData) {
-				console.log("puce");
+			if (retData) {
+				initChats();
 			}
 		}
 });

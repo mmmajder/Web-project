@@ -48,7 +48,8 @@ public class MessageService {
 		User user = (User) request.getSession().getAttribute("logged");
 		ChatDAO chatDao = (ChatDAO) ctx.getAttribute("chatDAO");
 		UserDAO userDAO = (UserDAO) ctx.getAttribute("userDAO");
-		return chatDao.getChatsForUser(user, userDAO);
+		DmDAO dmDAO = (DmDAO) ctx.getAttribute("dmDAO");
+		return chatDao.getChatsForUser(user, userDAO, dmDAO);
 	}
 
 	@POST

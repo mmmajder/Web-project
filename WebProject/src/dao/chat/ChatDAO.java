@@ -10,6 +10,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,7 +62,7 @@ public class ChatDAO {
 		chats.put(chat.getId(), chat);
 		writeFile();
 	}
-	
+
 	public void addDM(DM dm, Chat chat) {
 		Chat selectedChat = findById(chat.getId());
 		selectedChat.getDms().add(dm.getId());
@@ -87,7 +88,7 @@ public class ChatDAO {
 		}
 		return null;
 	}
-	
+
 	public DmData getDmData(String chatId, DmDAO dmDao, UserDAO userDAO, User user) {
 		Chat chat = findById(chatId);
 		System.out.println(chat);
@@ -102,15 +103,25 @@ public class ChatDAO {
 		return new DmData(chat, dms, user, otherParticipant);
 	}
 
-	public ArrayList<ChatHeadData> getChatsForUser(User user, UserDAO userDAO) {
+	public ArrayList<ChatHeadData> getChatsForUser(User user, UserDAO userDAO, DmDAO dmDAO) {
 		ArrayList<ChatHeadData> chatsUser = new ArrayList<ChatHeadData>();
 
 		for (String chatId : user.getChats()) {
 			Chat chat = findById(chatId);
 			User otherParticipant = userDAO.findById(getOtherParticipant(user, chat));
-			chatsUser.add(new ChatHeadData(chat, otherParticipant));
+			DM dm = getLastDM(chat, dmDAO);
+			chatsUser.add(new ChatHeadData(chat, otherParticipant, dm.getContent(), dm.getDateTime()));
 		}
-		return chatsUser;
+		return sortChatHeads(chatsUser);
+	}
+
+	public DM getLastDM(Chat chat, DmDAO dmDAO) {
+		return dmDAO.findById(chat.getDms().get(chat.getDms().size() - 1));
+	}
+
+	public ArrayList<ChatHeadData> sortChatHeads(ArrayList<ChatHeadData> chats) {
+		Collections.sort(chats);
+		return chats;
 	}
 
 	private String getOtherParticipant(User user, Chat chat) {
@@ -130,7 +141,8 @@ public class ChatDAO {
 			List<String[]> data = new ArrayList<String[]>();
 			data.add(new String[] { "id", "participants", "dmIDs", "seen" });
 			for (Chat c : findAll()) {
-				data.add(new String[] { c.getId(), printList(c.getParticipants()), printList(c.getDms()), new Boolean(c.isSeen()).toString()});
+				data.add(new String[] { c.getId(), printList(c.getParticipants()), printList(c.getDms()),
+						new Boolean(c.isSeen()).toString() });
 				System.out.println(c);
 			}
 			writer.writeAll(data);
@@ -186,9 +198,7 @@ public class ChatDAO {
 
 	public void seenMessage(Chat chat) {
 		findById(chat.getId()).setSeen(true);
-		
-	}
 
-	
+	}
 
 }

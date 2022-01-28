@@ -26,7 +26,7 @@ public class DmDAO {
 
 	public static void main(String[] args) {
 		DmDAO dao = new DmDAO("src");
-		dao.addDM(new DM(dao.generateId(), "ČAOČAO", LocalDateTime.now(), "prvi", "drugi"));
+		dao.addDM(new DM(dao.generateId(), "Cao", LocalDateTime.now(), "prvi", "drugi"));
 		// dao.writeFile();
 	}
 
