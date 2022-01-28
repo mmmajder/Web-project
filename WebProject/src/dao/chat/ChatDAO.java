@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -110,12 +111,20 @@ public class ChatDAO {
 			Chat chat = findById(chatId);
 			User otherParticipant = userDAO.findById(getOtherParticipant(user, chat));
 			DM dm = getLastDM(chat, dmDAO);
-			chatsUser.add(new ChatHeadData(chat, otherParticipant, dm.getContent(), dm.getDateTime()));
+			if (dm==null) {
+				chatsUser.add(new ChatHeadData(chat, otherParticipant, "", LocalDateTime.now()));
+			} else {
+				chatsUser.add(new ChatHeadData(chat, otherParticipant, dm.getContent(), dm.getDateTime()));
+			}
+			
 		}
 		return sortChatHeads(chatsUser);
 	}
 
 	public DM getLastDM(Chat chat, DmDAO dmDAO) {
+		if (chat.getDms().size()==0) {
+			return null;
+		}
 		return dmDAO.findById(chat.getDms().get(chat.getDms().size() - 1));
 	}
 
