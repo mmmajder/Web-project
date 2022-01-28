@@ -77,7 +77,7 @@ function addNewPost(postAsPicture) {
 	        	var newPost = data.responseJSON;
 	        	console.log(newPost);
 				createNewPost(newPost, function(p) {
-					if(postAsPhoto == "false") {
+					if(postAsPicture == "false") {
 						$('#feeds').prepend(p);
 					}
 				});

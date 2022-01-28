@@ -65,7 +65,7 @@ public class FeedService {
 		User currentlyLogged = (User) request.getSession().getAttribute("logged");
 		String photoName = "";
 		System.out.println(postData.getPictureLocation());
-		if (postData.getPictureLocation() != "") {
+		if (!postData.getPictureLocation().equals("")) {
 			String base64String = postData.getPictureLocation();
 			String[] strings = base64String.split(",");
 			String extension;
