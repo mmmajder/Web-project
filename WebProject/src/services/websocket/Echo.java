@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
-import java.util.TimerTask;
 import java.util.logging.Logger;
 
 import javax.websocket.OnClose;
@@ -21,19 +20,6 @@ public class Echo {
 	Timer t = new Timer();
 
 	public Echo() {
-		t.schedule(new TimerTask() {
-			@Override
-			public void run() {
-				for (Session s : sessions) {
-					try {
-						s.getBasicRemote().sendText("od servera: " + System.currentTimeMillis());
-						log.info("Poslao poruku od servera na: " + s.getId());
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		}, 5000, 5000);
 	}
 
 	@OnMessage
@@ -41,7 +27,11 @@ public class Echo {
 		try {
 			if (session.isOpen()) {
 				System.out.println("Websocket " + this.hashCode() + " endpoint received: " + msg);
-				session.getBasicRemote().sendText(msg, last);
+				for (Session s : sessions) {
+					if(!s.getId().equals(session.getId())) {
+						s.getBasicRemote().sendText(msg, last);
+					}
+				}
 			}
 		} catch (IOException e) {
 			try {
@@ -53,7 +43,9 @@ public class Echo {
 
 	@OnOpen
 	public void onOpen(Session session) {
+		System.out.println("stigao sam");
 		if (!sessions.contains(session)) {
+			System.out.println("oo da");
 			sessions.add(session);
 			log.info("Dodao sesiju: " + session.getId());
 		}

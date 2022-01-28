@@ -18,10 +18,15 @@ public class DM {
 		this.reciever = reciever;
 	}
 
+	
+
+	@Override
 	public String toString() {
-		return "DM [id=" + id + ", content=" + content + ", dateTime=" + dateTime + ", senderID=" + sender
-				+ ", recieverID=" + reciever + "]";
+		return "DM [id=" + id + ", content=" + content + ", dateTime=" + dateTime + ", sender=" + sender + ", reciever="
+				+ reciever + "]";
 	}
+
+
 
 	public String getSender() {
 		return sender;
@@ -62,5 +67,6 @@ public class DM {
 	public void setDateTime(LocalDateTime dateTime) {
 		this.dateTime = dateTime;
 	}
+	
 
 }

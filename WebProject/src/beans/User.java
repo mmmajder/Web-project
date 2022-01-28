@@ -48,6 +48,10 @@ public class User {
 		this.isAdmin = isAdmin;
 	}
 
+	public User() {
+		super();
+	}
+
 	public User(String id, String username, String email, String name, String surname, Gender gender, String password,
 			boolean isAdmin, LocalDate dateOfBirth) {
 		this.id = id;
@@ -172,7 +176,7 @@ public class User {
 	public void setPosts(ArrayList<String> posts) {
 		this.posts = posts;
 	}
-	
+
 	public void addPost(String p) {
 		this.posts.add(p);
 	}
