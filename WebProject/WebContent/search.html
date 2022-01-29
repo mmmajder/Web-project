@@ -30,20 +30,20 @@
             <div class="left">
                 <!--SIDEBAR-->
                 <div class="sidebar">
-                    <a class="menu-item active" id="homepage">
+                    <a class="menu-item" id="homepage" onclick="goToFeed()">
                         <span><i class="uil uil-home"></i></span>
                         <h3>Home page</h3>
                     </a>
-                    <a class="menu-item" id="my-profile" onclick="goToMyProfile()">
+                    <a class="menu-item" id="my-profile-a" onclick="goToMyProfile()">
                         <span><i class="uil uil-user-circle"></i></span>
                         <h3>My profile</h3>
                     </a>
                     <a class="menu-item" id="messages" onclick="goToMessages()">
                         <span><i class="uil uil-envelope-alt">
-                            <small class="messages-count">9+</small></i></span>
+                            <small class="messages-count">!</small></i></span>
                         <h3>Messages</h3>
                     </a>
-                    <a class="menu-item" id="search">
+                    <a class="menu-item active" id="search">
                         <span><i class="uil uil-search"></i></span>
                         <h3>Search people</h3>
                     </a>
@@ -51,9 +51,9 @@
                         <span><i class="uil uil-palette"></i></span>
                         <h3>Themes</h3>
                     </a>
-                    <a class="menu-item" id="settings">
-                        <span><i class="uil uil-setting"></i></span>
-                        <h3>Settings</h3>
+                    <a class="menu-item" id="log-out-a" onclick="logOut()">
+                        <span><i class="uil uil-sign-out-alt"></i></span>
+                        <h3>Log Out</h3>
                     </a>
                 </div>
 

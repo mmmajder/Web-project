@@ -201,4 +201,16 @@ public class PostDAO {
 		return null;
 	}
 
+	public ArrayList<Post> getPublicFeed(ArrayList<String> publicUsersPosts) {
+		ArrayList<Post> retPosts = new ArrayList<Post>();
+		for (String p : publicUsersPosts) {
+			Post post = findById(p);
+			if(!post.isPicture()) {
+				retPosts.add(post);
+			}
+		}
+		return (ArrayList<Post>) retPosts.stream().sorted(Comparator.comparing(Post::getPosted).reversed())
+				.collect(Collectors.toList());
+	}
+
 }

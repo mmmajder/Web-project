@@ -110,17 +110,6 @@ function logOut() {
 	window.location.href = "index.html";
 }
 
-// remove active class from all menu items
-const changeActiveItem2 = () => {
-	$('.menu-item').forEach(item => {
-		item.classList.remove('active');
-	})
-}
-
-function changeActiveItem() {
-	$('.menu-item').removeClass('active');
-}
-
 // add new image
 function getImage(input) {
 	if (input.files && input.files[0]) {

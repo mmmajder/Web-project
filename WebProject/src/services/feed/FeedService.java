@@ -54,6 +54,15 @@ public class FeedService {
 	public ArrayList<Post> getUserPosts(@Context HttpServletRequest request) {
 		return ((PostDAO) ctx.getAttribute("postDAO")).getUserFeed((User) request.getSession().getAttribute("logged"));
 	}
+	
+	@GET
+	@Path("/getPublicFeed")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<Post> getPublicFeed(@Context HttpServletRequest request) {
+		UserDAO userDAO = (UserDAO) ctx.getAttribute("userDAO");
+		ArrayList<String> postsOfPublicUsers = userDAO.getPostsOfPublicUsers();
+		return ((PostDAO) ctx.getAttribute("postDAO")).getPublicFeed(postsOfPublicUsers);
+	}
 
 	@POST
 	@Path("/createNewPost")

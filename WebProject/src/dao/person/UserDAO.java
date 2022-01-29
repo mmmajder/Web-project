@@ -236,7 +236,8 @@ public class UserDAO {
 					endDate = LocalDate.parse(data.getEnd());
 				if (user.getDateOfBirth().isAfter(startDate) && user.getDateOfBirth().isBefore(endDate)) {
 					UserSearchData newUser = new UserSearchData(user.getId(), user.getName(), user.getSurname(),
-							user.getProfilePicture(), user.getDateOfBirth().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")).toString());
+							user.getProfilePicture(),
+							user.getDateOfBirth().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")).toString());
 					list.add(newUser);
 				}
 			}
@@ -261,7 +262,6 @@ public class UserDAO {
 			} catch (Exception e) {
 			}
 		}
-		// TODO Auto-generated method stub
 		return users;
 	}
 
@@ -294,7 +294,16 @@ public class UserDAO {
 				this.writeFile();
 				System.out.println("Dodao sam post.");
 			}
-		}		
+		}
+	}
+
+	public ArrayList<String> getPostsOfPublicUsers() {
+		ArrayList<String> posts = new ArrayList<String>();
+		for (User user : findAll()) {
+			if (!user.isPrivate())
+				posts.addAll(user.getPosts());
+		}
+		return posts;
 	}
 
 }

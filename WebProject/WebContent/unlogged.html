@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meetply</title>
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.1.6/css/unicons.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="images/logo.png">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <!--NAVBAR-->
+    <nav>
+        <div class="container">
+            <img src="images/Meeply.png" class="logo">
+        </div>
+    </nav>
+
+    <main>
+        <div class="container">
+            <div class="left">
+                <!--SIDEBAR-->
+                <div class="sidebar">
+                    <a class="menu-item active" id="homepage">
+                        <span><i class="uil uil-home"></i></span>
+                        <h3>Home page</h3>
+                    </a>
+                    <a class="menu-item" id="search" onclick="goToSearch()">
+                        <span><i class="uil uil-search"></i></span>
+                        <h3>Search people</h3>
+                    </a>
+                    <a class="menu-item" id="log-in" onclick="logIn()">
+	                    <span><i class="uil uil-sign-in-alt"></i></span>
+	                    <h3>Log In</h3>
+                    </a>
+                    <a class="menu-item" id="register" onclick="register()">
+	                    <span><i class="uil uil-user-circle"></i></span>
+	                    <h3>Create an account</h3>
+                    </a>
+                    <a class="menu-item" id="themes">
+                        <span><i class="uil uil-palette"></i></span>
+                        <h3>Themes</h3>
+                    </a>
+                </div>
+
+            </div>
+
+            <div class="middle">
+                <!--Feed-->
+                <div class="feeds" id="feeds"></div>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="js/unloggedFeed.js"></script>
+
+</body>
+
+</html>

@@ -24,6 +24,46 @@ $("#search-btn").click(function search() {
     });
 })
 
+$(document).ready(function() {
+	if(!getCurrentUser()) {
+		$('#my-profile-a').hide();
+		$('#messages').hide();
+		$('#log-out-a').hide();
+		$('#buttons').hide();
+		$('.sidebar').append('<a class="menu-item" id="log-in" onclick="logIn()"><span><i class="uil uil-sign-in-alt"></i></span><h3>Log In</h3></a>');
+		$('.sidebar').append('<a class="menu-item" id="register" onclick="register()"><span><i class="uil uil-user-circle"></i></span><h3>Create an account</h3></a>');
+	}
+})
+
+function goToFeed() {
+	if(!getCurrentUser()) {
+		window.location.href = "unlogged.html";
+	} else {
+		window.location.href = "feed.html";
+	}
+}
+
+function logIn() {
+	window.location.href = "index.html";
+}
+
+function register() {
+	window.location.href = "register.html";
+}
+
+function getCurrentUser() {
+	$.ajax({
+		url: "rest/profile/",
+		type: "GET",
+		contentType: "application/json",
+		dataType: "json",
+		complete: function(data) {
+			var user = data.responseJSON;
+			return user;
+		}
+	});
+}
+
 function compare(an, bn) {
 	if(an > bn) {
 		return 1;

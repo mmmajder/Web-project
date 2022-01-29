@@ -36,6 +36,10 @@
     margin: 5% auto 5% auto;
 }
 
+#just-looking {
+	cursor: pointer;
+}
+
 .register,
 .register span {
     font-size: 25px;
