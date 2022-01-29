@@ -1,9 +1,3 @@
-function loadUser(user, logged) {
-	setBio(user);
-	$("#edit-profile").hide();
-
-}
-
 function clear() {
 	$('.showing div').removeClass('visible');
 	$('.navbar label').removeClass('active');
@@ -489,13 +483,13 @@ function viewComments(postID) {
         		event.preventDefault();
         		return;
         	}
-			loadComments(comments, postID);
+        	loadCommentsOnPost(comments, postID);
         	event.preventDefault();
         }
     });
 }
 
-function loadComments(comments, id) {
+function loadCommentsOnPost(comments, id) {
 	$('#' + id + ' #view-comments').append('<div class="comment-section"><p>Comments</p><div class="comments-content"' + ' id="' + id + '"></div></div>');
 	for (let i = comments.length - 1; i >= 0; i -= 1) {
 		$('#' + id + ' #view-comments').append(makeComment(comments[i], id));

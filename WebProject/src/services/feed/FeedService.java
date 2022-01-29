@@ -20,14 +20,11 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.xml.bind.DatatypeConverter;
 
-import beans.Comment;
 import beans.Post;
 import beans.User;
 import dao.comment.CommentDAO;
 import dao.person.UserDAO;
 import dao.post.PostDAO;
-import services.profile.CommentData;
-import services.profile.CommentReturnData;
 
 @Path("/feed")
 public class FeedService {
