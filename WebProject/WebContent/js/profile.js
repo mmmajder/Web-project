@@ -1,9 +1,3 @@
-function loadUser(user, logged) {
-	setBio(user);
-	$("#edit-profile").hide();
-
-}
-
 function clear() {
 	$('.showing div').removeClass('visible');
 	$('.navbar label').removeClass('active');
@@ -368,33 +362,18 @@ function makeFriendTemplate(user) {
 	return $(cardTemplate.join(''));
 }
 
-function getLogged(callback) {
-	$.ajax({
-		url: "rest/profile/",
-		type: "GET",
-		contentType: "application/json",
-		dataType: "json",
-		complete: function(data) {
-			var loggedUser = data.responseJSON;
-			callback(loggedUser);
-		}
-	});
-
-}
-
-$(".friend-name").click(function() {
+$(".friendships").on('click', 'div.friend-name', function() {
 	var id = $(this).attr('id');
-	var url = "rest/profile/viewOtherProfile?loggedId=" + "&userId=" + id;
+	console.log(id);
 	$.ajax({
-		url: url,
-		type: "GET",
+		url: "rest/profile/viewOtherProfile",
+		type: "POST",
 		contentType: "application/json",
 		dataType: "json",
+		data: id,
 		complete: function(data) {
-			var user = data.responseJSON;
-			getLogged(function(loggedUser) {
-				loadUser(user, logged);
-			})
+		//	var user = data.responseJSON;
+			window.open("otherProfile.html", '_self').focus();
 		}
 	});
 });

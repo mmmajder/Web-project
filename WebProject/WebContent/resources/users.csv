@@ -1,7 +1,7 @@
 id;username;password;email;name;surname;dateOfBirth;gender;profilePicture;biography;friendIDs;friendRequestIDs;postIDs;pictureIDs;chats;isPrivate;isBlocked;isAdmin
-U00001;pera;pera12345;pera@gmail.com;Pera;Perić;2000-01-01;MALE;user1.png;Mlad lep zgodan;;FR000001|FR000002;PO00001|PO00002|PO00003;;true;false;false
+U00001;pera;pera12345;pera@gmail.com;Pera;Perić;2000-01-01;MALE;user1.png;Mlad lep zgodan;U00004;FR000001|FR000002;PO00001|PO00002|PO00003;C000004;true;false;false
 U00002;ana;ana12345;ana@gmail.com;Ana;Anić;1998-01-01;FEMALE;user2.jpg;Kuvam perem peglam;U00003|U00004;;PO00004;C000001|C000002;false;false;false
-U00003;jova;jova12345;jova@gmail.com;Jova;Jovičić;1965-05-05;MALE;user3.jpg;Mlad lep zgodan 2.;U00002;;PO00005|PO00006;C000001;false;false;false
-U00004;masa;masa12345;masa@gmail.com;Maša;Mašić;1965-05-05;FEMALE;bear5.jpg;Mlada lepa zgodna;U00002;;;C000002;false;false;false
+U00003;jova;jova12345;jova@gmail.com;Jova;Jovičić;1965-05-05;MALE;user3.jpg;Mlad lep zgodan 2.;U00002|U00004;;PO00005|PO00006;C000001|C000003;false;false;false
+U00004;masa;masa12345;masa@gmail.com;Maša;Mašić;1965-05-05;FEMALE;bear5.jpg;Mlada lepa zgodna;U00002|U00003|U00001;;;C000002|C000003|C000004;true;false;false
 A00001;administrator1;administrator1;admin1@gmail.com;Stana;Stanić;1990-01-01;FEMALE;admin1.jpg;Ne nemoj mi prici;;;;;true;false;true
 A00002;administrator2;administrator2;admin2@gmail.com;Marko;Marković;1978-02-02;MALE;admin2.png;Works at: Sam svoj gazda;;;;;true;false;true

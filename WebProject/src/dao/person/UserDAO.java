@@ -249,6 +249,16 @@ public class UserDAO {
 		return loggedUser.getFriends().stream().filter(otherUser.getFriends()::contains).collect(Collectors.toList())
 				.size();
 	}
+	
+	public ArrayList<User> getMutualFriends(User loggedUser, User otherUser) {
+		System.out.println(loggedUser);
+		List<String> ids = loggedUser.getFriends().stream().filter(otherUser.getFriends()::contains).collect(Collectors.toList());
+		ArrayList<User> users = new ArrayList<User>();
+		for (String id : ids) {
+			users.add(findById(id));
+		}
+		return users;
+	}
 
 	public ArrayList<User> getFriends(User user) {
 		ArrayList<User> users = new ArrayList<User>();
