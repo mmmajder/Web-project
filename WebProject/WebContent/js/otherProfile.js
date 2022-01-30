@@ -350,7 +350,6 @@ $("#add-comment").click(function() {
 			getLogged(function(user) {
 				if (user.id == comment.authorId) {
 					$('#' + comment.id).append('<span class="edit" onclick="editComment(\'' + comment.id + '\',\'' + comment.text + '\',\'' + postID + '\')"><i class="uil uil-edit"></i></span>');
-					console.log("jsm");
 				} 
 				if (user.id == comment.authorId || user.admin) {
 					$('#' + comment.id).append('<span class="del" onclick="deleteComment(\'' + comment.id + '\',\'' + postID + '\')"><i class="uil uil-trash-alt"></i></span>');
@@ -437,7 +436,7 @@ function addComment(id) {
 	}
 }
 
-function viewComments(postID) {
+export function viewComments(postID) {
 	$.ajax({
         url: "rest/profile/loadComments",
         type: "POST",

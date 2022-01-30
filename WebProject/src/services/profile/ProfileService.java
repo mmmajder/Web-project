@@ -137,7 +137,12 @@ public class ProfileService {
 	public ArrayList<CommentReturnData> loadComments(@Context HttpServletRequest request, String photoID) {
 		PostDAO postDAO = (PostDAO) ctx.getAttribute("postDAO");
 		CommentDAO commentDAO = (CommentDAO) ctx.getAttribute("commentDAO");
-		Post post = postDAO.findById(photoID.split(":")[1].replace("\"", "").replace("}", ""));
+		Post post;
+		if(photoID.contains("{")) {
+			post = postDAO.findById(photoID.split(":")[1].replace("\"", "").replace("}", ""));			
+		} else {
+			post = postDAO.findById(photoID);
+		}
 		User user = (User) request.getSession().getAttribute("logged");
 		System.out.println(post);
 		System.out.println(user);

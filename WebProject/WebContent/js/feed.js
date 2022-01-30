@@ -10,7 +10,7 @@ function createFriendReqCard(cardData) {
 		'"></div><div><h5>',
 		cardData.name + ' ' + cardData.surname,
 		'</h5><p class="text-muted">',
-		cardData.numberOfMutualFriends + ' multural friends',
+		cardData.numberOfMutualFriends + ' mutual friends',
 		'</p></div></div><div class="action">',
 		'<button class="btn btn-primary">Accept</button>',
 		'<button class="btn decline">Decline</button>',
@@ -67,7 +67,7 @@ function addNewPost(postAsPicture) {
 						    	picture: postAsPicture,
 						    	description: des
 						    });
-	if(des != "" || picLoc != "") {
+	if((des != "" && postAsPicture=="false") || (picLoc != "" && postAsPicture=="true")) {
 		$.ajax({
 	        url: "rest/feed/createNewPost",
 	        type: "POST",
@@ -79,8 +79,13 @@ function addNewPost(postAsPicture) {
 				createNewPost(newPost, function(p) {
 					if(postAsPicture == "false") {
 						$('#feeds').prepend(p);
+					} else {
+						window.location.href = "profile.html";
 					}
 				});
+				$("#post-text").val('');
+				$('#add-post-image').attr('src', '');
+				event.preventDefault();
 	        }
 	    });
 	} else {
@@ -108,17 +113,6 @@ function goToMessages() {
 
 function logOut() {
 	window.location.href = "index.html";
-}
-
-// remove active class from all menu items
-const changeActiveItem2 = () => {
-	$('.menu-item').forEach(item => {
-		item.classList.remove('active');
-	})
-}
-
-function changeActiveItem() {
-	$('.menu-item').removeClass('active');
 }
 
 // add new image
