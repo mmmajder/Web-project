@@ -12,7 +12,6 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
@@ -47,7 +46,7 @@ public class ProfileService {
 	}
 
 	@GET
-	@Path("/")
+	@Path("/getUser")
 	@Produces(MediaType.APPLICATION_JSON)
 	public User getUser(@Context HttpServletRequest request) {
 		return (User) request.getSession().getAttribute("logged");
@@ -97,10 +96,16 @@ public class ProfileService {
 		return ((UserDAO) ctx.getAttribute("userDAO")).getFriends((User) request.getSession().getAttribute("logged"));
 	}
 
-	@GET
+	@POST
 	@Path("/viewOtherProfile")
-	public String getBooks(@QueryParam("num") int num) {
-		return "/rest/demo/books received QueryParam 'num': " + num;
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public User viewOtherProfile(@Context HttpServletRequest request, String id) {
+		System.out.println(id);
+		User user = ((UserDAO) ctx.getAttribute("userDAO")).findById(id);
+		System.out.println("prvo " + user);
+		request.getSession().setAttribute("otherProfile", user);
+		return user;
 	}
 
 	@DELETE
@@ -136,8 +141,15 @@ public class ProfileService {
 	public ArrayList<CommentReturnData> loadComments(@Context HttpServletRequest request, String photoID) {
 		PostDAO postDAO = (PostDAO) ctx.getAttribute("postDAO");
 		CommentDAO commentDAO = (CommentDAO) ctx.getAttribute("commentDAO");
-		Post post = postDAO.findById(photoID.split(":")[1].replace("\"", "").replace("}", ""));
-		User user = (User) request.getSession().getAttribute("logged");
+		Post post;
+		if(photoID.contains("{")) {
+			post = postDAO.findById(photoID.split(":")[1].replace("\"", "").replace("}", ""));			
+		} else {
+			post = postDAO.findById(photoID);
+		}
+	    User user = (User) request.getSession().getAttribute("logged");
+		System.out.println(post);
+		System.out.println(user);
 		return commentDAO.getCommentsOnPost(post, user);
 	}
 
@@ -154,6 +166,8 @@ public class ProfileService {
 				LocalDateTime.now(), false);
 		commentDAO.addComment(comment);
 		postDAO.addComment(post, comment);
+		System.out.println(post);
+		System.out.println(comment);
 		return new CommentReturnData(comment.getId(), comment.getText(), user.getId(), user.getName(),
 				user.getSurname(), comment.getCreated(), comment.getLastEdited(), user.getProfilePicture());
 	}
@@ -172,5 +186,26 @@ public class ProfileService {
 		
 	}
 	
+	@POST
+	@Path("/editComment")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Comment editComment(@Context HttpServletRequest request, CommentEditData commentData) {
+		CommentDAO commentDAO = (CommentDAO) ctx.getAttribute("commentDAO");
+		commentDAO.editComment(commentData.getCommentID(), commentData.getText());
+		return commentDAO.findById(commentData.getCommentID());
+	}
+	
+	@POST
+	@Path("/deleteComment")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Comment deleteComment(@Context HttpServletRequest request, CommentEditData commentData) {
+		CommentDAO commentDAO = (CommentDAO) ctx.getAttribute("commentDAO");
+		commentDAO.deleteComment(commentData.getCommentID());
+		PostDAO postDAO = (PostDAO) ctx.getAttribute("postDAO");
+		postDAO.deleteComment(commentData.getPostID(), commentData.getCommentID());
+		return commentDAO.findById(commentData.getCommentID());
+	}
 
 }

@@ -15,7 +15,7 @@ function register() {
 
     var s = JSON.stringify(data);
     $.ajax({
-        url: "rest/register/",
+        url: "rest/register/register",
         type: "POST",
         data: s,
         contentType: "application/json",

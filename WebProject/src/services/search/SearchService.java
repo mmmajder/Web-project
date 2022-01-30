@@ -30,7 +30,7 @@ public class SearchService {
 	}
 
 	@POST
-	@Path("/")
+	@Path("/search")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public ArrayList<UserSearchData> searchUsers(@Context HttpServletRequest request, SearchData data) {

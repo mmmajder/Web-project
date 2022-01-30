@@ -27,7 +27,7 @@ public class RegistrationService {
 	}
 
 	@POST
-	@Path("/")
+	@Path("/register")
 	@Produces(MediaType.APPLICATION_JSON)
 	public User register(@Context HttpServletRequest request, RegisterUser registerUser) {
 		if (!registerUser.getPassword().equals(registerUser.getPassword2())) {

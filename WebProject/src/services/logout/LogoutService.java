@@ -13,7 +13,7 @@ import beans.User;
 @Path("/logout")
 public class LogoutService {
 	@GET
-	@Path("/")
+	@Path("/logout")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public boolean logout(@Context HttpServletRequest request) {

@@ -168,6 +168,13 @@ body {
     aspect-ratio: 1/1;
     border-radius: 50%;
     overflow: hidden;
+    text-align: center;
+}
+
+.profile-picture img {
+	object-fit: cover;
+	width: 2.7rem;
+    height: 2.7rem;
 }
 
 .profile-photo {
@@ -1008,6 +1015,11 @@ h4 {
 
 .photos {
     padding: var(--card-padding);
+}
+
+.private {
+	padding: var(--card-padding);
+	text-align: center;
 }
 
 .photos .row {

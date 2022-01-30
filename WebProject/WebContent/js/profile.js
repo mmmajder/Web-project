@@ -31,7 +31,7 @@ function setBio(user) {
 
 $(document).ready(function() {
 	$.ajax({
-		url: "rest/profile/",
+		url: "rest/profile/getUser",
 		type: "GET",
 		contentType: "application/json",
 		dataType: "json",
@@ -100,7 +100,7 @@ function logOut() {
 $("#edit-profile").click(function() {
 	$(".edit-profile-card").fadeIn();
 	$.ajax({
-		url: "rest/profile/",
+		url: "rest/profile/getUser",
 		type: "GET",
 		contentType: "application/json",
 		dataType: "json",
@@ -159,9 +159,7 @@ $("#edit-profile-save-changed").click(function() {
 			$(".profile-name-surname").html(data.name + " " + data.surname)
 		}
 	});
-
 });
-
 
 $(".cancel-btn").click(function() {
 	$(".edit-profile-card").fadeOut();
@@ -210,7 +208,18 @@ function viewdetails() {
         	$("#comments-content").empty();
         	if (comments.length == 0)
 				return;
-			loadComments(comments);
+        	for (let i = comments.length - 1; i >= 0; i -= 1) {
+        		$("#comments-content").append(makeComment(comments[i], $("#post-image img").attr("id")));
+    			getLogged(function(user) {
+    				if (user.id == comments[i].authorId) {
+    					$('#' + comments[i].id).append('<span class="edit" onclick="editComment(\'' + comments[i].id + '\',\'' + comments[i].text + '\',\'' + postID.id + '\')"><i class="uil uil-edit"></i></span>');
+    					console.log("jsm");
+    				} 
+    				if (user.id == comments[i].authorId || user.admin) {
+    					$('#' + comments[i].id).append('<span class="del" onclick="deleteComment(\'' + comments[i].id + '\',\'' + postID.id + '\')"><i class="uil uil-trash-alt"></i></span>');
+    				} 
+    			});
+        	}
         }
     });
 }
@@ -230,8 +239,9 @@ function deletePost() {
         data: postID,
         contentType: "application/json",
         complete: function(data) {
-        	alert("photo deleted.");
         	loadPhotos(data.responseJSON);
+        	$(".photo-details-card").fadeOut();
+        	$('body').removeClass('stop-scrolling');
         }
     });
 }
@@ -391,7 +401,7 @@ function openChat(userId) {
 
 function getLogged(callback) {
 	$.ajax({
-		url: "rest/profile/",
+		url: "rest/profile/getUser",
 		type: "GET",
 		contentType: "application/json",
 		dataType: "json",
@@ -403,19 +413,16 @@ function getLogged(callback) {
 
 }
 
-$(".friend-name").click(function() {
+$(".friendships").on('click', 'div.friend-name', function() {
 	var id = $(this).attr('id');
-	var url = "rest/profile/viewOtherProfile?loggedId=" + "&userId=" + id;
 	$.ajax({
-		url: url,
-		type: "GET",
+		url: "rest/profile/viewOtherProfile",
+		type: "POST",
 		contentType: "application/json",
 		dataType: "json",
+		data: id,
 		complete: function(data) {
-			var user = data.responseJSON;
-			getLogged(function(loggedUser) {
-				loadUser(user, logged);
-			})
+			window.open("otherProfile.html", '_self').focus();
 		}
 	});
 });
@@ -432,7 +439,16 @@ $("#add-comment").click(function() {
 		dataType: "json",
 		complete: function(data) {
 			comment = data.responseJSON;
-			$("#comments-content").append(makeComment(comment));
+			$("#comments-content").append(makeComment(comment, id));
+			getLogged(function(user) {
+				if (user.id == comment.authorId) {
+					$('#' + comment.id).append('<span class="edit" onclick="editComment(\'' + comment.id + '\',\'' + comment.text + '\',\'' + id + '\')"><i class="uil uil-edit"></i></span>');
+				} 
+				if (user.id == comment.authorId || user.admin) {
+					$('#' + comment.id).append('<span class="del" onclick="deleteComment(\'' + comment.id + '\',\'' + id + '\')"><i class="uil uil-trash-alt"></i></span>');
+				} 
+			});
+			$("#comment-text").val('');
         }
     });
 });
@@ -443,19 +459,19 @@ function makeComment(comment, postID) {
         '<div class="message-container">',
         '<div class="profile-picture">',
         '<img src="images/userPictures/' + comment.authorId + '/' + comment.profilePicture + '">',
-        '</div><div>' + comment.name + ' ' + comment.lastname + '  ',
+        '</div><div class="comment-author" id="' + comment.author + '">' + comment.name + ' ' + comment.lastname + '  ',
         '</div><div class="message-text"><span style="font-size:10px;">',
         comment.text,
         '</span></div></div><small style="font-size:8px;margin-left:1rem;color:black;">Last edited: ' + comment.lastEdited,
-        '  </small><span class="edit"><i class="uil uil-edit" onclick="editComment(\'' + comment + ',' + postID + '\')"></i></span></div>'
+        '  </small></div>'
 	];
 	return $(cardTemplate.join(''));
 }
 
-function editComment(comment, postID) {
-	let text = prompt("Edit comment", comment.text);
+function editComment(comID, comText, pid) {
+	let text = prompt("Edit comment", comText);
 	  if (text != null) {
-		var c = JSON.stringify({text: text, postID: id});
+		var c = JSON.stringify({commentID: comID, text: text, postID: pid});
 		  $.ajax({
 				url: "rest/profile/editComment",
 				type: "POST",
@@ -466,8 +482,26 @@ function editComment(comment, postID) {
 					comment = data.responseJSON;
 					$('#' + comment.id + ' small').empty();
 					$('#' + comment.id + ' small').append('Last edited: ' + comment.lastEdited);
-					$('#' + comment.id + ' .message-text').empty();
-					$('#' + comment.id + ' .message-text').append('<span style="font-size:10px;">' + comment.text + '</span>');
+					$('#' + comment.id + ' .message-text span').empty();
+					$('#' + comment.id + ' .message-text span').append(comment.text);
+					event.preventDefault();
+		        }
+		    });
+	  }
+}
+
+function deleteComment(comID, pid) {
+	  if (confirm('Are you sure you want to delete this comment?')) {
+		var c = JSON.stringify({commentID: comID, text: '', postID: pid});
+		  $.ajax({
+				url: "rest/profile/deleteComment",
+				type: "POST",
+				data: c,
+				contentType: "application/json",
+				dataType: "json",
+				complete: function(data) {
+					comment = data.responseJSON;
+					$('#' + comment.id).hide();
 					event.preventDefault();
 		        }
 		    });
@@ -522,4 +556,3 @@ function loadCommentsOnPost(comments, id) {
 		$('#' + id + ' #view-comments').append(makeComment(comments[i], id));
 	}
 }
-

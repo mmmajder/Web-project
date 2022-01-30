@@ -183,15 +183,15 @@ public class PostDAO {
 	}
 
 	public ArrayList<Post> getUserFeed(User u) {
-        ArrayList<String> people = new ArrayList<String>();
-        for(String f : u.getFriends()) {
-            people.add(f);
-        }
-        people.add(u.getId());
-        ArrayList<Post> retPosts = findByAuthorId(people);
-        return (ArrayList<Post>) retPosts.stream().sorted(Comparator.comparing(Post::getPosted).reversed())
-                .collect(Collectors.toList());
-    }
+		ArrayList<String> people = new ArrayList<String>();
+		for (String f : u.getFriends()) {
+			people.add(f);
+		}
+		people.add(u.getId());
+		ArrayList<Post> retPosts = findByAuthorId(people);
+		return (ArrayList<Post>) retPosts.stream().sorted(Comparator.comparing(Post::getPosted).reversed())
+				.collect(Collectors.toList());
+	}
 
 	public String delete(String postID) {
 		for (Post post : findAll()) {
@@ -208,12 +208,22 @@ public class PostDAO {
 		ArrayList<Post> retPosts = new ArrayList<Post>();
 		for (String p : publicUsersPosts) {
 			Post post = findById(p);
-			if(!post.isPicture()) {
+			if (!post.isPicture()) {
 				retPosts.add(post);
 			}
 		}
 		return (ArrayList<Post>) retPosts.stream().sorted(Comparator.comparing(Post::getPosted).reversed())
 				.collect(Collectors.toList());
+	}
+
+	public void deleteComment(String postID, String commentID) {
+		for (Post post : findAll()) {
+			if (post.getId().equals(postID)) {
+				post.deleteComment(commentID);
+				this.writeFile();
+				return;
+			}
+		}
 	}
 
 }

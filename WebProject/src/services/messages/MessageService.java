@@ -104,17 +104,17 @@ public class MessageService {
 		return userDAO.hasNotSeenMessages(user, dmDAO, chatDao);
 	}
 	
-	@POST
-	@Path("/openedChat")
-	@Consumes(MediaType.APPLICATION_JSON)
-	public void getChat(@Context HttpServletRequest request, String id) {
-		User user = (User) request.getSession().getAttribute("logged");
-		UserDAO userDAO = (UserDAO) ctx.getAttribute("userDAO");
-		User otherUser = userDAO.findById(id);
-		ChatDAO chatDao = (ChatDAO) ctx.getAttribute("chatDAO");
-		Chat chat = chatDao.getChatForUsers(user, otherUser);
-		request.getSession().setAttribute("openedChat", chat);
-	}
+//	@POST
+//	@Path("/openedChat")
+//	@Consumes(MediaType.APPLICATION_JSON)
+//	public void getChat(@Context HttpServletRequest request, String id) {
+//		User user = (User) request.getSession().getAttribute("logged");
+//		UserDAO userDAO = (UserDAO) ctx.getAttribute("userDAO");
+//		User otherUser = userDAO.findById(id);
+//		ChatDAO chatDao = (ChatDAO) ctx.getAttribute("chatDAO");
+//		Chat chat = chatDao.getChatForUsers(user, otherUser);
+//		request.getSession().setAttribute("openedChat", chat);
+//	}
 	
 	@GET
 	@Path("/openedChat")

@@ -19,7 +19,7 @@
             <img src="images/Meeply.png" class="logo">
             <div id="buttons">
                 <span><i id="homepage" class="uil uil-home" onclick="goToHomepage()"></i></span>
-                <span><i id="my-profile" class="uil uil-user-circle"></i></span>
+                <span><i id="my-profile" class="uil uil-user-circle" onclick="goToMyProfile()"></i></span>
                 <span><i id="log-out" class="uil uil-sign-out-alt" onclick="logOut()"></i></span>
             </div>
         </div>
@@ -35,7 +35,8 @@
                     </div>
                     <div class="user-info">
                         <div class="profile-user-settings">
-                            <button id="edit-profile" class="btn"><i class="uil uil-edit-alt"></i> Edit Profile</button>
+                            <button id="add-remove-friend" class="btn">+ Add friend</button>  
+                            <button id="edit-profile" class="btn"><i class="uil uil-comment-message"></i>Send message</button>  
                             <h1 class="profile-user-name" id="profile-user-name"></h1>
                         </div>
                         <div>
@@ -60,10 +61,15 @@
                     <div class="navbar">
                         <label class="active" id="photos">Photos</label>
                         <label id="posts">Posts</label>
-                        <label id="friends">Friends</label>
+                        <label id="friends">Mutual friends</label>
                     </div>
                 </div>
                 <div class="showing">
+                	<!--Private profile-->
+                	<div class="private">
+                		<label>This account is private.</label>
+                	</div>
+                	
                     <!--Photos-->
                     <div class="photos visible">
                         <div class="row">
@@ -74,8 +80,10 @@
                     </div>
 
                     <!--Posts-->
-                    <div class="feeds posts" id="feeds"></div>
-
+					<div class="container">
+						<div class="feeds posts" id="feeds"></div>
+					</div>
+					
                     <!--Friends-->
                     <div class="container">
                         <div class="friends">
@@ -84,136 +92,10 @@
                                 <input type="search" placeholder="Search friends" id="friends-search">
                             </div>
                             <div class="friendships">
-                                <div class="friendship">
-                                    <div class="profile-picture">
-                                        <img src="images/profile-1.jpg">
-                                    </div>
-                                    <div>
-                                        <h3 id="friend-data">Milan Ajder</h3>
-                                    </div>
-                                    <div class="buttons">
-                                        <div class="btn" id="open-chat">
-                                            <i class="uil uil-message"></i>
-                                            <label>Send a Message</label>
-                                        </div>
-                                        <div class="btn" id="remove-friend">
-                                            <i class="uil uil-multiply"></i>
-                                            <label>Remove Friend</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="friendship">
-                                    <div class="profile-picture">
-                                        <img src="images/profile-1.jpg">
-                                    </div>
-                                    <div>
-                                        <h3 id="friend-data">Milan Ajder</h3>
-                                    </div>
-                                    <div class="buttons">
-                                        <div class="btn" id="open-chat">
-                                            <i class="uil uil-message"></i>
-                                            <label>Send a Message</label>
-                                        </div>
-                                        <div class="btn" id="remove-friend">
-                                            <i class="uil uil-multiply"></i>
-                                            <label>Remove Friend</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="friendship">
-                                    <div class="profile-picture">
-                                        <img src="images/profile-1.jpg">
-                                    </div>
-                                    <div>
-                                        <h3 id="friend-data">Pera Peric</h3>
-                                    </div>
-                                    <div class="buttons">
-                                        <div class="btn" id="open-chat">
-                                            <i class="uil uil-message"></i>
-                                            <label>Send a Message</label>
-                                        </div>
-                                        <div class="btn" id="remove-friend">
-                                            <i class="uil uil-multiply"></i>
-                                            <label>Remove Friend</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="friendship">
-                                    <div class="profile-picture">
-                                        <img src="images/profile-1.jpg">
-                                    </div>
-                                    <div>
-                                        <h3 id="friend-data">Mika Mikic</h3>
-                                    </div>
-                                    <div class="buttons">
-                                        <div class="btn" id="open-chat">
-                                            <i class="uil uil-message"></i>
-                                            <label>Send a Message</label>
-                                        </div>
-                                        <div class="btn" id="remove-friend">
-                                            <i class="uil uil-multiply"></i>
-                                            <label>Remove Friend</label>
-                                        </div>
-                                    </div>
-                                </div>
+                                
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <!--Edit profile-->
-        <div class="edit-profile-card">
-
-            <div class="div">
-                <span style="float: right;"><i id="cancel-edit" class="uil uil-times"></i></span>
-                <h3>Edit profile</h3>
-            </div>
-            <div class="row">
-                <div class="column">
-
-                    <label for="name">Name</label>
-                    <input type="text" placeholder="Enter Name" id="name" name="name" required><br>
-
-                    <label for="surname">Surname</label>
-                    <input type="text" placeholder="Enter Surname" id="surname" name="surname" required><br>
-
-                    <label for="password">New Password</label>
-                    <input type="password" placeholder="Enter Password" id="password" name="password"><br>
-
-                    <label for="password2">Re-enter your new Password</label>
-                    <input type="password" placeholder="Re-Enter Password" id="password2" name="password2"><br>
-
-                </div>
-                <div class="column">
-
-                    <label for="gender">Gender</label><br>
-                    <select class="gender" id="gender" name="gender" required>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                    </select>
-
-                    <label for="dateOfBirth">Date of Birth</label>
-                    <input type="date" id="dateOfBirth" name="dateOfBirth" required>
-
-                    <label for="biography">Biography</label>
-                    <input type="text" placeholder="Biography" id="biography" name="biography">
-
-                    <label for="privacy">Privacy</label><br>
-					<select class="privacy" id="privacy" name="privacy" required>
-                        <option value="private">Private</option>
-                        <option value="public">Public</option>
-                    </select>
-                </div>
-                <br><label for="resultEdit" id="resultEdit"></label>
-            </div>
-            <div class="buttons">
-                <div class="btn btn-primary">
-                    <span>Save changes</span>
-                </div>
-                <div class="btn cancel-btn">
-                    <span>Cancel</span>
                 </div>
             </div>
         </div>
@@ -226,83 +108,25 @@
             <div class="row">
                 <div class="column">
                     <div id="post-image">
-                        <img src="images/logInBackground.jpg">
+                        <img>
                     </div>
                 </div>
                 <div class="column">
-                    <label id="image-description">Ovo je opis slike</label><br>
+                    <label id="image-description"></label><br>
                     <div class="photo-comments">
-                        <div class="comments-content">
-                            <div class="message-left">
-                                <div class="message-container">
-                                    <div class="profile-picture">
-                                        <img src="images/profile-1.jpg">
-                                    </div>
-                                    <div class="message-text">
-                                        <span>Hejj</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="message-left">
-                                <div class="message-container">
-                                    <div class="profile-picture">
-                                        <img src="images/profile-1.jpg">
-                                    </div>
-                                    <div class="message-text">
-                                        <span>Hejj</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="message-left">
-                                <div class="message-container">
-                                    <div class="profile-picture">
-                                        <img src="images/profile-1.jpg">
-                                    </div>
-                                    <div class="message-text">
-                                        <span>Hejj</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="message-left">
-                                <div class="message-container">
-                                    <div class="profile-picture">
-                                        <img src="images/profile-1.jpg">
-                                    </div>
-                                    <div class="message-text">
-                                        <span>Hejj</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="message-left">
-                                <div class="message-container">
-                                    <div class="profile-picture">
-                                        <img src="images/profile-1.jpg">
-                                    </div>
-                                    <div class="message-text">
-                                        <span>Hejj</span>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="comments-content" id="comments-content">
+                            
                         </div>
                     </div>
                     <div class="add-comment">
                         <input type="text" placeholder="Type comment..." id="comment-text">
                         <span><i id="add-comment" class="uil uil-enter"></i></span>
                     </div>
-
-                    <div class="buttons">
-                        <div class="btn btn-primary">
-                            <span>Set as profile photo</span>
-                        </div>
-                        <div class="btn cancel-btn">
-                            <span>Delete photo</span>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <script src="js/profile.js"></script>
+    <script src="js/otherProfile.js"></script>
 </body>
 
 </html>

@@ -12,7 +12,7 @@ $("#search-btn").click(function search() {
     var s = JSON.stringify(getSearchData());
     
 	$.ajax({
-        url: "rest/search/",
+        url: "rest/search/search",
         type: "POST",
         data: s,
         contentType: "application/json",

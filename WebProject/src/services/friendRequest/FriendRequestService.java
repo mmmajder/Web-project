@@ -40,7 +40,7 @@ public class FriendRequestService {
 	}
 	
 	@GET
-	@Path("/")
+	@Path("/getRequests")
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<UserSearchData> getFriendRequests(@Context HttpServletRequest request) {
 		User user = (User) request.getSession().getAttribute("logged");

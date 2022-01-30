@@ -13,7 +13,7 @@ function createFriendReqCard(cardData) {
 		'"></div><div><h5>',
 		cardData.name + ' ' + cardData.surname,
 		'</h5><p class="text-muted">',
-		cardData.numberOfMutualFriends + ' multural friends',
+		cardData.numberOfMutualFriends + ' mutual friends',
 		'</p></div></div><div class="action">',
 		'<button class="btn btn-primary" id="',
 		cardData.id,
@@ -57,7 +57,7 @@ $(".friend-requests").on('click', 'button.decline', function() {
 var socket
 $(document).ready(function() {
 	try{
-		socket = new WebSocket("ws://localhost:9000/WebProject/websocket/echoAnnotation");
+		socket = new WebSocket("ws://localhost:8088/WebProject/websocket/echoAnnotation");
 		socket.onopen = function() {
 			console.log("otvoren soket")
 		}
@@ -100,7 +100,7 @@ function receiveMessage(msg) {
 
 $(document).ready(function() {
 	$.ajax({
-		url: "rest/friendRequest/",
+		url: "rest/friendRequest/getRequests",
 		type: "GET",
 		contentType: "application/json",
 		complete: function(data) {
@@ -114,7 +114,7 @@ $(document).ready(function() {
 	});
 	
 	$.ajax({
-        url: "rest/feed/",
+        url: "rest/feed/getUserPosts",
         type: "GET",
         contentType: "application/json",
         complete: function(data) {
@@ -146,7 +146,7 @@ function addNewPost(postAsPicture) {
 						    	picture: postAsPicture,
 						    	description: des
 						    });
-	if(des != "" || picLoc != "") {
+	if((des != "" && postAsPicture=="false") || (picLoc != "" && postAsPicture=="true")) {
 		$.ajax({
 	        url: "rest/feed/createNewPost",
 	        type: "POST",
@@ -158,8 +158,13 @@ function addNewPost(postAsPicture) {
 				createNewPost(newPost, function(p) {
 					if(postAsPicture == "false") {
 						$('#feeds').prepend(p);
+					} else {
+						window.location.href = "profile.html";
 					}
 				});
+				$("#post-text").val('');
+				$('#add-post-image').attr('src', '');
+				event.preventDefault();
 	        }
 	    });
 	} else {
