@@ -374,7 +374,6 @@ function removeFriend(userId) {
     });
 }
 
-
 function openChat(userId) {
 	$.ajax({
 		url: "rest/messages/openedChat",

@@ -19,6 +19,7 @@ import javax.ws.rs.core.MediaType;
 import beans.Comment;
 import beans.Post;
 import beans.User;
+import dao.chat.ChatDAO;
 import dao.comment.CommentDAO;
 import dao.person.UserDAO;
 import dao.post.PostDAO;
@@ -39,6 +40,9 @@ public class ProfileService {
 		}
 		if (ctx.getAttribute("commentDAO") == null) {
 			ctx.setAttribute("commentDAO", new CommentDAO(contextPath));
+		}
+		if (ctx.getAttribute("chatDAO") == null) {
+			ctx.setAttribute("chatDAO", new ChatDAO(contextPath));
 		}
 	}
 
@@ -162,6 +166,9 @@ public class ProfileService {
 		User loggedUser = (User) request.getSession().getAttribute("logged");
 		UserDAO userDAO = (UserDAO) ctx.getAttribute("userDAO");
 		userDAO.removeFriend(loggedUser.getId(), otherUserId);
+		
+	//	ChatDAO chatDAO = (ChatDAO) ctx.getAttribute("chatDAO");
+	//	chatDAO.removeChat(loggedUser, userDAO.findById(otherUserId));
 		
 	}
 	
