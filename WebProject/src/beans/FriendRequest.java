@@ -11,7 +11,8 @@ public class FriendRequest {
 	private LocalDateTime dateOfRequest;
 	private FriendRequestState state;
 
-	public FriendRequest(String id, String sender, String reciever, LocalDateTime dateOfRequest, FriendRequestState state) {
+	public FriendRequest(String id, String sender, String reciever, LocalDateTime dateOfRequest,
+			FriendRequestState state) {
 		super();
 		this.id = id;
 		this.sender = sender;
@@ -27,7 +28,6 @@ public class FriendRequest {
 	public void setId(String id) {
 		this.id = id;
 	}
-
 
 	public String getSender() {
 		return sender;
@@ -60,6 +60,11 @@ public class FriendRequest {
 	public void setState(FriendRequestState state) {
 		this.state = state;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "FriendRequest [id=" + id + ", sender=" + sender + ", reciever=" + reciever + ", dateOfRequest="
+				+ dateOfRequest + ", state=" + state + "]";
+	}
+
 }

@@ -1,8 +1,11 @@
 // show friend requests
 function createFriendReqCard(cardData) {
 	console.log(cardData);
+	
 	var cardTemplate = [
-		'<div class="request">',
+		'<div class="request id="',
+		cardData.id,
+		'">',
 		'<div class="info">',
 		'<div class="profile-picture">',
 		'<img src="',
@@ -12,12 +15,44 @@ function createFriendReqCard(cardData) {
 		'</h5><p class="text-muted">',
 		cardData.numberOfMutualFriends + ' multural friends',
 		'</p></div></div><div class="action">',
-		'<button class="btn btn-primary">Accept</button>',
-		'<button class="btn decline">Decline</button>',
+		'<button class="btn btn-primary" id="',
+		cardData.id,
+		'">Accept</button>',
+		'<button class="btn decline" id="',
+		cardData.id,
+		'">Decline</button>',
 		'</div></div>'
 	];
 	return $(cardTemplate.join(''));
 }
+
+$(".friend-requests").on('click', 'button.btn-primary', function() {
+	var senderId = $(this).attr('id');
+	$.ajax({
+		url: "rest/friendRequest/accept",
+		type: "POST",
+		contentType: "application/json",
+		data: senderId,
+		complete: function() {
+			$(this).parent().fadeOut('slow');
+		}
+		
+	});
+});
+
+$(".friend-requests").on('click', 'button.decline', function() {
+	var senderId = $(this).attr('id');
+	$.ajax({
+		url: "rest/friendRequest/deny",
+		type: "POST",
+		contentType: "application/json",
+		data: senderId,
+		complete: function() {
+			$(this).parent().fadeOut('slow');
+		}
+		
+	});
+});
 
 $(document).ready(function() {
 	$.ajax({

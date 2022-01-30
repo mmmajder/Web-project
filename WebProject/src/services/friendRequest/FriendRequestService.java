@@ -5,15 +5,20 @@ import java.util.ArrayList;
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
+import beans.Chat;
 import beans.User;
+import dao.chat.ChatDAO;
 import dao.friendRequest.FriendRequestDAO;
 import dao.person.UserDAO;
+import enums.FriendRequestState;
 import services.search.UserSearchData;
 
 @Path("/friendRequest")
@@ -26,9 +31,11 @@ public class FriendRequestService {
 		if (ctx.getAttribute("friendRequestDAO") == null) {
 			ctx.setAttribute("friendRequestDAO", new FriendRequestDAO(contextPath));
 		}
-		System.out.println("friendDAO");
 		if (ctx.getAttribute("userDAO") == null) {
 			ctx.setAttribute("userDAO", new UserDAO(contextPath));
+		}
+		if (ctx.getAttribute("chatDAO") == null) {
+			ctx.setAttribute("chatDAO", new ChatDAO(contextPath));
 		}
 	}
 	
@@ -42,4 +49,35 @@ public class FriendRequestService {
 		return dao.getPrintData(user, userDAO);
 	}
 	
+	@POST
+	@Path("/accept")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void acceptRequest(@Context HttpServletRequest request, String senderId) {
+		User user = (User) request.getSession().getAttribute("logged");
+		UserDAO userDAO = (UserDAO) ctx.getAttribute("userDAO");
+		User sender = userDAO.findById(senderId);
+		System.out.println("sender " + sender);
+		System.out.println("user " + user);
+		userDAO.addFriend(user.getId(), senderId);
+		
+		
+		ChatDAO chatDAO = (ChatDAO) ctx.getAttribute("chatDAO");
+		Chat chat = chatDAO.createChat(user, sender);
+		
+		userDAO.addChatToUsers(user, sender, chat);
+		
+		FriendRequestDAO friendRequestDAO = (FriendRequestDAO) ctx.getAttribute("friendRequestDAO");
+		friendRequestDAO.changeStatus(sender, user, FriendRequestState.ACCEPTED);
+	}
+	
+	@POST
+	@Path("/deny")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void declineRequest(@Context HttpServletRequest request, String senderId) {
+		User user = (User) request.getSession().getAttribute("logged");
+		UserDAO userDAO = (UserDAO) ctx.getAttribute("userDAO");
+		User sender = userDAO.findById(senderId);
+		FriendRequestDAO friendRequestDAO = (FriendRequestDAO) ctx.getAttribute("friendRequestDAO");
+		friendRequestDAO.changeStatus(sender, user, FriendRequestState.DENIED);
+	}
 }

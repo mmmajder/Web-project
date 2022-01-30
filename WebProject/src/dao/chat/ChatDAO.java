@@ -210,4 +210,14 @@ public class ChatDAO {
 
 	}
 
+	public Chat createChat(User user1, User user2) {
+		ArrayList<String> participants = new ArrayList<String>();
+		participants.add(user1.getId());
+		participants.add(user2.getId());
+		Chat chat = new Chat(generateId(), new ArrayList<String>(), participants, true);
+		System.out.println(chat);
+		add(chat);
+		return chat;
+	}
+
 }

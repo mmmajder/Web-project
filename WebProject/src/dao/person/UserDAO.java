@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
+import beans.Chat;
 import beans.Post;
 import beans.User;
 import enums.Gender;
@@ -150,6 +151,7 @@ public class UserDAO {
 						u.getBiography(), printList(u.getFriends()), printList(u.getFriendRequests()),
 						printList(u.getPosts()), printList(u.getChats()), new Boolean(u.isPrivate()).toString(),
 						new Boolean(u.isBlocked()).toString(), new Boolean(u.isAdmin()).toString() });
+				System.out.println(u);
 			}
 			writer.writeAll(data);
 			writer.close();
@@ -304,6 +306,34 @@ public class UserDAO {
 				posts.addAll(user.getPosts());
 		}
 		return posts;
+	}
+	
+	private void connectFriends(User user1, User user2) {
+		ArrayList<String> user1Friends = user1.getFriends();
+		user1Friends.add(user2.getId());
+		user1.setFriends(user1Friends);
+	}
+
+	public void addFriend(String receiverId, String senderId) {
+		User receiver = findById(receiverId);
+		User sender = findById(senderId);
+		connectFriends(receiver, sender);
+		connectFriends(sender, receiver);
+		System.out.println("sender" + sender);
+		System.out.println("user " + receiver);
+		writeFile();
+	}
+	
+	private void setChats(User user, Chat chat) {
+		ArrayList<String> user1Chats = user.getChats();
+		user1Chats.add(chat.getId());
+		user.setChats(user1Chats);
+	}
+
+	public void addChatToUsers(User user1, User user2, Chat chat) {
+		setChats(user1, chat);
+		setChats(user2, chat);
+		writeFile();
 	}
 
 }
