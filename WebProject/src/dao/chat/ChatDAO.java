@@ -212,6 +212,17 @@ public class ChatDAO {
 			writeFile();
 		}
 	}
+	
+	public Chat getChatForUsers(User user1, User user2) {
+		for (String chat1Ids : user1.getChats()) {
+			for (String chat2Ids : user2.getChats()) {
+				if (chat1Ids.equals(chat2Ids)) {
+					return findById(chat1Ids);
+				}
+			}
+		}
+		return null;
+	}
 
 	public Chat createChat(User user1, User user2) {
 		ArrayList<String> participants = new ArrayList<String>();

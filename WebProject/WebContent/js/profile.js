@@ -348,11 +348,11 @@ function makeFriendTemplate(user) {
 		'</h3>',
 		'</div>',
 		'<div class="buttons">',
-		'<div class="btn" id="open-chat">',
+		'<div class="btn" id="open-chat" onclick="openChat(\'' + user.id + '\')">',
 		'<i class="uil uil-message"></i>',
 		'<label>Send a Message</label>',
 		'</div>',
-		'<div class="btn" id="remove-friend">',
+		'<div class="btn" id="remove-friend" onclick="removeFriend(\'' + user.id + '\')">',
 		'<i class="uil uil-multiply"></i>',
 		'<label>Remove Friend</label>',
 		'</div>',
@@ -361,6 +361,34 @@ function makeFriendTemplate(user) {
 	];
 	return $(cardTemplate.join(''));
 }
+
+function removeFriend(userId) {
+	$.ajax({
+		url: "rest/profile/removeFriend",
+		type: "POST",
+		data: userId,
+		contentType: "application/json",
+		dataType: "json",
+		complete: function() {
+		}
+    });
+}
+
+
+function openChat(userId) {
+	$.ajax({
+		url: "rest/messages/openedChat",
+		type: "POST",
+		data: userId,
+		contentType: "application/json",
+		dataType: "json",
+		complete: function() {
+			window.location.href = "messages.html";
+		}
+    });
+	
+} 
+
 
 function getLogged(callback) {
 	$.ajax({

@@ -12,6 +12,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -322,8 +323,6 @@ public class UserDAO {
 		User sender = findById(senderId);
 		connectFriends(receiver, sender);
 		connectFriends(sender, receiver);
-		System.out.println("sender" + sender);
-		System.out.println("user " + receiver);
 		writeFile();
 	}
 	
@@ -350,6 +349,25 @@ public class UserDAO {
 			}
 		}
 		return false;
+	}
+	
+	private void removeFromFriendsList(User user1, String user2Id) {
+		ArrayList<String> friends = user1.getFriends();
+		Iterator<String> itr = friends.iterator();
+		while (itr.hasNext()) {
+			if (itr.next().equals(user2Id)) {
+				itr.remove();
+				break;
+			}
+		}
+	}
+
+	public void removeFriend(String loggedUserId, String otherUserId) {
+		User loggedUser = findById(loggedUserId);
+		User otherUser = findById(otherUserId);
+		removeFromFriendsList(loggedUser, otherUser.getId());
+		removeFromFriendsList(otherUser, loggedUser.getId());
+		writeFile();
 	}
 
 }

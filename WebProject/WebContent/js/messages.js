@@ -80,10 +80,21 @@ function initChats() {
 	});
 }
 
+function openChatIfNeeded() {
+	$.ajax({
+		url: "rest/messages/openedChat",
+		type: "GET",
+		contentType: "application/json",
+		complete: function(data) {
+			chat(data);
+		}
+	});
+}
 
 
 $(document).ready(function() {
 	initChats();
+	openChatIfNeeded();
 })
 
 function makeChatTemplate(chatHeadData) {
@@ -132,53 +143,57 @@ $(".messages").on('click', 'div.message', function() {
 		dataType: "json",
 		contentType: "application/json",
 		complete: function(data) {
-			$('.chat-messages').empty();
-			var chatDms = data.responseJSON;
-			selectedChat = chatDms;
-			seenMessage();		
-			$("#profile-picture-top").attr("src","images/userPictures/" + chatDms.otherUser.id + "/" + chatDms.otherUser.profilePicture);
-			$("#profile-name-top").html(chatDms.otherUser.name + " " + chatDms.otherUser.surname);
-			chatDms.dms.forEach(function(item) {
-				if (item.sender == chatDms.loggedUser.id) {
-					$('.chat-messages').append(makeDmsTemplate(item.content, "right", chatDms.loggedUser));
-				} else {
-					$('.chat-messages').append(makeDmsTemplate(item.content, "left", chatDms.otherUser));
-				}
-			})
-			function send() {
-				var text = $('#new-message-text').val();
-				if (text=="") {
-					return ;
-				}
-				try {
-					var editedText = text + "senderId" + selectedChat.loggedUser.id + "recieverId" + selectedChat.otherUser.id;
-					save(selectedChat, text);
-					socket.send(editedText);			
-					sendMessage(text);
-					//initChats();
-				} catch(exception) {
-					console.log(exception);
-				}
-			}
-	
-			function sendMessage(msg) {
-				$('.chat-messages').append(makeDmsTemplate(msg, "right", chatDms.loggedUser));
-			}
-			
-			$('#send-message').click(function() {
-				send();
-				$('#new-message-text').val("");
-			})
-			
-			$('#new-message-text').keypress(function(event){
-				if (event.keyCode=='13') {
-					send();
-					$('#new-message-text').val("");
-				}
-			})			
+			chat(data);
 		}
 	});
 });
+
+function chat(data) {
+	$('.chat-messages').empty();
+	var chatDms = data.responseJSON;
+	selectedChat = chatDms;
+	seenMessage();		
+	$("#profile-picture-top").attr("src","images/userPictures/" + chatDms.otherUser.id + "/" + chatDms.otherUser.profilePicture);
+	$("#profile-name-top").html(chatDms.otherUser.name + " " + chatDms.otherUser.surname);
+	chatDms.dms.forEach(function(item) {
+		if (item.sender == chatDms.loggedUser.id) {
+			$('.chat-messages').append(makeDmsTemplate(item.content, "right", chatDms.loggedUser));
+		} else {
+			$('.chat-messages').append(makeDmsTemplate(item.content, "left", chatDms.otherUser));
+		}
+	})
+	function send() {
+		var text = $('#new-message-text').val();
+		if (text=="") {
+			return ;
+		}
+		try {
+			var editedText = text + "senderId" + selectedChat.loggedUser.id + "recieverId" + selectedChat.otherUser.id;
+			save(selectedChat, text);
+			socket.send(editedText);			
+			sendMessage(text);
+			//initChats();
+		} catch(exception) {
+			console.log(exception);
+		}
+	}
+
+	function sendMessage(msg) {
+		$('.chat-messages').append(makeDmsTemplate(msg, "right", chatDms.loggedUser));
+	}
+	
+	$('#send-message').click(function() {
+		send();
+		$('#new-message-text').val("");
+	})
+	
+	$('#new-message-text').keypress(function(event){
+		if (event.keyCode=='13') {
+			send();
+			$('#new-message-text').val("");
+		}
+	})
+}
 
 
 function makeDmsTemplate(content, position, sender) {

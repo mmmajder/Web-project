@@ -153,5 +153,17 @@ public class ProfileService {
 		return new CommentReturnData(comment.getId(), comment.getText(), user.getId(), user.getName(),
 				user.getSurname(), comment.getCreated(), comment.getLastEdited(), user.getProfilePicture());
 	}
+	
+	@POST
+	@Path("/removeFriend")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void removeFriend(@Context HttpServletRequest request, String otherUserId) {
+		User loggedUser = (User) request.getSession().getAttribute("logged");
+		UserDAO userDAO = (UserDAO) ctx.getAttribute("userDAO");
+		userDAO.removeFriend(loggedUser.getId(), otherUserId);
+		
+	}
+	
 
 }
