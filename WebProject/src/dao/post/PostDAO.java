@@ -183,7 +183,10 @@ public class PostDAO {
 	}
 
 	public ArrayList<Post> getUserFeed(User u) {
-		ArrayList<String> people = u.getFriends();
+		ArrayList<String> people = new ArrayList<String>();
+		for(String f : u.getFriends()) {
+			people.add(f);
+		}
 		people.add(u.getId());
 		ArrayList<Post> retPosts = findByAuthorId(people);
 		return (ArrayList<Post>) retPosts.stream().sorted(Comparator.comparing(Post::getPosted).reversed())
@@ -199,6 +202,16 @@ public class PostDAO {
 			}
 		}
 		return null;
+	}
+
+	public void deleteComment(String postID, String commentID) {
+		for (Post post : findAll()) {
+			if (post.getId().equals(postID)) {
+				post.deleteComment(commentID);
+				this.writeFile();
+				return;
+			}
+		}		
 	}
 
 }

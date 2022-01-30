@@ -23,39 +23,51 @@ function getOtherProfile(callback) {
 	});
 }
 
+function arePostsPrivate() {
+	$.ajax({
+		url: "rest/otherProfile/arePostsPrivate",
+		type: "GET",
+		contentType: "application/json",
+		dataType: "json",
+		complete: function(isPrivate) {
+			return isPrivate.responseJSON=="true";
+		}
+	});
+}
 
 // setting display of menu
 function clear() {
 	$('.showing div').removeClass('visible');
 	$('.navbar label').removeClass('active');
+	$('.private').hide();
 }
 
 $('#photos').click(function() {
 	clear();
 	$(this).addClass('active');
-	$('.photos').addClass('visible');
-});
-
-$('#friends').click(function() {
-	clear();
-	$(this).addClass('active');
-	$('.friends').addClass('visible');
+	showPhotos();
 });
 
 // display photos
 function showPhotos() {
-	$.ajax({
-		url: "rest/otherProfile/photos",
-		type: "GET",
-		contentType: "application/json",
-		dataType: "json",
-		complete: function(data) {
-			var userPhotos = data.responseJSON;
-			if (userPhotos.length == 0)
-				return;
-			loadPhotos(userPhotos);
-		}
-	});
+	if(!arePostsPrivate()) {
+		$.ajax({
+			url: "rest/otherProfile/photos",
+			type: "GET",
+			contentType: "application/json",
+			dataType: "json",
+			complete: function(data) {
+				var userPhotos = data.responseJSON;
+				if (userPhotos.length == 0)
+					return;
+				loadPhotos(userPhotos);
+				$('.photos').addClass('visible');
+				$('#photos').addClass('active');
+			}
+		});
+	} else {
+		$('.private').show();
+	}
 }
 
 function loadPhotos(userPhotos) {
@@ -80,24 +92,8 @@ function loadPhotos(userPhotos) {
 	}
 }
 
-// not tested for none public users
-function displayData(callback) {
-	getOtherProfile(function(otherProfile){
-		setBio(otherProfile);
-		if (!otherProfile.isPrivate) {
-			callback();
-		} else {
-			getLogged(function(loggedUser) {
-				if (loggedUser.admin || loggedUser.friends.contains(otherProfile.id)) {
-					callback();
-				}
-			});
-		}
-	});
-}
-
 function redirectIfLoggedSelected() {
-	getOtherProfile(function(otherProfile){
+	getOtherProfile(function(otherProfile) {
 		getLogged(function(loggedUser) {
 			if (otherProfile.id == loggedUser.id) {
 				window.open("profile.html", '_self').focus();
@@ -112,33 +108,38 @@ $(document).ready(function() {
 	getOtherProfile(function(otherProfile){
 		setBio(otherProfile);
 	});
-	displayData(showPhotos);
+	clear();
+	showPhotos();
 });
 
 $("#friends").click(function() {
 	clear();
 	$(this).addClass('active');
-	$('.friends').addClass('visible');
 	showFriends();
 });
 
 function showFriends() {
-	$.ajax({
-		url: "rest/otherProfile/friends",
-		type: "GET",
-		contentType: "application/json",
-		complete: function(data) {
-			$('.friendships').empty();
-			var userFriends = data.responseJSON;
-			userFriends.forEach(function(item) {
-				$('.friendships').append(makeFriendTemplate(item));
-				/*
-				 * createFriendCard(item, function(data1) {
-				 * $('.friendships').append(data1); } )
-				 */
-			});
-		}
-	});
+	if(!arePostsPrivate()) {
+		$.ajax({
+			url: "rest/otherProfile/friends",
+			type: "GET",
+			contentType: "application/json",
+			complete: function(data) {
+				$('.friendships').empty();
+				var userFriends = data.responseJSON;
+				userFriends.forEach(function(item) {
+					$('.friendships').append(makeFriendTemplate(item));
+					/*
+					 * createFriendCard(item, function(data1) {
+					 * $('.friendships').append(data1); } )
+					 */
+				});
+				$('.friends').addClass('visible');
+			}
+		});
+	} else {
+		$('.private').show();
+	}
 }
 
 function makeFriendTemplate(user) {
@@ -172,20 +173,25 @@ function makeFriendTemplate(user) {
 }
 
 function showPosts() {
-	$.ajax({
-        url: "rest/otherProfile/posts",
-        type: "GET",
-        contentType: "application/json",
-        complete: function(data) {
-        	$('#feeds').empty();
-            var userPosts = data.responseJSON;
-            userPosts.forEach(function(item) {
-				createPost(item, function(data1) {
-					$('#feeds').append(data1);
-				} )
-            });
-        }
-    });
+	if(!arePostsPrivate()) {
+		$.ajax({
+	        url: "rest/otherProfile/posts",
+	        type: "GET",
+	        contentType: "application/json",
+	        complete: function(data) {
+	        	$('#feeds').empty();
+	            var userPosts = data.responseJSON;
+	            userPosts.forEach(function(item) {
+					createPost(item, function(data1) {
+						$('#feeds').append(data1);
+					} )
+	            });
+	            $('.posts').addClass('visible');
+	        }
+	    });
+	} else {
+		$('.private').show();
+	}
 }
 
 var createPost = function(postData, callback) {
@@ -229,8 +235,7 @@ function makeCardTemplate(user, postData) {
 $('#posts').click(function() {
     clear();
     $(this).addClass('active');
-    $('.posts').addClass('visible');
-    displayData(showPosts);
+    showPosts();
 });
 
 
@@ -264,6 +269,10 @@ function goToHomepage() {
 
 function logOut() {
 	window.location.href = "index.html";
+}
+
+function goToProfile() {
+	window.location.href = "profile.html";
 }
 
 $(".cancel-btn").click(function() {
@@ -309,15 +318,20 @@ function viewdetails() {
         	$("#comments-content").empty();
         	if (comments.length == 0)
 				return;
-			loadComments(comments);
+        	for (let i = comments.length - 1; i >= 0; i -= 1) {
+        		$("#comments-content").append(makeComment(comments[i], $("#post-image img").attr("id")));
+    			getLogged(function(user) {
+    				if (user.id == comments[i].authorId) {
+    					$('#' + comments[i].id).append('<span class="edit" onclick="editComment(\'' + comments[i].id + '\',\'' + comments[i].text + '\',\'' + postID.id + '\')"><i class="uil uil-edit"></i></span>');
+    					console.log("jsm");
+    				} 
+    				if (user.id == comments[i].authorId || user.admin) {
+    					$('#' + comments[i].id).append('<span class="del" onclick="deleteComment(\'' + comments[i].id + '\',\'' + postID.id + '\')"><i class="uil uil-trash-alt"></i></span>');
+    				} 
+    			});
+        	}
         }
     });
-}
-
-function loadComments(comments) {
-	for (let i = comments.length - 1; i >= 0; i -= 1) {
-		$("#comments-content").append(makeComment(comments[i]));
-	}
 }
 
 $("#add-comment").click(function() {
@@ -332,7 +346,16 @@ $("#add-comment").click(function() {
 		dataType: "json",
 		complete: function(data) {
 			comment = data.responseJSON;
-			$("#comments-content").append(makeComment(comment));
+			$("#comments-content").append(makeComment(comment, id));
+			getLogged(function(user) {
+				if (user.id == comment.authorId) {
+					$('#' + comment.id).append('<span class="edit" onclick="editComment(\'' + comment.id + '\',\'' + comment.text + '\',\'' + postID + '\')"><i class="uil uil-edit"></i></span>');
+					console.log("jsm");
+				} 
+				if (user.id == comment.authorId || user.admin) {
+					$('#' + comment.id).append('<span class="del" onclick="deleteComment(\'' + comment.id + '\',\'' + postID + '\')"><i class="uil uil-trash-alt"></i></span>');
+				} 
+			});
         }
     });
 });
@@ -343,19 +366,19 @@ function makeComment(comment, postID) {
         '<div class="message-container">',
         '<div class="profile-picture">',
         '<img src="images/userPictures/' + comment.authorId + '/' + comment.profilePicture + '">',
-        '</div><div>' + comment.name + ' ' + comment.lastname + '  ',
+        '</div><div class="comment-author" id="' + comment.author + '">' + comment.name + ' ' + comment.lastname + '  ',
         '</div><div class="message-text"><span style="font-size:10px;">',
         comment.text,
         '</span></div></div><small style="font-size:8px;margin-left:1rem;color:black;">Last edited: ' + comment.lastEdited,
-        '  </small><span class="edit"><i class="uil uil-edit" onclick="editComment(\'' + comment + ',' + postID + '\')"></i></span></div>'
+        '  </small></div>'
 	];
 	return $(cardTemplate.join(''));
 }
 
-function editComment(comment, postID) {
-	let text = prompt("Edit comment", comment.text);
+function editComment(comID, comText, pid) {
+	let text = prompt("Edit comment", comText);
 	  if (text != null) {
-		var c = JSON.stringify({text: text, postID: id});
+		var c = JSON.stringify({commentID: comID, text: text, postID: pid});
 		  $.ajax({
 				url: "rest/profile/editComment",
 				type: "POST",
@@ -366,8 +389,26 @@ function editComment(comment, postID) {
 					comment = data.responseJSON;
 					$('#' + comment.id + ' small').empty();
 					$('#' + comment.id + ' small').append('Last edited: ' + comment.lastEdited);
-					$('#' + comment.id + ' .message-text').empty();
-					$('#' + comment.id + ' .message-text').append('<span style="font-size:10px;">' + comment.text + '</span>');
+					$('#' + comment.id + ' .message-text span').empty();
+					$('#' + comment.id + ' .message-text span').append(comment.text);
+					event.preventDefault();
+		        }
+		    });
+	  }
+}
+
+function deleteComment(comID, pid) {
+	  if (confirm('Are you sure you want to delete this comment?')) {
+		var c = JSON.stringify({commentID: comID, text: '', postID: pid});
+		  $.ajax({
+				url: "rest/profile/deleteComment",
+				type: "POST",
+				data: c,
+				contentType: "application/json",
+				dataType: "json",
+				complete: function(data) {
+					comment = data.responseJSON;
+					$('#' + comment.id).hide();
 					event.preventDefault();
 		        }
 		    });

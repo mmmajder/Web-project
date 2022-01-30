@@ -60,6 +60,17 @@ public class OtherProfileService {
 		return ((UserDAO) ctx.getAttribute("userDAO")).getMutualFriends((User) request.getSession().getAttribute("otherProfile"), (User) request.getSession().getAttribute("logged"));
 	}
 	
-	
+	@GET
+	@Path("/arePostsPrivate")
+	@Produces(MediaType.APPLICATION_JSON)
+	public boolean arePostsPrivate(@Context HttpServletRequest request) {
+		User otherUser = (User) request.getSession().getAttribute("otherProfile"); 
+		User logged = (User) request.getSession().getAttribute("logged"); 
+		if(logged.isAdmin())
+			return false;
+		if(logged.getFriends().contains(otherUser.getId()))
+			return false;
+		return otherUser.isPrivate();
+	}
 
 }

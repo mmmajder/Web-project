@@ -162,5 +162,27 @@ public class ProfileService {
 		return new CommentReturnData(comment.getId(), comment.getText(), user.getId(), user.getName(),
 				user.getSurname(), comment.getCreated(), comment.getLastEdited(), user.getProfilePicture());
 	}
+	
+	@POST
+	@Path("/editComment")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Comment editComment(@Context HttpServletRequest request, CommentEditData commentData) {
+		CommentDAO commentDAO = (CommentDAO) ctx.getAttribute("commentDAO");
+		commentDAO.editComment(commentData.getCommentID(), commentData.getText());
+		return commentDAO.findById(commentData.getCommentID());
+	}
+	
+	@POST
+	@Path("/deleteComment")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Comment deleteComment(@Context HttpServletRequest request, CommentEditData commentData) {
+		CommentDAO commentDAO = (CommentDAO) ctx.getAttribute("commentDAO");
+		commentDAO.deleteComment(commentData.getCommentID());
+		PostDAO postDAO = (PostDAO) ctx.getAttribute("postDAO");
+		postDAO.deleteComment(commentData.getPostID(), commentData.getCommentID());
+		return commentDAO.findById(commentData.getCommentID());
+	}
 
 }

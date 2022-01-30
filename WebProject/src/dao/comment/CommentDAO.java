@@ -122,12 +122,27 @@ public class CommentDAO {
 
 	public ArrayList<CommentReturnData> getCommentsOnPost(Post post, User user) {
 		ArrayList<CommentReturnData> comments = new ArrayList<CommentReturnData>();
-		for(String id : post.getComments()) {
+		for (String id : post.getComments()) {
 			Comment comment = this.findById(id);
-			comments.add(new CommentReturnData(comment.getId(), comment.getText(), user.getId(), user.getName(),
-				user.getSurname(), comment.getCreated(), comment.getLastEdited(), user.getProfilePicture()));
+			if (!comment.isDeleted()) {
+				comments.add(new CommentReturnData(comment.getId(), comment.getText(), user.getId(), user.getName(),
+						user.getSurname(), comment.getCreated(), comment.getLastEdited(), user.getProfilePicture()));
+			}
 		}
 		return comments;
+	}
+
+	public void editComment(String commentID, String text) {
+		Comment comment = comments.get(commentID);
+		comment.setText(text);
+		comment.setLastEdited(LocalDateTime.now());
+		writeFile();
+	}
+
+	public void deleteComment(String commentID) {
+		Comment comment = comments.get(commentID);
+		comment.setDeleted(true);
+		writeFile();
 	}
 
 }

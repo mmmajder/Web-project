@@ -405,15 +405,15 @@ function makeComment(comment, postID) {
         '</div><div class="message-text"><span style="font-size:10px;">',
         comment.text,
         '</span></div></div><small style="font-size:8px;margin-left:1rem;color:black;">Last edited: ' + comment.lastEdited,
-        '  </small><span class="edit"><i class="uil uil-edit" onclick="editComment(\'' + comment + ',' + postID + '\')"></i></span></div>'
+        '  </small><span class="edit" onclick="editComment(\'' + comment.id + '\',\'' + comment.text + '\',\'' + postID + '\')"><i class="uil uil-edit"></i></span></div>'
 	];
 	return $(cardTemplate.join(''));
 }
 
-function editComment(comment, postID) {
-	let text = prompt("Edit comment", comment.text);
+function editComment(comID, comText, pid) {
+	let text = prompt("Edit comment", comText);
 	  if (text != null) {
-		var c = JSON.stringify({text: text, postID: id});
+		var c = JSON.stringify({commentID: comID, text: text, postID: pid});
 		  $.ajax({
 				url: "rest/profile/editComment",
 				type: "POST",
@@ -424,8 +424,8 @@ function editComment(comment, postID) {
 					comment = data.responseJSON;
 					$('#' + comment.id + ' small').empty();
 					$('#' + comment.id + ' small').append('Last edited: ' + comment.lastEdited);
-					$('#' + comment.id + ' .message-text').empty();
-					$('#' + comment.id + ' .message-text').append('<span style="font-size:10px;">' + comment.text + '</span>');
+					$('#' + comment.id + ' .message-text span').empty();
+					$('#' + comment.id + ' .message-text span').append(comment.text);
 					event.preventDefault();
 		        }
 		    });

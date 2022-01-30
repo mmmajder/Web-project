@@ -19,7 +19,7 @@
             <img src="images/Meeply.png" class="logo">
             <div id="buttons">
                 <span><i id="homepage" class="uil uil-home" onclick="goToHomepage()"></i></span>
-                <span><i id="my-profile" class="uil uil-user-circle"></i></span>
+                <span><i id="my-profile" class="uil uil-user-circle" onclick="goToMyProfile()"></i></span>
                 <span><i id="log-out" class="uil uil-sign-out-alt" onclick="logOut()"></i></span>
             </div>
         </div>
@@ -35,7 +35,8 @@
                     </div>
                     <div class="user-info">
                         <div class="profile-user-settings">
-                          <!-- <button id="edit-profile" class="btn"><i class="uil uil-edit-alt"></i> Edit Profile</button> -->  
+                            <button id="add-remove-friend" class="btn">+ Add friend</button>  
+                            <button id="edit-profile" class="btn"><i class="uil uil-comment-message"></i>Send message</button>  
                             <h1 class="profile-user-name" id="profile-user-name"></h1>
                         </div>
                         <div>
@@ -64,6 +65,11 @@
                     </div>
                 </div>
                 <div class="showing">
+                	<!--Private profile-->
+                	<div class="private">
+                		<label>This account is private.</label>
+                	</div>
+                	
                     <!--Photos-->
                     <div class="photos visible">
                         <div class="row">
@@ -100,11 +106,11 @@
             <div class="row">
                 <div class="column">
                     <div id="post-image">
-                        <img src="images/logInBackground.jpg">
+                        <img>
                     </div>
                 </div>
                 <div class="column">
-                    <label id="image-description">Ovo je opis slike</label><br>
+                    <label id="image-description"></label><br>
                     <div class="photo-comments">
                         <div class="comments-content" id="comments-content">
                             

@@ -101,5 +101,9 @@ public class Post {
 				+ ", isPicture=" + isPicture + "]";
 	}
 
+	public void deleteComment(String commentID) {
+		this.comments.remove(commentID);
+	}
+
 
 }
