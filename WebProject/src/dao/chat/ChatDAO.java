@@ -112,9 +112,9 @@ public class ChatDAO {
 			User otherParticipant = userDAO.findById(getOtherParticipant(user, chat));
 			DM dm = getLastDM(chat, dmDAO);
 			if (dm==null) {
-				chatsUser.add(new ChatHeadData(chat, otherParticipant, "", LocalDateTime.now()));
+				chatsUser.add(new ChatHeadData(chat, otherParticipant, "", LocalDateTime.now(), null));
 			} else {
-				chatsUser.add(new ChatHeadData(chat, otherParticipant, dm.getContent(), dm.getDateTime()));
+				chatsUser.add(new ChatHeadData(chat, otherParticipant, dm.getContent(), dm.getDateTime(), dm.getSender()));
 			}
 			
 		}
@@ -205,9 +205,12 @@ public class ChatDAO {
 		return elems;
 	}
 
-	public void seenMessage(Chat chat) {
-		findById(chat.getId()).setSeen(true);
-
+	public void seenMessage(DmData chatData, User user) {
+		
+		if (!chatData.getDms().get(chatData.getDms().size()-1).getSender().equals(user.getId())) {
+			findById(chatData.getChat().getId()).setSeen(true);
+			writeFile();
+		}
 	}
 
 	public Chat createChat(User user1, User user2) {

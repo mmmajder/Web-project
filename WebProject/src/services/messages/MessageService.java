@@ -87,9 +87,21 @@ public class MessageService {
 	@POST
 	@Path("/seen")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void getChat(@Context HttpServletRequest request, Chat chat) {
+	public void getChat(@Context HttpServletRequest request, DmData chat) {
 		ChatDAO chatDao = (ChatDAO) ctx.getAttribute("chatDAO");
-		chatDao.seenMessage(chat);
+		User user = (User) request.getSession().getAttribute("logged");
+		chatDao.seenMessage(chat, user);
+	}
+	
+	@GET
+	@Path("/notSeenMessages")
+	@Produces(MediaType.APPLICATION_JSON)
+	public boolean notSeenMessages(@Context HttpServletRequest request) {
+		User user = (User) request.getSession().getAttribute("logged");
+		UserDAO userDAO = (UserDAO) ctx.getAttribute("userDAO");
+		DmDAO dmDAO = (DmDAO) ctx.getAttribute("dmDAO");
+		ChatDAO chatDao = (ChatDAO) ctx.getAttribute("chatDAO");
+		return userDAO.hasNotSeenMessages(user, dmDAO, chatDao);
 	}
 
 }

@@ -17,6 +17,9 @@ $(document).ready(function() {
 			console.log("stigao")
 			receiveMessage(msg.data, "left");
 		}
+		connection.onerror = function (error) { 	
+			console.log('WebSocket Error ' + error); 
+		}; 
 		socket.onclose = function() {
 			console.log("zatvoren soket")
 			socket = null;
@@ -34,14 +37,20 @@ function receiveMessage(msg, position) {
 		if (selectedChat.loggedUser.id==receiver && selectedChat.otherUser.id==sender) {
 			seenMessage();
 			$('.chat-messages').append(makeDmsTemplate(realMessage, position, selectedChat.otherUser));
+			
 		}
+		else {
+			initChats();
+		}
+	} else {
+		initChats();
 	}
-	initChats();
+	
 }
 
 function seenMessage(){
 	
-	var s = JSON.stringify(selectedChat.chat);
+	var s = JSON.stringify(selectedChat);
 	$.ajax({
 		url: "rest/messages/seen",
 		type: "POST",
@@ -49,6 +58,7 @@ function seenMessage(){
 		contentType: "application/json",
 		dataType: "json",
 		complete: function() {
+			initChats();
 		}
 	})
 }
@@ -76,32 +86,32 @@ $(document).ready(function() {
 	initChats();
 })
 
-function makeChatTemplate(dmData) {
+function makeChatTemplate(chatHeadData) {
 	var color = 'white';
-	if (!dmData.seen) {
+	if (!chatHeadData.chat.seen && chatHeadData.lastSender==chatHeadData.otherParticipant.id) {
 		color = 'grey';
 	}
 	var cardTemplate = [
 		'<div class="message" id="',
-		dmData.chat.id,
+		chatHeadData.chat.id,
 		'" style="background-color:',
 		color,
 		';"',
 		'><div class="profile-picture">',
 		'<img src="images/userPictures/',
-		dmData.otherParticipant.id + "/" + dmData.otherParticipant.profilePicture,
+		chatHeadData.otherParticipant.id + "/" + chatHeadData.otherParticipant.profilePicture,
 		'">',
 		'<div class="active"></div>',
 		'</div>',
 		'<div class="message-body">',
 		'<h5>',
-		dmData.otherParticipant.name + " " + dmData.otherParticipant.surname,
+		chatHeadData.otherParticipant.name + " " + chatHeadData.otherParticipant.surname,
 		'</h5>',
 		'<p class="text-muted">',
-		dmData.content,
+		chatHeadData.content,
 		'</p>',
 		'<p>',
-		dmData.lastMessage,
+		chatHeadData.lastMessage,
 		"</p>",
 		'</div>',
 		'</div>'
@@ -145,7 +155,7 @@ $(".messages").on('click', 'div.message', function() {
 					save(selectedChat, text);
 					socket.send(editedText);			
 					sendMessage(text);
-					initChats();
+					//initChats();
 				} catch(exception) {
 					console.log(exception);
 				}
@@ -236,14 +246,22 @@ function save(chatDms, content) {
 });
 }
 
+window.onbeforeunload = function(event)
+{
+    socket.close();
+};
+
 function goToHomepage() {
+	socket.close();
 	window.location.href = "feed.html";
 }
 
 function logOut() {
+	socket.close();
 	window.location.href = "index.html";
 }
 
 function goToMyProfile() {
+	socket.close();
 	window.location.href = "profile.html";
 }

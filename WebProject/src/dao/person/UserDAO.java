@@ -19,8 +19,11 @@ import java.util.stream.Collectors;
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
 import beans.Chat;
+import beans.DM;
 import beans.Post;
 import beans.User;
+import dao.chat.ChatDAO;
+import dao.dm.DmDAO;
 import enums.Gender;
 import services.profile.EditProfileData;
 import services.search.SearchData;
@@ -334,6 +337,19 @@ public class UserDAO {
 		setChats(user1, chat);
 		setChats(user2, chat);
 		writeFile();
+	}
+
+	public boolean hasNotSeenMessages(User user, DmDAO dmDAO, ChatDAO chatDao) {
+		for (String chatId : user.getChats()) {
+			Chat chat = chatDao.findById(chatId);
+			if (!chat.isSeen()) {
+				DM dm = dmDAO.findById(chat.getDms().get(chat.getDms().size()-1));
+				if (dm.getReciever().equals(user.getId())) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 }
