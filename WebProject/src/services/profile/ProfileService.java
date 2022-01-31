@@ -147,10 +147,8 @@ public class ProfileService {
 		} else {
 			post = postDAO.findById(photoID);
 		}
-	    User user = (User) request.getSession().getAttribute("logged");
-		System.out.println(post);
-		System.out.println(user);
-		return commentDAO.getCommentsOnPost(post, user);
+		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");
+		return commentDAO.getCommentsOnPost(post, dao);
 	}
 
 	@POST

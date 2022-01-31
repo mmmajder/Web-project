@@ -20,6 +20,7 @@ import au.com.bytecode.opencsv.CSVWriter;
 import beans.Comment;
 import beans.Post;
 import beans.User;
+import dao.person.UserDAO;
 import services.profile.CommentReturnData;
 
 public class CommentDAO {
@@ -120,12 +121,13 @@ public class CommentDAO {
 		return b.equals("true");
 	}
 
-	public ArrayList<CommentReturnData> getCommentsOnPost(Post post, User user) {
+	public ArrayList<CommentReturnData> getCommentsOnPost(Post post, UserDAO userDAO) {
 		ArrayList<CommentReturnData> comments = new ArrayList<CommentReturnData>();
 		for (String id : post.getComments()) {
 			Comment comment = this.findById(id);
 			if (!comment.isDeleted()) {
-				comments.add(new CommentReturnData(comment.getId(), comment.getText(), user.getId(), user.getName(),
+				User user = userDAO.findById(comment.getAuthor());
+				comments.add(new CommentReturnData(comment.getId(), comment.getText(), comment.getAuthor(), user.getName(),
 						user.getSurname(), comment.getCreated(), comment.getLastEdited(), user.getProfilePicture()));
 			}
 		}
