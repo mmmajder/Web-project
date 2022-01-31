@@ -53,6 +53,16 @@ $(document).ready(function() {
 			loadPhotos(userPhotos);
 		}
 	});
+	
+	$.ajax({
+        url: "rest/login/testlogin",
+        type: "GET",
+        contentType: "application/json",
+        complete: function(data) {
+            var user = data.responseJSON;
+            $("#logged-user-username").html("@" + user.username);
+        }
+	});
 })
 
 function loadPhotos(userPhotos) {

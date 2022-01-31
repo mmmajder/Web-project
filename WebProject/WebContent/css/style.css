@@ -261,7 +261,6 @@ nav .container {
 
 nav .container #buttons {
     float: right;
-    cursor: pointer;
 }
 
 .send-message-icon {
@@ -277,6 +276,13 @@ nav .container #buttons span,
 nav .container #buttons i,
 .send-message-icon i {
     font-size: 1.8rem;
+    color: var(--color-primary);
+    cursor: pointer;
+}
+
+nav #logged-user-username {
+    font-size: 1.5rem;
+    margin: 0 8px;
     color: var(--color-primary);
 }
 

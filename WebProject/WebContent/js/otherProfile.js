@@ -110,6 +110,16 @@ $(document).ready(function() {
 	});
 	clear();
 	showPhotos();
+	
+	$.ajax({
+        url: "rest/login/testlogin",
+        type: "GET",
+        contentType: "application/json",
+        complete: function(data) {
+            var user = data.responseJSON;
+            $("#logged-user-username").html("@" + user.username);
+        }
+	});
 });
 
 $("#friends").click(function() {

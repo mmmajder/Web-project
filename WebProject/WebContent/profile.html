@@ -20,10 +20,10 @@
 		<div class="container">
 			<img src="images/Meeply.png" class="logo">
 			<div id="buttons">
-				<span><i id="homepage" class="uil uil-home"
-					onclick="goToHomepage()"></i></span> <span><i id="my-profile"
-					class="uil uil-user-circle"></i></span> <span><i id="log-out"
-					class="uil uil-sign-out-alt" onclick="logOut()"></i></span>
+				<span id="logged-user-username"></span> 
+				<span><i id="homepage" class="uil uil-home" onclick="goToHomepage()"></i></span>
+				<span><i id="my-profile" class="uil uil-user-circle"></i></span> 
+				<span><i id="log-out" class="uil uil-sign-out-alt" onclick="logOut()"></i></span>
 			</div>
 		</div>
 	</nav>
@@ -135,8 +135,7 @@
 						<option value="public">Public</option>
 					</select>
 				</div>
-				<br>
-				<label for="resultEdit" id="resultEdit"></label>
+				<br> <label for="resultEdit" id="resultEdit"></label>
 			</div>
 			<div class="buttons">
 				<div class="btn btn-primary" id="edit-profile-save-changed">
