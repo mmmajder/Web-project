@@ -49,18 +49,19 @@ function receiveMessage(msg, position) {
 }
 
 function seenMessage(){
-	
-	var s = JSON.stringify(selectedChat);
-	$.ajax({
-		url: "rest/messages/seen",
-		type: "POST",
-		data: s,
-		contentType: "application/json",
-		dataType: "json",
-		complete: function() {
-			initChats();
-		}
-	})
+	if(selectedChat) {
+		var s = JSON.stringify(selectedChat);
+		$.ajax({
+			url: "rest/messages/seen",
+			type: "POST",
+			data: s,
+			contentType: "application/json",
+			dataType: "json",
+			complete: function() {
+				initChats();
+			}
+		})
+	}
 }
 
 
@@ -132,7 +133,7 @@ function makeChatTemplate(chatHeadData) {
 		chatHeadData.content,
 		'</p>',
 		'<p>',
-		chatHeadData.lastMessage,
+		printDateTime(chatHeadData.lastMessage),
 		"</p>",
 		'</div>',
 		'</div>'

@@ -111,18 +111,19 @@ public class ChatDAO {
 			Chat chat = findById(chatId);
 			User otherParticipant = userDAO.findById(getOtherParticipant(user, chat));
 			DM dm = getLastDM(chat, dmDAO);
-			if (dm==null) {
+			if (dm == null) {
 				chatsUser.add(new ChatHeadData(chat, otherParticipant, "", LocalDateTime.now(), null));
 			} else {
-				chatsUser.add(new ChatHeadData(chat, otherParticipant, dm.getContent(), dm.getDateTime(), dm.getSender()));
+				chatsUser.add(
+						new ChatHeadData(chat, otherParticipant, dm.getContent(), dm.getDateTime(), dm.getSender()));
 			}
-			
+
 		}
 		return sortChatHeads(chatsUser);
 	}
 
 	public DM getLastDM(Chat chat, DmDAO dmDAO) {
-		if (chat.getDms().size()==0) {
+		if (chat.getDms().size() == 0) {
 			return null;
 		}
 		return dmDAO.findById(chat.getDms().get(chat.getDms().size() - 1));
@@ -206,13 +207,14 @@ public class ChatDAO {
 	}
 
 	public void seenMessage(DmData chatData, User user) {
-		
-		if (!chatData.getDms().get(chatData.getDms().size()-1).getSender().equals(user.getId())) {
-			findById(chatData.getChat().getId()).setSeen(true);
-			writeFile();
+		if (chatData.getDms().size() != 0) {
+			if (!chatData.getDms().get(chatData.getDms().size() - 1).getSender().equals(user.getId())) {
+				findById(chatData.getChat().getId()).setSeen(true);
+				writeFile();
+			}
 		}
 	}
-	
+
 	public Chat getChatForUsers(User user1, User user2) {
 		for (String chat1Ids : user1.getChats()) {
 			for (String chat2Ids : user2.getChats()) {
