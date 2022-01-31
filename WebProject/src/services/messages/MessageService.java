@@ -37,7 +37,7 @@ public class MessageService {
 		}
 
 		if (ctx.getAttribute("dmDAO") == null) {
-			ctx.setAttribute("dmDAO", new DmDAO(contextPath));
+			ctx.setAttribute("dmDAO", new DmDAO(contextPath + "/../../data"));
 		}
 	}
 
