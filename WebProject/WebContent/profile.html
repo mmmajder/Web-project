@@ -47,7 +47,8 @@
 							<label class="profile-name-surname"></label>
 						</div>
 						<div class="profile-stats text-muted">
-							<label id="number-of-posts"></label> <label id="number-of-photos"></label>
+							<label id="number-of-posts"></label> 
+							<label id="number-of-photos"></label>
 							<label id="number-of-friends"></label>
 						</div>
 						<div class="date-of-birth">
@@ -61,7 +62,8 @@
 				<!--Navbar-->
 				<div class="menu">
 					<div class="navbar">
-						<label class="active" id="photos">Photos</label> <label id="posts">Posts</label>
+						<label class="active" id="photos">Photos</label> 
+						<label id="posts">Posts</label>
 						<label id="friends">Friends</label>
 					</div>
 				</div>
@@ -162,12 +164,12 @@
 				<div class="column">
 					<label id="image-description"></label><br> <label id="posted"
 						class="text-muted"></label><br>
-					<div class="photo-comments">
+					<div class="photo-comments" id="photo-comments">
 						<div class="comments-content" id="comments-content"></div>
 					</div>
 					<div class="add-comment">
 						<input type="text" placeholder="Type comment..." id="comment-text">
-						<span><i id="add-comment" class="uil uil-enter"></i></span>
+						<span><i id="add-comment-image" class="uil uil-enter"></i></span>
 					</div>
 
 					<div class="buttons">
@@ -176,7 +178,7 @@
 							<span>Set as profile photo</span>
 						</div>
 						<div class="btn cancel-btn" id="delete-photo"
-							onclick="deletePost()">
+							onclick="deletePhoto()">
 							<span>Delete photo</span>
 						</div>
 					</div>
@@ -184,6 +186,9 @@
 			</div>
 		</div>
 	</div>
+	
+	<script src="js/globals.js"></script>
+	<script src="js/comments.js"></script>
 	<script src="js/profile.js"></script>
 </body>
 

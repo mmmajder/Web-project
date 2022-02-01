@@ -37,7 +37,8 @@ function receiveMessage(msg, position) {
 		if (selectedChat.loggedUser.id==receiver && selectedChat.otherUser.id==sender) {
 			seenMessage();
 			$('.chat-messages').append(makeDmsTemplate(realMessage, position, selectedChat.otherUser));
-			
+			$(".chat-messages").scrollTop($(".chat-messages")[0].scrollHeight);
+
 		}
 		else {
 			initChats();
@@ -49,18 +50,19 @@ function receiveMessage(msg, position) {
 }
 
 function seenMessage(){
-	
-	var s = JSON.stringify(selectedChat);
-	$.ajax({
-		url: "rest/messages/seen",
-		type: "POST",
-		data: s,
-		contentType: "application/json",
-		dataType: "json",
-		complete: function() {
-			initChats();
-		}
-	})
+	if(selectedChat) {
+		var s = JSON.stringify(selectedChat);
+		$.ajax({
+			url: "rest/messages/seen",
+			type: "POST",
+			data: s,
+			contentType: "application/json",
+			dataType: "json",
+			complete: function() {
+				initChats();
+			}
+		})
+	}
 }
 
 
@@ -132,7 +134,7 @@ function makeChatTemplate(chatHeadData) {
 		chatHeadData.content,
 		'</p>',
 		'<p>',
-		chatHeadData.lastMessage,
+		printDateTime(chatHeadData.lastMessage),
 		"</p>",
 		'</div>',
 		'</div>'
@@ -190,6 +192,7 @@ function chat(data) {
 
 	function sendMessage(msg) {
 		$('.chat-messages').append(makeDmsTemplate(msg, "right", chatDms.loggedUser));
+		$(".chat-messages").scrollTop($(".chat-messages")[0].scrollHeight);
 	}
 	
 	$('#send-message').click(function() {

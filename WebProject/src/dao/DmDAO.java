@@ -24,12 +24,6 @@ public class DmDAO {
 	private Map<String, DM> dms = new HashMap<>();
 	private String path;
 
-	public static void main(String[] args) {
-		DmDAO dao = new DmDAO("src");
-		dao.addDM(new DM(dao.generateId(), "Cao", LocalDateTime.now(), "prvi", "drugi"));
-		// dao.writeFile();
-	}
-
 	public DmDAO(String contextPath) {
 		this.path = contextPath;
 		readFile();

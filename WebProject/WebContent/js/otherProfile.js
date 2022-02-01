@@ -1,16 +1,3 @@
-//getting data
-function getLogged(callback) {
-	$.ajax({
-		url: "rest/login/testlogin",
-		type: "GET",
-		contentType: "application/json",
-		dataType: "json",
-		complete: function(data) {
-			callback(data.responseJSON);
-		}
-	});
-}
-
 function getOtherProfile(callback) {
 	$.ajax({
 		url: "rest/otherProfile/otherUser",
@@ -229,7 +216,7 @@ function makeCardTemplate(user, postData) {
         'images/userPictures/' + user.id + '/' + user.profilePicture,
         '"></div><div class="ingo">',
         '<h3>' + user.name + ' ' + user.surname + '</h3>',
-        '<small>' + postData.posted + '</small>',
+        '<small>' + printDateTime(postData.posted) + '</small>',
         '</div></div><span class="edit"><i class="uil uil-ellipsis-h"></i></span></div><br><div class="caption">',
         '<p>' + postData.description + '</p></div>',
         postPic,
@@ -257,7 +244,7 @@ function setBio(user) {
 																	// nula
 																	// izbaci 1
 																	// ?
-	$("#date-of-birth").html(user.dateOfBirth);
+	$("#date-of-birth").html(printDate(user.dateOfBirth));
 	$("#profile-bio-text").html(user.biography);
 	$(".profile-info .profile-photo img").attr("src", "images/userPictures/" + user.id + "/" + user.profilePicture);
 	$(".profile-name-surname").html(user.name + " " + user.surname)
@@ -311,7 +298,7 @@ function viewdetails() {
         complete: function(data) {
         	var x = data.responseJSON;
         	$("#post-image img").attr("src", "images/userPictures/" + x.author + "/" + x.pictureLocation);
-        	$("#posted").html(x.posted);
+        	$("#posted").html(printDateTime(x.posted));
         	$("#image-description").html(x.description);
         	$("#post-image img").attr("id", x.id);
         }
@@ -333,7 +320,6 @@ function viewdetails() {
     			getLogged(function(user) {
     				if (user.id == comments[i].authorId) {
     					$('#' + comments[i].id).append('<span class="edit" onclick="editComment(\'' + comments[i].id + '\',\'' + comments[i].text + '\',\'' + postID.id + '\')"><i class="uil uil-edit"></i></span>');
-    					console.log("jsm");
     				} 
     				if (user.id == comments[i].authorId || user.admin) {
     					$('#' + comments[i].id).append('<span class="del" onclick="deleteComment(\'' + comments[i].id + '\',\'' + postID.id + '\')"><i class="uil uil-trash-alt"></i></span>');
@@ -344,7 +330,7 @@ function viewdetails() {
     });
 }
 
-$("#add-comment").click(function() {
+$("#add-comment-image").click(function() {
 	var t = $("#comment-text").val();
 	var id = $("#post-image img").attr("id");
 	var c = JSON.stringify({text: t, postID: id});
@@ -359,116 +345,13 @@ $("#add-comment").click(function() {
 			$("#comments-content").append(makeComment(comment, id));
 			getLogged(function(user) {
 				if (user.id == comment.authorId) {
-					$('#' + comment.id).append('<span class="edit" onclick="editComment(\'' + comment.id + '\',\'' + comment.text + '\',\'' + postID + '\')"><i class="uil uil-edit"></i></span>');
+					$('#' + comment.id).append('<span class="edit" onclick="editComment(\'' + comment.id + '\',\'' + comment.text + '\',\'' + id + '\')"><i class="uil uil-edit"></i></span>');
 				} 
 				if (user.id == comment.authorId || user.admin) {
-					$('#' + comment.id).append('<span class="del" onclick="deleteComment(\'' + comment.id + '\',\'' + postID + '\')"><i class="uil uil-trash-alt"></i></span>');
+					$('#' + comment.id).append('<span class="del" onclick="deleteComment(\'' + comment.id + '\',\'' + id + '\')"><i class="uil uil-trash-alt"></i></span>');
 				} 
 			});
         }
     });
 });
 
-function makeComment(comment, postID) {
-	var cardTemplate = [
-		'<div class="message-left" id="' + comment.id + '">',
-        '<div class="message-container">',
-        '<div class="profile-picture">',
-        '<img src="images/userPictures/' + comment.authorId + '/' + comment.profilePicture + '">',
-        '</div><div class="comment-author" id="' + comment.author + '">' + comment.name + ' ' + comment.lastname + '  ',
-        '</div><div class="message-text"><span style="font-size:10px;">',
-        comment.text,
-        '</span></div></div><small style="font-size:8px;margin-left:1rem;color:black;">Last edited: ' + comment.lastEdited,
-        '  </small></div>'
-	];
-	return $(cardTemplate.join(''));
-}
-
-function editComment(comID, comText, pid) {
-	let text = prompt("Edit comment", comText);
-	  if (text != null) {
-		var c = JSON.stringify({commentID: comID, text: text, postID: pid});
-		  $.ajax({
-				url: "rest/profile/editComment",
-				type: "POST",
-				data: c,
-				contentType: "application/json",
-				dataType: "json",
-				complete: function(data) {
-					comment = data.responseJSON;
-					$('#' + comment.id + ' small').empty();
-					$('#' + comment.id + ' small').append('Last edited: ' + comment.lastEdited);
-					$('#' + comment.id + ' .message-text span').empty();
-					$('#' + comment.id + ' .message-text span').append(comment.text);
-					event.preventDefault();
-		        }
-		    });
-	  }
-}
-
-function deleteComment(comID, pid) {
-	  if (confirm('Are you sure you want to delete this comment?')) {
-		var c = JSON.stringify({commentID: comID, text: '', postID: pid});
-		  $.ajax({
-				url: "rest/profile/deleteComment",
-				type: "POST",
-				data: c,
-				contentType: "application/json",
-				dataType: "json",
-				complete: function(data) {
-					comment = data.responseJSON;
-					$('#' + comment.id).hide();
-					event.preventDefault();
-		        }
-		    });
-	  }
-}
-
-function addComment(id) {
-	var value = $('#' + id + ' input').val();
-	if(value != '') {
-		var c = JSON.stringify({text: value, postID: id});
-		$.ajax({
-			url: "rest/profile/addComment",
-			type: "POST",
-			data: c,
-			contentType: "application/json",
-			dataType: "json",
-			complete: function(data) {
-				comment = data.responseJSON;
-				$('#' + id + ' .comments-content').append(makeComment(comment, id));
-				$('#' + id + ' input').val('');
-				event.preventDefault();
-	        }
-	    });
-	} else {
-		alert("You can't add empty comment.");
-	}
-}
-
-function viewComments(postID) {
-	$.ajax({
-        url: "rest/profile/loadComments",
-        type: "POST",
-        data: postID,
-        contentType: "application/json",
-        complete: function(data) {
-        	var comments = data.responseJSON;
-        	$('#' + postID + ' #view-comments').empty();
-        	if (comments.length == 0) {
-        		$('#' + postID + ' #view-comments').append("<p>No comments here.</p>");
-        		event.preventDefault();
-        		return;
-        	}
-			loadCommentsOnPost(comments, postID);
-        	event.preventDefault();
-        }
-    });
-}
-
-function loadCommentsOnPost(comments, id) {
-	$('#' + id + ' #view-comments').append('<div class="comment-section"><p>Comments</p><div class="comments-content"' + ' id="' + id + '"></div></div>');
-	for (let i = comments.length - 1; i >= 0; i -= 1) {
-		$('#' + id + ' #view-comments').append(makeComment(comments[i], id));
-	}
-}

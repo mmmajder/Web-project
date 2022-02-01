@@ -51,7 +51,7 @@ public class FeedService {
 	public ArrayList<Post> getUserPosts(@Context HttpServletRequest request) {
 		return ((PostDAO) ctx.getAttribute("postDAO")).getUserFeed((User) request.getSession().getAttribute("logged"));
 	}
-	
+
 	@GET
 	@Path("/getPublicFeed")
 	@Produces(MediaType.APPLICATION_JSON)

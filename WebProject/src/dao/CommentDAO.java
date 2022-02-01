@@ -18,9 +18,9 @@ import java.util.Map;
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
 import beans.Comment;
-import beans.FriendRequest;
 import beans.Post;
 import beans.User;
+import dao.UserDAO;
 import services.profile.CommentReturnData;
 
 public class CommentDAO {
@@ -31,13 +31,6 @@ public class CommentDAO {
 	public CommentDAO(String contextPath) {
 		this.path = contextPath;
 		readFile();
-	}
-
-	public static void main(String[] args) {
-		CommentDAO dao = new CommentDAO("src");
-		for (Comment x : dao.findAll()) {
-			System.out.println(x);
-		}
 	}
 
 	public Collection<Comment> findAll() {
@@ -122,13 +115,15 @@ public class CommentDAO {
 		return b.equals("true");
 	}
 
-	public ArrayList<CommentReturnData> getCommentsOnPost(Post post, User user) {
+	public ArrayList<CommentReturnData> getCommentsOnPost(Post post, UserDAO userDAO) {
 		ArrayList<CommentReturnData> comments = new ArrayList<CommentReturnData>();
 		for (String id : post.getComments()) {
 			Comment comment = this.findById(id);
 			if (!comment.isDeleted()) {
-				comments.add(new CommentReturnData(comment.getId(), comment.getText(), user.getId(), user.getName(),
-						user.getSurname(), comment.getCreated(), comment.getLastEdited(), user.getProfilePicture()));
+				User user = userDAO.findById(comment.getAuthor());
+				comments.add(new CommentReturnData(comment.getId(), comment.getText(), comment.getAuthor(),
+						user.getName(), user.getSurname(), comment.getCreated(), comment.getLastEdited(),
+						user.getProfilePicture()));
 			}
 		}
 		return comments;

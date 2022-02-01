@@ -83,7 +83,7 @@ public class MessageService {
 			return false;
 		}
 	}
-	
+
 	@POST
 	@Path("/seen")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -92,7 +92,7 @@ public class MessageService {
 		User user = (User) request.getSession().getAttribute("logged");
 		chatDao.seenMessage(chat, user);
 	}
-	
+
 	@GET
 	@Path("/notSeenMessages")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -103,7 +103,7 @@ public class MessageService {
 		ChatDAO chatDao = (ChatDAO) ctx.getAttribute("chatDAO");
 		return userDAO.hasNotSeenMessages(user, dmDAO, chatDao);
 	}
-	
+
 	@POST
 	@Path("/openedChat")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -115,7 +115,7 @@ public class MessageService {
 		Chat chat = chatDao.getChatForUsers(user, otherUser);
 		request.getSession().setAttribute("openedChat", chat);
 	}
-	
+
 	@GET
 	@Path("/openChatIfNeeded")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -123,8 +123,7 @@ public class MessageService {
 		Chat chat = (Chat) request.getSession().getAttribute("openedChat");
 		if (chat == null) {
 			return null;
-		}
-		else {
+		} else {
 			return getChatContent(request, chat.getId());
 		}
 	}

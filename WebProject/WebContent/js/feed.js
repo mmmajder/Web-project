@@ -1,59 +1,3 @@
-// show friend requests
-function createFriendReqCard(cardData) {
-	console.log(cardData);
-	
-	var cardTemplate = [
-		'<div class="request id="',
-		cardData.id,
-		'">',
-		'<div class="info">',
-		'<div class="profile-picture">',
-		'<img src="',
-		'images/userPictures/' + cardData.id + '/' + cardData.profilePicture,
-		'"></div><div><h5>',
-		cardData.name + ' ' + cardData.surname,
-		'</h5><p class="text-muted">',
-		cardData.numberOfMutualFriends + ' mutual friends',
-		'</p></div></div><div class="action">',
-		'<button class="btn btn-primary" id="',
-		cardData.id,
-		'">Accept</button>',
-		'<button class="btn decline" id="',
-		cardData.id,
-		'">Decline</button>',
-		'</div></div>'
-	];
-	return $(cardTemplate.join(''));
-}
-
-$(".friend-requests").on('click', 'button.btn-primary', function() {
-	var senderId = $(this).attr('id');
-	$.ajax({
-		url: "rest/friendRequest/accept",
-		type: "POST",
-		contentType: "application/json",
-		data: senderId,
-		complete: function() {
-			$(this).parent().fadeOut('slow');
-		}
-		
-	});
-});
-
-$(".friend-requests").on('click', 'button.decline', function() {
-	var senderId = $(this).attr('id');
-	$.ajax({
-		url: "rest/friendRequest/deny",
-		type: "POST",
-		contentType: "application/json",
-		data: senderId,
-		complete: function() {
-			$(this).parent().fadeOut('slow');
-		}
-		
-	});
-});
-
 var socket
 $(document).ready(function() {
 	try{
@@ -99,19 +43,6 @@ function receiveMessage(msg) {
 
 
 $(document).ready(function() {
-	$.ajax({
-		url: "rest/friendRequest/getRequests",
-		type: "GET",
-		contentType: "application/json",
-		complete: function(data) {
-			$('.friend-requests').empty();
-			$('.friend-requests').append('<h4>Friendship Requests</h4>');
-			var friendRequests = data.responseJSON;
-			friendRequests.forEach(function(item, i) {
-				$('.friend-requests').append(createFriendReqCard(item));
-			});
-		}
-	});
 	
 	$.ajax({
         url: "rest/feed/getUserPosts",
@@ -135,6 +66,10 @@ $(document).ready(function() {
         complete: function(data) {
             var user = data.responseJSON;
             $("#logged-user-username").html("@" + user.username);
+            if(user.admin) {
+            	$(".create-post").hide();
+            	$(".friend-requests").hide();
+            }
         }
 	});
 });
@@ -260,84 +195,52 @@ function makeCardTemplate(user, postData) {
 	if (postData.pictureLocation != "") {
 		postPic = '<div class="post-photo"><img src="images/userPictures/' + postData.author + '/' + postData.pictureLocation + '"></div>';
 	}
+	var delPost = '';
+	if (user.admin || user.id == postData.author) {
+		delPost = '<span class="delete-post" onclick="deletePost(\'' + postData.id + '\',\'' + user.admin + '\')"><i class="uil uil-trash-alt"></i></span>';
+	}
 	var cardTemplate = [
         '<div class="feed" id="' + postData.id + '"><div class="head"><div class="user"><div class="profile-picture">',
         '<img src="',
         'images/userPictures/' + user.id + '/' + user.profilePicture,
         '"></div><div class="ingo">',
         '<h3>' + user.name + ' ' + user.surname + '</h3>',
-        '<small>' + postData.posted + '</small>',
-        '</div></div><span class="edit"><i class="uil uil-ellipsis-h"></i></span></div><br><div class="caption">',
+        '<small>' + printDateTime(postData.posted) + '</small>',
+        '</div></div>' + delPost + '</div><br><div class="caption">',
         '<p>' + postData.description + '</p></div>',
         postPic,
         '<div class="comments text-muted" id="view-comments" onclick="viewComments(\'' + postData.id + '\')">',
         '<p>View all comments</p>',
-        '</div><div class="add-comment">',
+        '</div><br><div class="add-comment">',
         '<input type="text" placeholder="Type comment..."><span><i id="add-comment" onclick="addComment(\'' + postData.id + '\')" class="uil uil-enter"></i></span>',
         '</div>'
     ];
     return $(cardTemplate.join(''));
 }
 
-function addComment(id) {
-	var value = $('#' + id + ' input').val();
-	if(value != '') {
-		var c = JSON.stringify({text: value, postID: id});
-		$.ajax({
-			url: "rest/profile/addComment",
-			type: "POST",
-			data: c,
-			contentType: "application/json",
-			dataType: "json",
-			complete: function(data) {
-				comment = data.responseJSON;
-				$('#' + id + ' .comments-content').append(makeComment(comment));
-				$('#' + id + ' input').val('');
-				event.preventDefault();
-	        }
-	    });
-	} else {
-		alert("You can't add empty comment.");
-	}
-}
-
-function makeComment(comment) {
-	var cardTemplate = [
-		'<div class="message-left" id="' + comment.id + '">',
-        '<div class="message-container">',
-        '<div class="profile-picture">',
-        '<img src="images/userPictures/' + comment.authorId + '/' + comment.profilePicture + '">',
-        '</div><div>' + comment.name + ' ' + comment.lastname + '  ',
-        '</div><div class="message-text"><span style="font-size:10px;">',
-        comment.text,
-        '</span></div></div><small style="font-size:8px;margin-left:1rem;color:black;">Last edited: ' + comment.lastEdited + '  </small><span class="edit"><i class="uil uil-edit"></i></span></div>'
-	];
-	return $(cardTemplate.join(''));
-}
-
-function viewComments(postID) {
-	$.ajax({
-        url: "rest/profile/loadComments",
-        type: "POST",
-        data: postID,
-        contentType: "application/json",
-        complete: function(data) {
-        	var comments = data.responseJSON;
-        	$('#' + postID + ' #view-comments').empty();
-        	if (comments.length == 0) {
-        		$('#' + postID + ' #view-comments').append("<p>No comments here.</p>");
-        		event.preventDefault();
-        		return;
-        	}
-			loadComments(comments, postID);
-        	event.preventDefault();
-        }
-    });
-}
-
-function loadComments(comments, id) {
-	$('#' + id + ' #view-comments').append('<p>Comments</p><div class="comments-content"' + ' id="' + id + '"></div>');
-	for (let i = comments.length - 1; i >= 0; i -= 1) {
-		$('#' + id + ' #view-comments').append(makeComment(comments[i]));
+function deletePost(postID, isAdmin) {
+	if (confirm('Are you sure you want to delete this post?')) {
+		var post = JSON.stringify({ id: postID });
+		if(isAdmin) {
+			$.ajax({
+		        url: "rest/profile/deletePostByAdmin",
+		        type: "DELETE",
+		        data: post,
+		        contentType: "application/json",
+		        complete: function(data) {
+		        	$("#feeds #" + postID).fadeOut();
+		        }
+		    });
+		} else {
+			$.ajax({
+		        url: "rest/profile/delete",
+		        type: "DELETE",
+		        data: post,
+		        contentType: "application/json",
+		        complete: function(data) {
+		        	$("#feeds #" + postID).fadeOut();
+		        }
+		    });
+		}
 	}
 }

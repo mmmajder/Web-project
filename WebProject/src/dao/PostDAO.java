@@ -39,6 +39,16 @@ public class PostDAO {
 	public Collection<Post> findAll() {
 		return posts.values();
 	}
+	
+	public Collection<Post> findActivePosts() {
+		Collection<Post> activePosts = new ArrayList<Post>();
+		for(Post post : posts.values()) {
+			if(!post.isDeleted()) {
+				activePosts.add(post);
+			}
+		}
+		return activePosts;
+	}
 
 	public void add(Post post) {
 		posts.put(post.getId(), post);
@@ -66,7 +76,7 @@ public class PostDAO {
 	public ArrayList<Post> findByAuthorId(ArrayList<String> ids) {
 		ArrayList<Post> x = new ArrayList<Post>();
 		for (Post post : findAll()) {
-			if (ids.contains(post.getAuthor()) && !post.isPicture()) {
+			if (ids.contains(post.getAuthor()) && !post.isPicture() && !post.isDeleted()) {
 				x.add(post);
 			}
 		}
@@ -190,12 +200,18 @@ public class PostDAO {
 	}
 
 	public ArrayList<Post> getUserFeed(User u) {
+		if (u.isAdmin())
+			return sortPosts(findActivePosts());
 		ArrayList<String> people = new ArrayList<String>();
 		for (String f : u.getFriends()) {
 			people.add(f);
 		}
 		people.add(u.getId());
 		ArrayList<Post> retPosts = findByAuthorId(people);
+		return sortPosts(retPosts);
+	}
+	
+	private ArrayList<Post> sortPosts(Collection<Post> retPosts) {
 		return (ArrayList<Post>) retPosts.stream().sorted(Comparator.comparing(Post::getPosted).reversed())
 				.collect(Collectors.toList());
 	}
