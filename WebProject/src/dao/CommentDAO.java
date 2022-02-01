@@ -1,4 +1,4 @@
-package dao.comment;
+package dao;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -18,6 +18,7 @@ import java.util.Map;
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
 import beans.Comment;
+import beans.FriendRequest;
 import beans.Post;
 import beans.User;
 import services.profile.CommentReturnData;
@@ -34,8 +35,9 @@ public class CommentDAO {
 
 	public static void main(String[] args) {
 		CommentDAO dao = new CommentDAO("src");
-		dao.addComment(
-				new Comment(dao.generateId(), "Cao%20lepa", "U00001", LocalDateTime.now(), LocalDateTime.now(), false));
+		for (Comment x : dao.findAll()) {
+			System.out.println(x);
+		}
 	}
 
 	public Collection<Comment> findAll() {

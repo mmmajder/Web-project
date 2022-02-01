@@ -1,7 +1,0 @@
-id;authorID;picture;description;posted;commentIDs;deleted
-PI00001;U00001;bear1.jpg;Mnogo dobar post 1;2020-01-01 11:00:00;;false
-PI00002;U00001;bear2.jpg;Mnogo dobar post 2;2020-01-01 12:00:00;;false
-PI00003;U00001;bear3.jpg;Mnogo dobar post 3;2020-01-01 13:00:00;;false
-PI00004;U00002;bear4.jpg;Mnogo dobar post 4;2020-01-01 14:00:00;;false
-PI00005;U00003;bear5.jpg;Mnogo dobar post 5;2020-01-01 15:00:00;COM-00000001|COM-00000002;false
-PI00006;U00003;bear6.jpg;Mnogo dobar post 6;2020-01-01 16:00:00;;false

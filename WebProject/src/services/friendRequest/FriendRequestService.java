@@ -15,9 +15,9 @@ import javax.ws.rs.core.MediaType;
 
 import beans.Chat;
 import beans.User;
-import dao.chat.ChatDAO;
-import dao.friendRequest.FriendRequestDAO;
-import dao.person.UserDAO;
+import dao.ChatDAO;
+import dao.FriendRequestDAO;
+import dao.UserDAO;
 import enums.FriendRequestState;
 import services.search.UserSearchData;
 

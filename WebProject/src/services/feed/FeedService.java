@@ -22,9 +22,9 @@ import javax.xml.bind.DatatypeConverter;
 
 import beans.Post;
 import beans.User;
-import dao.comment.CommentDAO;
-import dao.person.UserDAO;
-import dao.post.PostDAO;
+import dao.CommentDAO;
+import dao.UserDAO;
+import dao.PostDAO;
 
 @Path("/feed")
 public class FeedService {

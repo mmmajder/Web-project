@@ -1,4 +1,4 @@
-package dao.post;
+package dao;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -23,6 +23,13 @@ public class PostDAO {
 	static final String CSV_FILE = "posts.csv";
 	private Map<String, Post> posts = new HashMap<>();
 	private String path;
+	
+	public static void main(String[] args) {
+		PostDAO dao = new PostDAO("src");
+		for (Post post : dao.findAll()) {
+			System.out.println(post);
+		}
+	}
 
 	public PostDAO(String contextPath) {
 		this.path = contextPath;

@@ -17,9 +17,9 @@ import javax.ws.rs.core.MediaType;
 import beans.Chat;
 import beans.DM;
 import beans.User;
-import dao.chat.ChatDAO;
-import dao.dm.DmDAO;
-import dao.person.UserDAO;
+import dao.ChatDAO;
+import dao.DmDAO;
+import dao.UserDAO;
 
 @Path("/messages")
 public class MessageService {
@@ -37,7 +37,7 @@ public class MessageService {
 		}
 
 		if (ctx.getAttribute("dmDAO") == null) {
-			ctx.setAttribute("dmDAO", new DmDAO(contextPath + "/../../data"));
+			ctx.setAttribute("dmDAO", new DmDAO(contextPath));
 		}
 	}
 

@@ -1,4 +1,4 @@
-package dao.friendRequest;
+package dao;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -18,8 +18,9 @@ import java.util.Map;
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
 import beans.FriendRequest;
+import beans.Post;
 import beans.User;
-import dao.person.UserDAO;
+import dao.UserDAO;
 import enums.FriendRequestState;
 import services.search.UserSearchData;
 
@@ -31,6 +32,13 @@ public class FriendRequestDAO {
 	public FriendRequestDAO(String contextPath) {
 		this.path = contextPath;
 		readFile();
+	}
+	
+	public static void main(String[] args) {
+		FriendRequestDAO dao = new FriendRequestDAO("src");
+		for (FriendRequest x : dao.findAll()) {
+			System.out.println(x);
+		}
 	}
 
 	public Collection<FriendRequest> findAll() {

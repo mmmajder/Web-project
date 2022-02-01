@@ -18,10 +18,10 @@ import javax.ws.rs.core.MediaType;
 import beans.Comment;
 import beans.Post;
 import beans.User;
-import dao.chat.ChatDAO;
-import dao.comment.CommentDAO;
-import dao.person.UserDAO;
-import dao.post.PostDAO;
+import dao.ChatDAO;
+import dao.CommentDAO;
+import dao.UserDAO;
+import dao.PostDAO;
 
 @Path("/profile")
 public class ProfileService {

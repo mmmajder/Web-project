@@ -13,8 +13,8 @@ import javax.ws.rs.core.MediaType;
 
 import beans.Post;
 import beans.User;
-import dao.person.UserDAO;
-import dao.post.PostDAO;
+import dao.UserDAO;
+import dao.PostDAO;
 
 @Path("/otherProfile")
 public class OtherProfileService {

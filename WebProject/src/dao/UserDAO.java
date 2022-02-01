@@ -1,4 +1,4 @@
-package dao.person;
+package dao;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -23,8 +23,6 @@ import beans.Chat;
 import beans.DM;
 import beans.Post;
 import beans.User;
-import dao.chat.ChatDAO;
-import dao.dm.DmDAO;
 import enums.Gender;
 import services.profile.EditProfileData;
 import services.search.SearchData;
@@ -42,30 +40,6 @@ public class UserDAO {
 
 	public static void main(String[] args) {
 		UserDAO dao = new UserDAO("src");
-		/*
-		 * dao.add(new User(dao.generateId(),
-		 * dao.generateId(),"password","email","name","surname",LocalDate.now(),Gender.
-		 * MALE,"profilePicture","biography",new ArrayList<>(),new ArrayList<>(),new
-		 * ArrayList<>(),new ArrayList<>(),false,false,false)); dao.add(new
-		 * User(dao.generateId(),
-		 * dao.generateId(),"password","email","name","surname",LocalDate.now(),Gender.
-		 * MALE,"profilePicture","biography",new ArrayList<>(),new ArrayList<>(),new
-		 * ArrayList<>(),new ArrayList<>(),false,false,false)); dao.add(new
-		 * User(dao.generateId(),
-		 * dao.generateId(),"password","email","name","surname",LocalDate.now(),Gender.
-		 * MALE,"profilePicture","biography",new ArrayList<>(),new ArrayList<>(),new
-		 * ArrayList<>(),new ArrayList<>(),false,false,false));
-		 */
-
-		EditProfileData data = new EditProfileData();
-		data.setBiography("biography");
-		data.setDateOfBirth("2020-11-11");
-		data.setGender("MALE");
-		data.setName("name");
-		data.setPassword("password");
-		data.setPrivacy("privacy");
-		data.setSurname("surname");
-		dao.editUser("U00001", data);
 	}
 
 	public Collection<User> findAll() {
