@@ -211,7 +211,7 @@ function makeCardTemplate(user, postData) {
         postPic,
         '<div class="comments text-muted" id="view-comments" onclick="viewComments(\'' + postData.id + '\')">',
         '<p>View all comments</p>',
-        '</div><div class="add-comment">',
+        '</div><br><div class="add-comment">',
         '<input type="text" placeholder="Type comment..."><span><i id="add-comment" onclick="addComment(\'' + postData.id + '\')" class="uil uil-enter"></i></span>',
         '</div>'
     ];

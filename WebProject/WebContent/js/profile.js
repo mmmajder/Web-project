@@ -433,13 +433,14 @@ $("#add-comment-image").click(function() {
 			$("#comments-content").append(makeComment(comment, id));
 			getLogged(function(user) {
 				if (user.id == comment.authorId) {
-					$('#' + comment.id).append('<span class="edit" onclick="editComment(\'' + comment.id + '\',\'' + comment.text + '\',\'' + id + '\')"><i class="uil uil-edit"></i></span>');
+					$('#' + comment.id).append('<span class="edit" style="float:left;" onclick="editComment(\'' + comment.id + '\',\'' + comment.text + '\',\'' + id + '\')"><i class="uil uil-edit"></i></span>');
 				} 
 				if (user.id == comment.authorId || user.admin) {
-					$('#' + comment.id).append('<span class="del" onclick="deleteComment(\'' + comment.id + '\',\'' + id + '\')"><i class="uil uil-trash-alt"></i></span>');
+					$('#' + comment.id).append('<span class="del" style="float:left;" onclick="deleteComment(\'' + comment.id + '\',\'' + id + '\')"><i class="uil uil-trash-alt"></i></span>');
 				} 
 			});
 			$("#comment-text").val('');
+			$("#photo-comments").scrollTop($("#photo-comments")[0].scrollHeight);
         }
     });
 });

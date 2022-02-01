@@ -37,7 +37,8 @@ function receiveMessage(msg, position) {
 		if (selectedChat.loggedUser.id==receiver && selectedChat.otherUser.id==sender) {
 			seenMessage();
 			$('.chat-messages').append(makeDmsTemplate(realMessage, position, selectedChat.otherUser));
-			
+			$(".chat-messages").scrollTop($(".chat-messages")[0].scrollHeight);
+
 		}
 		else {
 			initChats();
@@ -191,6 +192,7 @@ function chat(data) {
 
 	function sendMessage(msg) {
 		$('.chat-messages').append(makeDmsTemplate(msg, "right", chatDms.loggedUser));
+		$(".chat-messages").scrollTop($(".chat-messages")[0].scrollHeight);
 	}
 	
 	$('#send-message').click(function() {

@@ -39,7 +39,7 @@ function makeComment(comment, postID) {
         '</div><div class="message-text"><span style="font-size:10px;padding:0px;">',
         comment.text,
         '</span></div></div><small style="font-size:8px;margin-left:1rem;color:black;float:left;">Last edited: ' + printDateTime(comment.lastEdited),
-        '  </small></div><br><hr>'
+        '</small></div>'
 	];
 	return $(cardTemplate.join(''));
 }
