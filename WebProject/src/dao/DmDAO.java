@@ -1,4 +1,4 @@
-package dao.dm;
+package dao;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -23,12 +23,6 @@ public class DmDAO {
 	static final String CSV_FILE = "dms.csv";
 	private Map<String, DM> dms = new HashMap<>();
 	private String path;
-
-	public static void main(String[] args) {
-		DmDAO dao = new DmDAO("src");
-		dao.addDM(new DM(dao.generateId(), "Cao", LocalDateTime.now(), "prvi", "drugi"));
-		// dao.writeFile();
-	}
 
 	public DmDAO(String contextPath) {
 		this.path = contextPath;

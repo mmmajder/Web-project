@@ -1,4 +1,4 @@
-package dao.chat;
+package dao;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -21,8 +21,8 @@ import au.com.bytecode.opencsv.CSVWriter;
 import beans.Chat;
 import beans.DM;
 import beans.User;
-import dao.dm.DmDAO;
-import dao.person.UserDAO;
+import dao.DmDAO;
+import dao.UserDAO;
 import services.messages.ChatHeadData;
 import services.messages.DmData;
 
@@ -34,20 +34,6 @@ public class ChatDAO {
 	public ChatDAO() {
 		this.path = "";
 		readFile();
-	}
-
-	public static void main(String[] args) {
-		ChatDAO dao = new ChatDAO("src");
-
-		ArrayList<String> participants = new ArrayList<String>();
-		participants.add("U000001");
-		participants.add("U000002");
-		dao.add(new Chat(dao.generateId(), new ArrayList<>(), participants, true));
-		ArrayList<String> dms = new ArrayList<String>();
-		dms.add("DM1");
-		dms.add("DM2");
-		dao.add(new Chat(dao.generateId(), dms, participants, true));
-		dao.writeFile();
 	}
 
 	public ChatDAO(String contextPath) {

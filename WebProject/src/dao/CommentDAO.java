@@ -1,4 +1,4 @@
-package dao.comment;
+package dao;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -20,7 +20,7 @@ import au.com.bytecode.opencsv.CSVWriter;
 import beans.Comment;
 import beans.Post;
 import beans.User;
-import dao.person.UserDAO;
+import dao.UserDAO;
 import services.profile.CommentReturnData;
 
 public class CommentDAO {
@@ -31,12 +31,6 @@ public class CommentDAO {
 	public CommentDAO(String contextPath) {
 		this.path = contextPath;
 		readFile();
-	}
-
-	public static void main(String[] args) {
-		CommentDAO dao = new CommentDAO("src");
-		dao.addComment(
-				new Comment(dao.generateId(), "Cao%20lepa", "U00001", LocalDateTime.now(), LocalDateTime.now(), false));
 	}
 
 	public Collection<Comment> findAll() {
@@ -127,8 +121,9 @@ public class CommentDAO {
 			Comment comment = this.findById(id);
 			if (!comment.isDeleted()) {
 				User user = userDAO.findById(comment.getAuthor());
-				comments.add(new CommentReturnData(comment.getId(), comment.getText(), comment.getAuthor(), user.getName(),
-						user.getSurname(), comment.getCreated(), comment.getLastEdited(), user.getProfilePicture()));
+				comments.add(new CommentReturnData(comment.getId(), comment.getText(), comment.getAuthor(),
+						user.getName(), user.getSurname(), comment.getCreated(), comment.getLastEdited(),
+						user.getProfilePicture()));
 			}
 		}
 		return comments;

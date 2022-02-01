@@ -18,10 +18,10 @@ import javax.ws.rs.core.MediaType;
 import beans.Comment;
 import beans.Post;
 import beans.User;
-import dao.chat.ChatDAO;
-import dao.comment.CommentDAO;
-import dao.person.UserDAO;
-import dao.post.PostDAO;
+import dao.ChatDAO;
+import dao.CommentDAO;
+import dao.UserDAO;
+import dao.PostDAO;
 
 @Path("/profile")
 public class ProfileService {
@@ -121,7 +121,7 @@ public class ProfileService {
 		dao.deletePost(postDAO.delete(post), post);
 		return postDAO.getUserPhotos(user);
 	}
-	
+
 	@DELETE
 	@Path("/deletePost")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -132,7 +132,7 @@ public class ProfileService {
 		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");
 		dao.deletePost(postDAO.delete(post), post);
 	}
-	
+
 	@DELETE
 	@Path("/deletePostByAdmin")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -165,8 +165,8 @@ public class ProfileService {
 		PostDAO postDAO = (PostDAO) ctx.getAttribute("postDAO");
 		CommentDAO commentDAO = (CommentDAO) ctx.getAttribute("commentDAO");
 		Post post;
-		if(photoID.contains("{")) {
-			post = postDAO.findById(photoID.split(":")[1].replace("\"", "").replace("}", ""));			
+		if (photoID.contains("{")) {
+			post = postDAO.findById(photoID.split(":")[1].replace("\"", "").replace("}", ""));
 		} else {
 			post = postDAO.findById(photoID);
 		}
@@ -192,7 +192,7 @@ public class ProfileService {
 		return new CommentReturnData(comment.getId(), comment.getText(), user.getId(), user.getName(),
 				user.getSurname(), comment.getCreated(), comment.getLastEdited(), user.getProfilePicture());
 	}
-	
+
 	@POST
 	@Path("/removeFriend")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -201,12 +201,12 @@ public class ProfileService {
 		User loggedUser = (User) request.getSession().getAttribute("logged");
 		UserDAO userDAO = (UserDAO) ctx.getAttribute("userDAO");
 		userDAO.removeFriend(loggedUser.getId(), otherUserId);
-		
-	//	ChatDAO chatDAO = (ChatDAO) ctx.getAttribute("chatDAO");
-	//	chatDAO.removeChat(loggedUser, userDAO.findById(otherUserId));
-		
+
+		// ChatDAO chatDAO = (ChatDAO) ctx.getAttribute("chatDAO");
+		// chatDAO.removeChat(loggedUser, userDAO.findById(otherUserId));
+
 	}
-	
+
 	@POST
 	@Path("/editComment")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -216,7 +216,7 @@ public class ProfileService {
 		commentDAO.editComment(commentData.getCommentID(), commentData.getText());
 		return commentDAO.findById(commentData.getCommentID());
 	}
-	
+
 	@POST
 	@Path("/deleteComment")
 	@Produces(MediaType.APPLICATION_JSON)

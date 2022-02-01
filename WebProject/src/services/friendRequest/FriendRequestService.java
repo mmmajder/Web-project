@@ -15,9 +15,9 @@ import javax.ws.rs.core.MediaType;
 
 import beans.Chat;
 import beans.User;
-import dao.chat.ChatDAO;
-import dao.friendRequest.FriendRequestDAO;
-import dao.person.UserDAO;
+import dao.ChatDAO;
+import dao.FriendRequestDAO;
+import dao.UserDAO;
 import enums.FriendRequestState;
 import services.search.UserSearchData;
 
@@ -25,6 +25,7 @@ import services.search.UserSearchData;
 public class FriendRequestService {
 	@Context
 	ServletContext ctx;
+
 	@PostConstruct
 	public void init() {
 		String contextPath = ctx.getRealPath("");
@@ -38,7 +39,7 @@ public class FriendRequestService {
 			ctx.setAttribute("chatDAO", new ChatDAO(contextPath));
 		}
 	}
-	
+
 	@GET
 	@Path("/getRequests")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -48,7 +49,7 @@ public class FriendRequestService {
 		UserDAO userDAO = (UserDAO) ctx.getAttribute("userDAO");
 		return dao.getPrintData(user, userDAO);
 	}
-	
+
 	@POST
 	@Path("/accept")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -59,17 +60,16 @@ public class FriendRequestService {
 		System.out.println("sender " + sender);
 		System.out.println("user " + user);
 		userDAO.addFriend(user.getId(), senderId);
-		
-		
+
 		ChatDAO chatDAO = (ChatDAO) ctx.getAttribute("chatDAO");
 		Chat chat = chatDAO.createChat(user, sender);
-		
+
 		userDAO.addChatToUsers(user, sender, chat);
-		
+
 		FriendRequestDAO friendRequestDAO = (FriendRequestDAO) ctx.getAttribute("friendRequestDAO");
 		friendRequestDAO.changeStatus(sender, user, FriendRequestState.ACCEPTED);
 	}
-	
+
 	@POST
 	@Path("/deny")
 	@Consumes(MediaType.APPLICATION_JSON)

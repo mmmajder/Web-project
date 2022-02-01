@@ -13,12 +13,12 @@ import javax.ws.rs.core.MediaType;
 
 import beans.Post;
 import beans.User;
-import dao.person.UserDAO;
-import dao.post.PostDAO;
+import dao.UserDAO;
+import dao.PostDAO;
 
 @Path("/otherProfile")
 public class OtherProfileService {
-	
+
 	@Context
 	ServletContext ctx;
 
@@ -34,10 +34,10 @@ public class OtherProfileService {
 	@Path("/otherUser")
 	@Produces(MediaType.APPLICATION_JSON)
 	public User getOpenedProfile(@Context HttpServletRequest request) {
-		User user = (User) request.getSession().getAttribute("otherProfile"); 
+		User user = (User) request.getSession().getAttribute("otherProfile");
 		return user;
 	}
-	
+
 	@GET
 	@Path("/photos")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -45,30 +45,33 @@ public class OtherProfileService {
 		return ((PostDAO) ctx.getAttribute("postDAO"))
 				.getUserPhotos((User) request.getSession().getAttribute("otherProfile"));
 	}
-	
+
 	@GET
 	@Path("/posts")
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<Post> getUserPosts(@Context HttpServletRequest request) {
-		return ((PostDAO) ctx.getAttribute("postDAO")).getUserPosts((User) request.getSession().getAttribute("otherProfile"));
+		return ((PostDAO) ctx.getAttribute("postDAO"))
+				.getUserPosts((User) request.getSession().getAttribute("otherProfile"));
 	}
-	
+
 	@GET
 	@Path("/friends")
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<User> getFriends(@Context HttpServletRequest request) {
-		return ((UserDAO) ctx.getAttribute("userDAO")).getMutualFriends((User) request.getSession().getAttribute("otherProfile"), (User) request.getSession().getAttribute("logged"));
+		return ((UserDAO) ctx.getAttribute("userDAO")).getMutualFriends(
+				(User) request.getSession().getAttribute("otherProfile"),
+				(User) request.getSession().getAttribute("logged"));
 	}
-	
+
 	@GET
 	@Path("/arePostsPrivate")
 	@Produces(MediaType.APPLICATION_JSON)
 	public boolean arePostsPrivate(@Context HttpServletRequest request) {
-		User otherUser = (User) request.getSession().getAttribute("otherProfile"); 
-		User logged = (User) request.getSession().getAttribute("logged"); 
-		if(logged.isAdmin())
+		User otherUser = (User) request.getSession().getAttribute("otherProfile");
+		User logged = (User) request.getSession().getAttribute("logged");
+		if (logged.isAdmin())
 			return false;
-		if(logged.getFriends().contains(otherUser.getId()))
+		if (logged.getFriends().contains(otherUser.getId()))
 			return false;
 		return otherUser.isPrivate();
 	}

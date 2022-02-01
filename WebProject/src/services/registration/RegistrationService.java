@@ -11,7 +11,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 import beans.User;
-import dao.person.UserDAO;
+import dao.UserDAO;
 
 @Path("/register")
 public class RegistrationService {

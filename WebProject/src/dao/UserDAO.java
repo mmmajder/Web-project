@@ -1,4 +1,4 @@
-package dao.person;
+package dao;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -23,8 +23,8 @@ import beans.Chat;
 import beans.DM;
 import beans.Post;
 import beans.User;
-import dao.chat.ChatDAO;
-import dao.dm.DmDAO;
+import dao.ChatDAO;
+import dao.DmDAO;
 import enums.Gender;
 import services.profile.EditProfileData;
 import services.search.SearchData;
@@ -38,34 +38,6 @@ public class UserDAO {
 	public UserDAO(String contextPath) {
 		this.path = contextPath;
 		readFile();
-	}
-
-	public static void main(String[] args) {
-		UserDAO dao = new UserDAO("src");
-		/*
-		 * dao.add(new User(dao.generateId(),
-		 * dao.generateId(),"password","email","name","surname",LocalDate.now(),Gender.
-		 * MALE,"profilePicture","biography",new ArrayList<>(),new ArrayList<>(),new
-		 * ArrayList<>(),new ArrayList<>(),false,false,false)); dao.add(new
-		 * User(dao.generateId(),
-		 * dao.generateId(),"password","email","name","surname",LocalDate.now(),Gender.
-		 * MALE,"profilePicture","biography",new ArrayList<>(),new ArrayList<>(),new
-		 * ArrayList<>(),new ArrayList<>(),false,false,false)); dao.add(new
-		 * User(dao.generateId(),
-		 * dao.generateId(),"password","email","name","surname",LocalDate.now(),Gender.
-		 * MALE,"profilePicture","biography",new ArrayList<>(),new ArrayList<>(),new
-		 * ArrayList<>(),new ArrayList<>(),false,false,false));
-		 */
-
-		EditProfileData data = new EditProfileData();
-		data.setBiography("biography");
-		data.setDateOfBirth("2020-11-11");
-		data.setGender("MALE");
-		data.setName("name");
-		data.setPassword("password");
-		data.setPrivacy("privacy");
-		data.setSurname("surname");
-		dao.editUser("U00001", data);
 	}
 
 	public Collection<User> findAll() {
@@ -256,10 +228,11 @@ public class UserDAO {
 		return loggedUser.getFriends().stream().filter(otherUser.getFriends()::contains).collect(Collectors.toList())
 				.size();
 	}
-	
+
 	public ArrayList<User> getMutualFriends(User loggedUser, User otherUser) {
 		System.out.println(loggedUser);
-		List<String> ids = loggedUser.getFriends().stream().filter(otherUser.getFriends()::contains).collect(Collectors.toList());
+		List<String> ids = loggedUser.getFriends().stream().filter(otherUser.getFriends()::contains)
+				.collect(Collectors.toList());
 		ArrayList<User> users = new ArrayList<User>();
 		for (String id : ids) {
 			users.add(findById(id));
@@ -321,7 +294,7 @@ public class UserDAO {
 		}
 		return posts;
 	}
-	
+
 	private void connectFriends(User user1, User user2) {
 		ArrayList<String> user1Friends = user1.getFriends();
 		user1Friends.add(user2.getId());
@@ -335,7 +308,7 @@ public class UserDAO {
 		connectFriends(sender, receiver);
 		writeFile();
 	}
-	
+
 	private void setChats(User user, Chat chat) {
 		ArrayList<String> user1Chats = user.getChats();
 		user1Chats.add(chat.getId());
@@ -352,7 +325,7 @@ public class UserDAO {
 		for (String chatId : user.getChats()) {
 			Chat chat = chatDao.findById(chatId);
 			if (!chat.isSeen()) {
-				DM dm = dmDAO.findById(chat.getDms().get(chat.getDms().size()-1));
+				DM dm = dmDAO.findById(chat.getDms().get(chat.getDms().size() - 1));
 				if (dm.getReciever().equals(user.getId())) {
 					return true;
 				}
@@ -360,7 +333,7 @@ public class UserDAO {
 		}
 		return false;
 	}
-	
+
 	private void removeFromFriendsList(User user1, String user2Id) {
 		ArrayList<String> friends = user1.getFriends();
 		Iterator<String> itr = friends.iterator();

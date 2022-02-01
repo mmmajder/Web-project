@@ -22,9 +22,9 @@ import javax.xml.bind.DatatypeConverter;
 
 import beans.Post;
 import beans.User;
-import dao.comment.CommentDAO;
-import dao.person.UserDAO;
-import dao.post.PostDAO;
+import dao.CommentDAO;
+import dao.UserDAO;
+import dao.PostDAO;
 
 @Path("/feed")
 public class FeedService {
@@ -51,7 +51,7 @@ public class FeedService {
 	public ArrayList<Post> getUserPosts(@Context HttpServletRequest request) {
 		return ((PostDAO) ctx.getAttribute("postDAO")).getUserFeed((User) request.getSession().getAttribute("logged"));
 	}
-	
+
 	@GET
 	@Path("/getPublicFeed")
 	@Produces(MediaType.APPLICATION_JSON)

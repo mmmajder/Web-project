@@ -1,10 +1,9 @@
-package dao.post;
+package dao;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.channels.NonReadableChannelException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
