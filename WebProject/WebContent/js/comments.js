@@ -33,38 +33,44 @@ function makeComment(comment, postID) {
 		'<div class="message-left" id="' + comment.id + '">',
         '<div class="message-container">',
         '<div class="profile-picture">',
-        '<img src="images/userPictures/' + comment.authorId + '/' + comment.profilePicture + '">',
-        '</div><div class="comment-author" id="' + comment.author + '">' + comment.name + ' ' + comment.lastname + '  ',
-        '</div><div class="message-text"><span style="font-size:10px;">',
+        '<img style="object-fit:cover;width:1.5rem;height:1.5rem;"',
+        'src="images/userPictures/' + comment.authorId + '/' + comment.profilePicture + '">',
+        '</div><div class="comment-author" style="font-size:12px;" id="' + comment.author + '">' + comment.name + ' ' + comment.lastname + '  ',
+        '</div><div class="message-text"><span style="font-size:10px;padding:0px;">',
         comment.text,
-        '</span></div></div><small style="font-size:8px;margin-left:1rem;color:black;">Last edited: ' + printDateTime(comment.lastEdited),
-        '  </small></div>'
+        '</span></div></div><small style="font-size:8px;margin-left:1rem;color:black;float:left;">Last edited: ' + printDateTime(comment.lastEdited),
+        '  </small></div><br><hr>'
 	];
 	return $(cardTemplate.join(''));
 }
 
 function viewComments(postID) {
-	$.ajax({
-        url: "rest/profile/loadComments",
-        type: "POST",
-        data: postID,
-        contentType: "application/json",
-        complete: function(data) {
-        	var comments = data.responseJSON;
-        	$('#' + postID + ' #view-comments').empty();
-        	if (comments.length == 0) {
-        		$('#' + postID + ' #view-comments').append("<p>No comments here.</p>");
-        		event.preventDefault();
-        		return;
-        	}
-        	loadCommentsOnPost(comments, postID);
-        	event.preventDefault();
-        }
-    });
+	if ($('#' + postID + ' #view-comments p').text() != "Hide comments") {
+		$.ajax({
+	        url: "rest/profile/loadComments",
+	        type: "POST",
+	        data: postID,
+	        contentType: "application/json",
+	        complete: function(data) {
+	        	var comments = data.responseJSON;
+	        	$('#' + postID + ' #view-comments').empty();
+	        	if (comments.length == 0) {
+	        		$('#' + postID + ' #view-comments').append("<p>No comments here.</p>");
+	        		event.preventDefault();
+	        		return;
+	        	}
+	        	loadCommentsOnPost(comments, postID);
+	        	event.preventDefault();
+	        }
+	    });
+	} else {
+		$('#' + postID + ' #view-comments').empty();
+		$('#' + postID + ' #view-comments').append('<p>View all comments</p>');
+	}
 }
 
 function loadCommentsOnPost(comments, id) {
-	$('#' + id + ' #view-comments').append('<p>Comments</p><div class="comments-content"' + ' id="' + id + '"></div>');
+	$('#' + id + ' #view-comments').append('<p>Hide comments</p><div class="comments-content"' + ' id="' + id + '"></div>');
 	for (let i = comments.length - 1; i >= 0; i -= 1) {
 		$('#' + id + ' #view-comments').append(makeComment(comments[i], id));
 		getLogged(function(user) {
@@ -89,7 +95,7 @@ function deleteComment(comID, pid) {
 				dataType: "json",
 				complete: function(data) {
 					comment = data.responseJSON;
-					$('#' + comment.id).hide();
+					$('#' + comment.id).fadeOut();
 					event.preventDefault();
 		        }
 		    });

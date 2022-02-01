@@ -66,6 +66,10 @@ $(document).ready(function() {
         complete: function(data) {
             var user = data.responseJSON;
             $("#logged-user-username").html("@" + user.username);
+            if(user.admin) {
+            	$(".create-post").hide();
+            	$(".friend-requests").hide();
+            }
         }
 	});
 });
@@ -191,6 +195,10 @@ function makeCardTemplate(user, postData) {
 	if (postData.pictureLocation != "") {
 		postPic = '<div class="post-photo"><img src="images/userPictures/' + postData.author + '/' + postData.pictureLocation + '"></div>';
 	}
+	var delPost = '';
+	if (user.admin || user.id == postData.author) {
+		delPost = '<span class="delete-post" onclick="deletePost(\'' + postData.id + '\',\'' + user.admin + '\')"><i class="uil uil-trash-alt"></i></span>';
+	}
 	var cardTemplate = [
         '<div class="feed" id="' + postData.id + '"><div class="head"><div class="user"><div class="profile-picture">',
         '<img src="',
@@ -198,7 +206,7 @@ function makeCardTemplate(user, postData) {
         '"></div><div class="ingo">',
         '<h3>' + user.name + ' ' + user.surname + '</h3>',
         '<small>' + printDateTime(postData.posted) + '</small>',
-        '</div></div><span class="edit"><i class="uil uil-ellipsis-h"></i></span></div><br><div class="caption">',
+        '</div></div>' + delPost + '</div><br><div class="caption">',
         '<p>' + postData.description + '</p></div>',
         postPic,
         '<div class="comments text-muted" id="view-comments" onclick="viewComments(\'' + postData.id + '\')">',
@@ -208,4 +216,31 @@ function makeCardTemplate(user, postData) {
         '</div>'
     ];
     return $(cardTemplate.join(''));
+}
+
+function deletePost(postID, isAdmin) {
+	if (confirm('Are you sure you want to delete this post?')) {
+		var post = JSON.stringify({ id: postID });
+		if(isAdmin) {
+			$.ajax({
+		        url: "rest/profile/deletePostByAdmin",
+		        type: "DELETE",
+		        data: post,
+		        contentType: "application/json",
+		        complete: function(data) {
+		        	$("#feeds #" + postID).fadeOut();
+		        }
+		    });
+		} else {
+			$.ajax({
+		        url: "rest/profile/delete",
+		        type: "DELETE",
+		        data: post,
+		        contentType: "application/json",
+		        complete: function(data) {
+		        	$("#feeds #" + postID).fadeOut();
+		        }
+		    });
+		}
+	}
 }

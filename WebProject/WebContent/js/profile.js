@@ -17,12 +17,14 @@ $('#friends').click(function() {
 
 function setBio(user) {
 	$("#profile-user-name").html("@" + user.username);
-	$("#number-of-posts").html(user.posts.length + " Posts");
-	$("#number-of-photos").html(user.posts.length + " Photos"); // TODO
-	$("#number-of-friends").html(user.friends.length + " Friends"); // kada je
-																	// nula
-																	// izbaci 1
-																	// ?
+	if(!user.admin) {
+		$("#number-of-posts").html(user.posts.length + " Posts");
+		$("#number-of-photos").html(user.posts.length + " Photos"); // TODO
+		$("#number-of-friends").html(user.friends.length + " Friends"); // kada je
+																		// nula
+																		// izbaci 1
+																		// ?
+	}
 	$("#date-of-birth").html(printDate(user.dateOfBirth));
 	$("#profile-bio-text").html(user.biography);
 	$(".profile-info .profile-photo img").attr("src", "images/userPictures/" + user.id + "/" + user.profilePicture);
@@ -38,6 +40,10 @@ $(document).ready(function() {
 		complete: function(data) {
 			var user = data.responseJSON;
 			setBio(user);
+			if(user.admin) {
+				$(".menu").hide();
+				$(".showing").hide();
+			}
 		}
 	});
 
@@ -234,11 +240,11 @@ function viewdetails() {
     });
 }
 
-function deletePost() {
+function deletePhoto() {
 	var x = $("#post-image img").attr("id");
 	var postID = JSON.stringify({ id: x });
 	$.ajax({
-        url: "rest/profile/delete",
+        url: "rest/profile/deletePhoto",
         type: "DELETE",
         data: postID,
         contentType: "application/json",

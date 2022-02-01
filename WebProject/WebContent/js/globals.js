@@ -9,7 +9,6 @@ function getLogged(callback) {
 			callback(loggedUser);
 		}
 	});
-
 }
 
 function printDate(data) {

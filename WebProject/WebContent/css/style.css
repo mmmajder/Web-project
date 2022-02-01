@@ -192,6 +192,21 @@ body {
     height: 15rem;
 }
 
+.comments-content .profile-photo {
+    width: 1.5rem;
+    height: 1.5rem;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    overflow: hidden;
+    text-align: center;
+}
+
+.comments-content .profile-photo img {
+	object-fit: cover;
+	width: 1.5rem;
+    height: 1.5rem;
+}
+
 img {
     display: block;
     width: 100%;
@@ -273,6 +288,19 @@ nav .container #buttons span,
     margin: 0 8px;
 }
 
+#add-comment, 
+.delete-post {
+	font-size: 1.2rem;
+    color: var(--color-primary);
+    cursor: pointer;
+    margin: 0 8px;
+}
+
+.add-comment i {
+	font-size: 1.5rem;
+	text-align: center;
+}
+
 nav .container #buttons i,
 .send-message-icon i {
     font-size: 1.8rem;
@@ -281,7 +309,7 @@ nav .container #buttons i,
 }
 
 nav #logged-user-username {
-    font-size: 1.5rem;
+    font-size: 1rem;
     margin: 0 8px;
     color: var(--color-primary);
 }

@@ -109,10 +109,10 @@ public class ProfileService {
 	}
 
 	@DELETE
-	@Path("/delete")
+	@Path("/deletePhoto")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public ArrayList<Post> deletePost(@Context HttpServletRequest request, String postID) {
+	public ArrayList<Post> deletePhoto(@Context HttpServletRequest request, String postID) {
 		PostDAO postDAO = (PostDAO) ctx.getAttribute("postDAO");
 		String post = postID.split(":")[1].replace("\"", "").replace("}", "");
 		Post p = postDAO.findById(post);
@@ -120,6 +120,29 @@ public class ProfileService {
 		User user = dao.findById(p.getAuthor());
 		dao.deletePost(postDAO.delete(post), post);
 		return postDAO.getUserPhotos(user);
+	}
+	
+	@DELETE
+	@Path("/deletePost")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void deletePost(@Context HttpServletRequest request, String postID) {
+		PostDAO postDAO = (PostDAO) ctx.getAttribute("postDAO");
+		String post = postID.split(":")[1].replace("\"", "").replace("}", "");
+		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");
+		dao.deletePost(postDAO.delete(post), post);
+	}
+	
+	@DELETE
+	@Path("/deletePostByAdmin")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void deletePostByAdmin(@Context HttpServletRequest request, String postID) {
+		PostDAO postDAO = (PostDAO) ctx.getAttribute("postDAO");
+		String post = postID.split(":")[1].replace("\"", "").replace("}", "");
+		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");
+		dao.deletePost(postDAO.delete(post), post);
+		// TODO send message that post is deleted
 	}
 
 	@POST
