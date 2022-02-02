@@ -127,8 +127,12 @@ public class ProfileService {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void deletePost(@Context HttpServletRequest request, String postID) {
+		System.out.println(postID);
 		PostDAO postDAO = (PostDAO) ctx.getAttribute("postDAO");
-		String post = postID.split(":")[1].replace("\"", "").replace("}", "");
+		String post = postID;
+		if (postID.contains("{")) {
+			post = postID.split(":")[1].replace("\"", "").replace("}", "");
+		} 
 		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");
 		dao.deletePost(postDAO.delete(post), post);
 	}

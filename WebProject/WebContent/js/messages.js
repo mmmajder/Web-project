@@ -14,8 +14,14 @@ $(document).ready(function() {
 			console.log("otvoren soket")
 		}
 		socket.onmessage = function(msg) {
-			console.log("stigao")
-			receiveMessage(msg.data, "left");
+			if (msg.startsWith("deletePostByAdmin")) { 
+				deletedPostMessage(msg.data)
+				
+				
+			} else {
+				receiveMessage(msg.data, "left");
+			}
+			
 		}
 		connection.onerror = function (error) { 	
 			console.log('WebSocket Error ' + error); 
@@ -28,6 +34,25 @@ $(document).ready(function() {
 		console.log(exception);
 	}
 })
+
+function deletedPostMessage(msg) {
+	//"deletePostByAdmin"+ user.id + "postId" + post.id + "user" + post.author
+	var adminId = msg.split('postDate')[0].split('deletePostByAdmin')[1];
+	var postDate = msg.split('user')[0].split('postDate')[1];
+	var authorId = msg.split('user')[1];
+	if (selectedChat) {
+		if (selectedChat.loggedUser.id==authorId && selectedChat.otherUser.id==adminId) {
+			seenMessage();
+			$('.chat-messages').append(makeDmsTemplate("Your post has been removed by Meeply admin. Date of post: " +postDate, position, selectedChat.otherUser));
+			$(".chat-messages").scrollTop($(".chat-messages")[0].scrollHeight);
+		}
+		else {
+			initChats();
+		}
+	} else {
+		initChats();
+	}
+}
 
 function receiveMessage(msg, position) {
 	var sender = msg.split("recieverId")[0].split("senderId")[1];
@@ -306,3 +331,4 @@ function goToMyProfile() {
 	socket.close();
 	window.location.href = "profile.html";
 }
+
