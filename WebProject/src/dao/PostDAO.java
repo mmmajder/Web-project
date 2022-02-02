@@ -22,6 +22,7 @@ import beans.User;
 public class PostDAO {
 	static final String CSV_FILE = "posts.csv";
 	private Map<String, Post> posts = new HashMap<>();
+	private RepositoryDAO repository = new RepositoryDAO();
 	private String path;
 	
 	public static void main(String[] args) {
@@ -85,7 +86,7 @@ public class PostDAO {
 
 	public void writeFile() {
 		try {
-			CSVWriter writer = new CSVWriter(new FileWriter(this.path + "/resources/" + CSV_FILE), ';',
+			CSVWriter writer = new CSVWriter(new FileWriter(repository.getPath() + "/resources/" + CSV_FILE), ';',
 					CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.DEFAULT_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END);
 			List<String[]> data = new ArrayList<String[]>();
 			data.add(new String[] { "id", "authorID", "pictureLocation", "description", "posted", "commentIDs",
@@ -104,7 +105,7 @@ public class PostDAO {
 	}
 
 	void readFile() {
-		try (CSVReader csvr = new CSVReader(new FileReader(this.path + "/resources/" + CSV_FILE), ';',
+		try (CSVReader csvr = new CSVReader(new FileReader(repository.getPath() + "/resources/" + CSV_FILE), ';',
 				CSVWriter.NO_QUOTE_CHARACTER, 1)) {
 			// String[] columns = new String[]
 			// {"id","authorID","pictureLocation","description","posted","commentIDs","deleted",

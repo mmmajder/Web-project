@@ -25,3 +25,16 @@ function printDateTime(data) {
     var minutes = time.split(':')[1];
     return printDate(date) + ' ' + hours + ':' + minutes;
 }
+
+function goToOtherProfile(id) {
+	$.ajax({
+		url: "rest/profile/viewOtherProfile",
+		type: "POST",
+		contentType: "application/json",
+		dataType: "json",
+		data: id,
+		complete: function(data) {
+			window.open("otherProfile.html", '_self').focus();
+		}
+	});
+}

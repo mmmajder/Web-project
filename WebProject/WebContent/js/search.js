@@ -161,7 +161,7 @@ function logOut() {
 function fillData(x) {
 	$("#users").empty();
 	for(var user of x) {
-		$("#users").append('<div class="person" data-name="$' + user.name + '" data-surname="$' + user.surname + '" data-date="' + 
+		$("#users").append('<div class="person" onclick="goToOtherProfile(\'' + user.id + '\')" data-name="$' + user.name + '" data-surname="$' + user.surname + '" data-date="' + 
 				user.dateOfBirth + '"><div class="profile-picture"><img src="images/userPictures/' + user.id + '/' + user.profilePicture + '">'
 				+ '</div><div class="person-body"><h5>' + user.name + ' ' + user.surname + '</h5><p class="text-muted">' + user.dateOfBirth + '</p></div></div>');
 	}

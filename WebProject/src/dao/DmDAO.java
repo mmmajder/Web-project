@@ -22,6 +22,7 @@ import beans.DM;
 public class DmDAO {
 	static final String CSV_FILE = "dms.csv";
 	private Map<String, DM> dms = new HashMap<>();
+	private RepositoryDAO repository = new RepositoryDAO();
 	private String path;
 
 	public DmDAO(String contextPath) {
@@ -64,7 +65,7 @@ public class DmDAO {
 	void writeFile() {
 		try {
 			System.out.println("stigao");
-			OutputStream os = new FileOutputStream(this.path + "/resources/" + CSV_FILE);
+			OutputStream os = new FileOutputStream(repository.getPath() + "/resources/" + CSV_FILE);
 			CSVWriter writer = new CSVWriter(new PrintWriter(new OutputStreamWriter(os, "UTF-8")), ';',
 					CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.DEFAULT_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END);
 			List<String[]> data = new ArrayList<String[]>();
@@ -84,7 +85,7 @@ public class DmDAO {
 
 	void readFile() {
 		try (CSVReader csvr = new CSVReader(
-				new InputStreamReader(new FileInputStream(this.path + "/resources/" + CSV_FILE), "UTF-8"), ';', '\'',
+				new InputStreamReader(new FileInputStream(repository.getPath() + "/resources/" + CSV_FILE), "UTF-8"), ';', '\'',
 				1);) {
 			String[] nextLine;
 			// String[] columns = new String[]

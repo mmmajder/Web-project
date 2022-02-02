@@ -25,6 +25,7 @@ import beans.User;
 import dao.CommentDAO;
 import dao.UserDAO;
 import dao.PostDAO;
+import dao.RepositoryDAO;
 
 @Path("/feed")
 public class FeedService {
@@ -69,6 +70,7 @@ public class FeedService {
 		PostDAO postDAO = (PostDAO) ctx.getAttribute("postDAO");
 		UserDAO userDAO = (UserDAO) ctx.getAttribute("userDAO");
 		User currentlyLogged = (User) request.getSession().getAttribute("logged");
+		RepositoryDAO repositoryDAO = new RepositoryDAO();
 		String photoName = "";
 		System.out.println(postData.getPictureLocation());
 		if (!postData.getPictureLocation().equals("")) {
@@ -88,19 +90,28 @@ public class FeedService {
 			}
 			// convert base64 string to binary data
 			byte[] data = DatatypeConverter.parseBase64Binary(strings[1]);
-			// String path =
-			// "C:\\Users\\Lenovo\\Desktop\\Web\\Projekat\\web-project\\WebProject\\WebContent\\images\\test_image."
-			// + extension;
 			photoName = "photo" + currentlyLogged.getPosts().size() + "." + extension;
-			String path = "C:/Users/Lenovo/Desktop/Web/Projekat/web-project/WebProject/WebContent/images/userPictures/"
-					+ currentlyLogged.getId() + "/" + photoName;
-			File file = new File(path);
-			try (OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(file))) {
+			
+			String path1 = repositoryDAO.getPath() + "/images/userPictures/" + currentlyLogged.getId() + "/"
+					+ photoName;
+			File file1 = new File(path1);
+			try (OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(file1))) {
 				outputStream.write(data);
-				System.out.println("hoce da radi");
+				System.out.println("napravio sam u eclipsu");
 			} catch (IOException e) {
 				e.printStackTrace();
-				System.out.println("nece da radi");
+				System.out.println("nisam napravio u eclipsu");
+			}
+
+			String path2 = repositoryDAO.getTomcatPath() + "/images/userPictures/" + currentlyLogged.getId() + "/"
+					+ photoName;
+			File file2 = new File(path2);
+			try (OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(file2))) {
+				outputStream.write(data);
+				System.out.println("napravio sam u tomcatu");
+			} catch (IOException e) {
+				e.printStackTrace();
+				System.out.println("nisam napravio u tomcatu");
 			}
 		}
 		Post newPost = new Post(postDAO.generateId(), currentlyLogged.getId(), photoName, postData.getDescription(),

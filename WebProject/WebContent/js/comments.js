@@ -32,7 +32,7 @@ function makeComment(comment, postID) {
 	var cardTemplate = [
 		'<div class="message-left" id="' + comment.id + '">',
         '<div class="message-container">',
-        '<div class="profile-picture">',
+        '<div class="profile-picture" onclick="goToOtherProfile(\'' + comment.authorId + '\')" >',
         '<img style="object-fit:cover;width:1.5rem;height:1.5rem;"',
         'src="images/userPictures/' + comment.authorId + '/' + comment.profilePicture + '">',
         '</div><div class="comment-author" style="font-size:12px;" id="' + comment.author + '">' + comment.name + ' ' + comment.lastname + '  ',
@@ -114,6 +114,7 @@ function editComment(comID, comText, pid) {
 				dataType: "json",
 				complete: function(data) {
 					comment = data.responseJSON;
+					event.preventDefault();
 					$('#' + comment.id + ' small').empty();
 					$('#' + comment.id + ' small').append('Last edited: ' + printDateTime(comment.lastEdited));
 					$('#' + comment.id + ' .message-text span').empty();

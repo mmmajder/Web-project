@@ -26,6 +26,7 @@ import services.profile.CommentReturnData;
 public class CommentDAO {
 	static final String CSV_FILE = "comments.csv";
 	private Map<String, Comment> comments = new HashMap<>();
+	private RepositoryDAO repository = new RepositoryDAO();
 	private String path;
 
 	public CommentDAO(String contextPath) {
@@ -45,6 +46,7 @@ public class CommentDAO {
 
 	public Comment findById(String id) {
 		for (Comment comment : findAll()) {
+			System.out.println("Comment: " + comment.getId() + " " + id);
 			if (comment.getId().equals(id)) {
 				return comment;
 			}
@@ -62,7 +64,7 @@ public class CommentDAO {
 
 	void writeFile() {
 		try {
-			OutputStream os = new FileOutputStream(this.path + "/resources/" + CSV_FILE);
+			OutputStream os = new FileOutputStream(repository.getPath() + "/resources/" + CSV_FILE);
 			CSVWriter writer = new CSVWriter(new PrintWriter(new OutputStreamWriter(os, "UTF-8")), ';',
 					CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.DEFAULT_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END);
 			List<String[]> data = new ArrayList<String[]>();
@@ -82,7 +84,7 @@ public class CommentDAO {
 
 	void readFile() {
 		try (CSVReader csvr = new CSVReader(
-				new InputStreamReader(new FileInputStream(this.path + "/resources/" + CSV_FILE), "UTF-8"), ';', '\'',
+				new InputStreamReader(new FileInputStream(repository.getPath() + "/resources/" + CSV_FILE), "UTF-8"), ';', '\'',
 				1);) {
 			String[] nextLine;
 			// csvr.readNext(); // skip first line

@@ -1,9 +1,10 @@
 package services.registration;
 
+import java.io.File;
+
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -11,6 +12,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 import beans.User;
+import dao.RepositoryDAO;
 import dao.UserDAO;
 
 @Path("/register")
@@ -41,6 +43,9 @@ public class RegistrationService {
 					registerUser.getPassword(), false, userDao.getDate(registerUser.getDateOfBirth()));
 			request.getSession().setAttribute("logged", retUser);
 			userDao.add(retUser);
+			RepositoryDAO repositoryDAO = new RepositoryDAO();
+			String path = repositoryDAO.getPath() + "/images/userPictures/"	+ retUser.getId();
+			new File(path).mkdirs();
 			return retUser;
 		}
 		return null;

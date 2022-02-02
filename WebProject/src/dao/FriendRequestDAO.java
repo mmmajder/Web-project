@@ -27,6 +27,7 @@ import services.search.UserSearchData;
 public class FriendRequestDAO {
 	static final String CSV_FILE = "friendRequests.csv";
 	private Map<String, FriendRequest> friendRequests = new HashMap<>();
+	private RepositoryDAO repository = new RepositoryDAO();
 	private String path;
 
 	public FriendRequestDAO(String contextPath) {
@@ -87,7 +88,7 @@ public class FriendRequestDAO {
 
 	void writeFile() {
 		try {
-			OutputStream os = new FileOutputStream(this.path + "/resources/" + CSV_FILE);
+			OutputStream os = new FileOutputStream(repository.getPath() + "/resources/" + CSV_FILE);
 			CSVWriter writer = new CSVWriter(new PrintWriter(new OutputStreamWriter(os, "UTF-8")), ';',
 					CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.DEFAULT_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END);
 			List<String[]> data = new ArrayList<String[]>();
@@ -106,7 +107,7 @@ public class FriendRequestDAO {
 
 	void readFile() {
 		try (CSVReader csvr = new CSVReader(
-				new InputStreamReader(new FileInputStream(this.path + "/resources/" + CSV_FILE), "UTF-8"), ';', '\'',
+				new InputStreamReader(new FileInputStream(repository.getPath() + "/resources/" + CSV_FILE), "UTF-8"), ';', '\'',
 				1);) {
 			String[] nextLine;
 			// String[] columns = new String[]

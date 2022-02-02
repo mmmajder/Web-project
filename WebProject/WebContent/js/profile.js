@@ -351,7 +351,7 @@ $("#friends").click(function() {
 function makeFriendTemplate(user) {
 	var cardTemplate = [
 		'<div class="friendship">',
-		'<div class="profile-picture">',
+		'<div class="profile-picture" onclick="goToOtherProfile(\'' + user.id + '\')" >',
 		'<img src="images/userPictures/',
 		user.id+ "/" +user.profilePicture,
 		'">',
@@ -386,6 +386,7 @@ function removeFriend(userId) {
 		contentType: "application/json",
 		dataType: "json",
 		complete: function() {
+			// add fade out
 		}
     });
 }
@@ -404,19 +405,19 @@ function openChat(userId) {
 	
 } 
 
-$(".friendships").on('click', 'div.friend-name', function() {
-	var id = $(this).attr('id');
-	$.ajax({
-		url: "rest/profile/viewOtherProfile",
-		type: "POST",
-		contentType: "application/json",
-		dataType: "json",
-		data: id,
-		complete: function(data) {
-			window.open("otherProfile.html", '_self').focus();
-		}
-	});
-});
+//$(".friendships").on('click', 'div.friend-name', function() {
+//	var id = $(this).attr('id');
+//	$.ajax({
+//		url: "rest/profile/viewOtherProfile",
+//		type: "POST",
+//		contentType: "application/json",
+//		dataType: "json",
+//		data: id,
+//		complete: function(data) {
+//			window.open("otherProfile.html", '_self').focus();
+//		}
+//	});
+//});
 
 $("#add-comment-image").click(function() {
 	var t = $("#comment-text").val();

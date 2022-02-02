@@ -120,7 +120,7 @@ function makeChatTemplate(chatHeadData) {
 		'" style="background-color:',
 		color,
 		';"',
-		'><div class="profile-picture">',
+		'><div onclick="goToOtherProfile(\'' + chatHeadData.otherParticipant.id + '\')" class="profile-picture">',
 		'<img src="images/userPictures/',
 		chatHeadData.otherParticipant.id + "/" + chatHeadData.otherParticipant.profilePicture,
 		'">',

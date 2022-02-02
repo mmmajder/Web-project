@@ -4,7 +4,7 @@ function createFriendReqCard(user) {
 		'<div class="request" id="',
 		user.id,
 		'">',
-		'<div class="info">',
+		'<div class="info" onclick="goToOtherProfile(\'' + user.id + '\')" >',
 		'<div class="profile-picture">',
 		'<img src="',
 		'images/userPictures/' + user.id + '/' + user.profilePicture,
