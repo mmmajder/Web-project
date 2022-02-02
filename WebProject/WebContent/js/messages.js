@@ -114,7 +114,11 @@ $(document).ready(function() {
 function makeChatTemplate(chatHeadData) {
 	var color = 'white';
 	if (!chatHeadData.chat.seen && chatHeadData.lastSender==chatHeadData.otherParticipant.id) {
-		color = 'grey';
+		if (chatHeadData.otherParticipant.admin) {
+			color = 'lightblue';
+		} else {
+			color = 'grey';
+		}
 	}
 	var cardTemplate = [
 		'<div class="message" id="',
