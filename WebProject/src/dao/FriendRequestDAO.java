@@ -59,7 +59,7 @@ public class FriendRequestDAO {
 		ArrayList<FriendRequest> pendingFriendRequests = new ArrayList<FriendRequest>();
 		for (String r : user.getFriendRequests()) {
 			FriendRequest friendRequest = getById(r);
-			if (friendRequest != null) {
+			if (friendRequest != null && !friendRequest.getSender().equals(user.getId())) {
 				if (friendRequest.getState() == FriendRequestState.PENDING) {
 					pendingFriendRequests.add(friendRequest);
 				}
