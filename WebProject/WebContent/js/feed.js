@@ -144,7 +144,14 @@ function goToMessages() {
 
 function logOut() {
 	socket.close();
-	window.location.href = "index.html";
+	$.ajax({
+        url: "rest/logout/logout",
+        type: "GET",
+        contentType: "application/json",
+        complete: function(data) {
+			window.location.href = "index.html";
+        }
+    });
 }
 
 // add new image
