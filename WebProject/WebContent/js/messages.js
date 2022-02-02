@@ -88,7 +88,9 @@ function openChatIfNeeded() {
 		type: "GET",
 		contentType: "application/json",
 		complete: function(data) {
-			chat(data);
+			if (data.responseText!=""){
+				chat(data);
+			}
 		}
 	});
 }
