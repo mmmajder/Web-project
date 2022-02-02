@@ -11,7 +11,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
+import beans.Chat;
 import beans.User;
+import dao.ChatDAO;
 import dao.RepositoryDAO;
 import dao.UserDAO;
 
@@ -22,9 +24,12 @@ public class RegistrationService {
 
 	@PostConstruct
 	public void init() {
+		String contextPath = ctx.getRealPath("");
 		if (ctx.getAttribute("userDAO") == null) {
-			String contextPath = ctx.getRealPath("");
 			ctx.setAttribute("userDAO", new UserDAO(contextPath));
+		}
+		if (ctx.getAttribute("chatDAO") == null) {
+			ctx.setAttribute("chatDAO", new ChatDAO(contextPath));
 		}
 	}
 
@@ -46,6 +51,12 @@ public class RegistrationService {
 			RepositoryDAO repositoryDAO = new RepositoryDAO();
 			String path = repositoryDAO.getPath() + "/images/userPictures/"	+ retUser.getId();
 			new File(path).mkdirs();
+			
+			ChatDAO chatDao = (ChatDAO) ctx.getAttribute("chatDAO");
+			for (User admin : userDao.getAdmins()) {
+				Chat chat = chatDao.createChat(retUser, admin);
+				userDao.addChatToUsers(retUser, admin, chat);
+			}
 			return retUser;
 		}
 		return null;
