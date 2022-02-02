@@ -14,6 +14,7 @@ import javax.ws.rs.core.MediaType;
 import beans.Post;
 import beans.User;
 import dao.UserDAO;
+import dao.FriendRequestDAO;
 import dao.PostDAO;
 
 @Path("/otherProfile")
@@ -24,9 +25,12 @@ public class OtherProfileService {
 
 	@PostConstruct
 	public void init() {
+		String contextPath = ctx.getRealPath("");
 		if (ctx.getAttribute("userDAO") == null) {
-			String contextPath = ctx.getRealPath("");
 			ctx.setAttribute("userDAO", new UserDAO(contextPath));
+		}
+		if (ctx.getAttribute("friendRequestDAO") == null) {
+			ctx.setAttribute("friendRequestDAO", new FriendRequestDAO(contextPath));
 		}
 	}
 
@@ -74,6 +78,45 @@ public class OtherProfileService {
 		if (logged.getFriends().contains(otherUser.getId()))
 			return false;
 		return otherUser.isPrivate();
+	}
+	
+	@GET
+	@Path("/getRelationStatus")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Relation getRelationStatus(@Context HttpServletRequest request) {
+		User otherUser = (User) request.getSession().getAttribute("otherProfile");
+		User logged = (User) request.getSession().getAttribute("logged");
+		FriendRequestDAO dao = (FriendRequestDAO) ctx.getAttribute("friendRequestDAO");
+		
+		Relation relation = new Relation();
+		if (logged == null) {
+			relation.setFriendStatus("");
+			relation.setSendMessage("");
+		} else if (logged.isAdmin()) {
+			if(otherUser.isAdmin()) {
+				relation.setFriendStatus("");
+				relation.setSendMessage("Send a message");
+			} else if(otherUser.isBlocked()) {
+				relation.setFriendStatus("Unblock user");
+				relation.setSendMessage("Send a message");
+			} else {
+				relation.setFriendStatus("Block user");
+				relation.setSendMessage("Send a message");
+			}
+		} else if(logged.getFriends().contains(otherUser.getId())) {
+			relation.setFriendStatus("Remove friend");
+			relation.setSendMessage("Send a message");
+		} else if(dao.isPending(logged, otherUser)) {
+			relation.setFriendStatus("Unsend request");
+			relation.setSendMessage("");
+		} else if(dao.isPending(otherUser, logged)) {
+			relation.setFriendStatus("Accept");
+			relation.setSendMessage("Decline");
+		} else {
+			relation.setFriendStatus("Add friend");
+			relation.setSendMessage("");
+		}
+		return relation;
 	}
 
 }

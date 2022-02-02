@@ -814,6 +814,7 @@ h4 {
     border-radius: var(--card-border-radius);
     align-items: center;
     justify-content: space-between;
+    max-height: inherit;
 }
 
 .edit-profile-card .row .column,
@@ -822,6 +823,7 @@ h4 {
     padding: 4rem;
     align-content: center;
     text-align: center;
+	max-height: inherit;
 }
 
 .edit-profile-card .buttons {
@@ -837,7 +839,12 @@ h4 {
 
 #post-image img {
     width: 100%;
-    position: sticky;
+    object-fit: contain;
+}
+
+#post-image {
+	max-width: 80%;
+    overflow: hidden;
 }
 
 #image-description {

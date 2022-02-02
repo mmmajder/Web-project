@@ -60,7 +60,7 @@ function makeCardTemplate(user, postData) {
 		postPic = '<div class="post-photo"><img src="images/userPictures/' + postData.author + '/' + postData.pictureLocation + '"></div>';
 	}
 	var cardTemplate = [
-        '<div class="feed" id="' + postData.id + '"><div class="head"><div class="user"><div class="profile-picture">',
+        '<div class="feed" id="' + postData.id + '"><div class="head"><div  onclick="goToOtherProfile(\'' + user.id + '\')" class="user"><div class="profile-picture">',
         '<img src="',
         'images/userPictures/' + user.id + '/' + user.profilePicture,
         '"></div><div class="ingo">',

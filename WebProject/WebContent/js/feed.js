@@ -41,7 +41,6 @@ function receiveMessage(msg) {
 	$(".messages-count").css('visibility', 'visible');
 }
 
-
 $(document).ready(function() {
 	
 	$.ajax({
@@ -54,6 +53,7 @@ $(document).ready(function() {
             userPosts.forEach(function(item) {
 				createPost(item, function(data1) {
 					$('#feeds').append(data1);
+					event.preventDefault();
 				} )
             });
         }
@@ -104,7 +104,7 @@ function addNewPost(postAsPicture) {
 					if(postAsPicture == "false") {
 						$('#feeds').prepend(p);
 					} else {
-						//window.location.href = "profile.html";
+						window.location.href = "profile.html";
 					}
 				});
 				$("#post-text").val('');
@@ -200,7 +200,7 @@ function makeCardTemplate(user, postData) {
 		delPost = '<span class="delete-post" onclick="deletePost(\'' + postData.id + '\',\'' + user.admin + '\')"><i class="uil uil-trash-alt"></i></span>';
 	}
 	var cardTemplate = [
-        '<div class="feed" id="' + postData.id + '"><div class="head"><div class="user"><div onclick="goToOtherProfile(\'' + user.id + '\')" class="profile-picture">',
+        '<div class="feed" id="' + postData.id + '"><div class="head"><div onclick="goToOtherProfile(\'' + user.id + '\')" class="user"><div class="profile-picture">',
         '<img src="',
         'images/userPictures/' + user.id + '/' + user.profilePicture,
         '"></div><div class="ingo">',

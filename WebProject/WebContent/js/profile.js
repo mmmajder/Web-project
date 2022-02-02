@@ -350,7 +350,7 @@ $("#friends").click(function() {
 
 function makeFriendTemplate(user) {
 	var cardTemplate = [
-		'<div class="friendship">',
+		'<div class="friendship" id="' + user.id + '">',
 		'<div class="profile-picture" onclick="goToOtherProfile(\'' + user.id + '\')" >',
 		'<img src="images/userPictures/',
 		user.id+ "/" +user.profilePicture,
@@ -386,7 +386,7 @@ function removeFriend(userId) {
 		contentType: "application/json",
 		dataType: "json",
 		complete: function() {
-			// add fade out
+			$('.friendship #' + userId).fadeOut();
 		}
     });
 }
