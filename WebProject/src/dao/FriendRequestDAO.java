@@ -18,9 +18,7 @@ import java.util.Map;
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
 import beans.FriendRequest;
-import beans.Post;
 import beans.User;
-import dao.UserDAO;
 import enums.FriendRequestState;
 import services.search.UserSearchData;
 
@@ -48,6 +46,12 @@ public class FriendRequestDAO {
 
 	public FriendRequest getById(String id) {
 		return friendRequests.get(id);
+	}
+	
+	public String createFriendRequest(String senderId, String receiverId) {
+		String id = generateId();
+		add(new FriendRequest(id, senderId, receiverId, LocalDateTime.now(), FriendRequestState.PENDING));
+		return id;
 	}
 
 	public void add(FriendRequest fr) {

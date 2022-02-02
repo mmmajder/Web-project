@@ -352,5 +352,16 @@ public class UserDAO {
 		removeFromFriendsList(otherUser, loggedUser.getId());
 		writeFile();
 	}
+	
+	private void addFriendRequest(User user, String friendRequestId) {
+		ArrayList<String> friendRequests = user.getFriendRequests();
+		friendRequests.add(friendRequestId);
+		user.setFriendRequests(friendRequests);
+	}
+
+	public void addFriendRequest(String senderId, String receiverId, String friendRequestId) {
+		addFriendRequest(findById(senderId), friendRequestId);
+		addFriendRequest(findById(receiverId), friendRequestId);
+	}
 
 }
