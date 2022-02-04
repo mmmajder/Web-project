@@ -20,6 +20,7 @@ import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
 import beans.Chat;
 import beans.DM;
+import beans.Post;
 import beans.User;
 import dao.DmDAO;
 import dao.UserDAO;
@@ -228,5 +229,4 @@ public class ChatDAO {
 		chats.remove(chat.getId());
 		writeFile();
 	}
-
 }

@@ -14,10 +14,10 @@ $(document).ready(function() {
 			console.log("otvoren soket")
 		}
 		socket.onmessage = function(msg) {
-			if (msg.startsWith("deletePostByAdmin")) { 
-				deletedPostMessage(msg.data)
-				
-				
+			if (msg.data.startsWith("deletedByAdminPost")) { 
+				deletedInfoMessage(msg.data, "post")				
+			} else if (msg.data.startsWith("deletedByAdminComment")) { 
+				deletedInfoMessage(msg.data, "comment")				
 			} else {
 				receiveMessage(msg.data, "left");
 			}
@@ -35,15 +35,15 @@ $(document).ready(function() {
 	}
 })
 
-function deletedPostMessage(msg) {
-	//"deletePostByAdmin"+ user.id + "postId" + post.id + "user" + post.author
-	var adminId = msg.split('postDate')[0].split('deletePostByAdmin')[1];
-	var postDate = msg.split('user')[0].split('postDate')[1];
-	var authorId = msg.split('user')[1];
+function deletedInfoMessage(msg, content) {
+	//	PATTERN	"deletePostByAdmin"+ postId + "user" + author + "admin" + loggedUser.id
+	var postId = msg.split('user')[0].split('deleteByAdmin')[1];
+	var authorId = msg.split('user')[1].split('admin')[0];
+	var adminId = msg.split('admin')[1]
 	if (selectedChat) {
 		if (selectedChat.loggedUser.id==authorId && selectedChat.otherUser.id==adminId) {
 			seenMessage();
-			$('.chat-messages').append(makeDmsTemplate("Your post has been removed by Meeply admin. Date of post: " +postDate, position, selectedChat.otherUser));
+			$('.chat-messages').append(makeDmsTemplate("Your " + content + " has been deleted", "left", selectedChat.otherUser));
 			$(".chat-messages").scrollTop($(".chat-messages")[0].scrollHeight);
 		}
 		else {
@@ -203,7 +203,7 @@ function chat(data) {
 	selectedChat = chatDms;
 	seenMessage();		
 	$("#profile-picture-top").attr("src","images/userPictures/" + chatDms.otherUser.id + "/" + chatDms.otherUser.profilePicture);
-	$("#profile-picture-top").click(goToOtherProfile(chatDms.otherUser.id));
+	//$("#profile-picture-top").click(goToOtherProfile(chatDms.otherUser.id));
 	$("#profile-name-top").html(chatDms.otherUser.name + " " + chatDms.otherUser.surname);
 	chatDms.dms.forEach(function(item) {
 		if (item.sender == chatDms.loggedUser.id) {
