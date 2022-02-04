@@ -2,8 +2,11 @@ id;authorID;pictureLocation;description;posted;commentIDs;deleted;isPicture
 PO00018;U00007;bear12.jpg;Mnogo dobra slika 18;2020-01-01 16:30;;false;true
 PO00019;U00008;user8.png;Mnogo dobra slika 19;2020-01-01 16:30;;false;true
 PO00014;U00006;user6.jpg;Mnogo dobra slika 14;2020-01-01 22:00;COM-00000012|COM-00000013;false;true
+PO00036;U00002;;sdbdfb;2022-02-04 15:41:24.484;;false;false
 PO00015;U00007;bear10.jpg;Mnogo dobar post 15;2020-01-01 23:00;;false;false
+PO00037;U00002;photo12.jpeg;drhrh;2022-02-04 15:41:34.985;;false;true
 PO00016;U00007;user7.png;Mnogo dobra slika 16;2020-01-01 10:00;COM-000000014;false;true
+PO00038;U00002;photo13.jpeg;ftrjtzj;2022-02-04 15:42:14.873;;false;false
 PO00017;U00007;bear11.jpg;Mnogo dobra slika 17;2020-01-01 10:20;COM-000000015;false;true
 PO00010;U00004;bear8.jpg;Mnogo dobar post 10;2020-01-01 19:00;COM-00000007|COM-00000008|COM-00000009|COM-00000010|COM-00000016;true;false
 PO00032;U00002;photo10.jpeg;još jedan meda;2022-02-02 16:25;;false;true
