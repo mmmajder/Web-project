@@ -15,11 +15,14 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
+import beans.Chat;
 import beans.Comment;
+import beans.DM;
 import beans.Post;
 import beans.User;
 import dao.ChatDAO;
 import dao.CommentDAO;
+import dao.DmDAO;
 import dao.UserDAO;
 import dao.PostDAO;
 
@@ -42,6 +45,9 @@ public class ProfileService {
 		}
 		if (ctx.getAttribute("chatDAO") == null) {
 			ctx.setAttribute("chatDAO", new ChatDAO(contextPath));
+		}
+		if (ctx.getAttribute("dmDAO") == null) {
+			ctx.setAttribute("dmDAO", new DmDAO(contextPath));
 		}
 	}
 
@@ -141,12 +147,19 @@ public class ProfileService {
 	@Path("/deletePostByAdmin")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void deletePostByAdmin(@Context HttpServletRequest request, String postID) {
+	public void deletePostByAdmin(@Context HttpServletRequest request, AdminDeleteData deleteData) {
 		PostDAO postDAO = (PostDAO) ctx.getAttribute("postDAO");
-		String post = postID.split(":")[1].replace("\"", "").replace("}", "");
 		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");
-		dao.deletePost(postDAO.delete(post), post);
-		// TODO send message that post is deleted
+		dao.deletePost(postDAO.delete(deleteData.getPostId()), deleteData.getPostId());
+		User admin = (User) request.getSession().getAttribute("logged");
+		
+		DmDAO dmDAO = (DmDAO) ctx.getAttribute("dmDAO");
+		DM dm = new DM(dmDAO.generateId(), deleteData.getText(), LocalDateTime.now(), admin.getId(), postDAO.findById(deleteData.getPostId()).getAuthor());
+		dmDAO.addDM(dm);
+		
+		ChatDAO chatDAO = (ChatDAO) ctx.getAttribute("chatDAO");
+		Chat chat = chatDAO.getChatForUsers(admin, dao.findById(postDAO.findById(deleteData.getPostId()).getAuthor()));
+		chatDAO.addDM(dm, chat);
 	}
 
 	@POST
@@ -226,6 +239,19 @@ public class ProfileService {
 		commentDAO.deleteComment(commentData.getCommentID());
 		PostDAO postDAO = (PostDAO) ctx.getAttribute("postDAO");
 		postDAO.deleteComment(commentData.getPostID(), commentData.getCommentID());
+		
+		User user = (User) request.getSession().getAttribute("logged");
+		if (user.isAdmin()) {
+			DmDAO dmDAO = (DmDAO) ctx.getAttribute("dmDAO");
+			Comment comment = commentDAO.findById(commentData.getCommentID());
+			DM dm = new DM(dmDAO.generateId(), "Your comment has been deleted", LocalDateTime.now(), user.getId(), comment.getAuthor());
+			dmDAO.addDM(dm);
+			
+			UserDAO userDAO = (UserDAO) ctx.getAttribute("userDAO");
+			ChatDAO chatDAO = (ChatDAO) ctx.getAttribute("chatDAO");
+			Chat chat = chatDAO.getChatForUsers(userDAO.findById(comment.getAuthor()), user);
+			chatDAO.addDM(dm, chat);
+		}
 		return commentDAO.findById(commentData.getCommentID());
 	}
 

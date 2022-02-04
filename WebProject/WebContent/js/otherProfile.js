@@ -349,29 +349,6 @@ var createPost = function(postData, callback) {
     });
 }
 
-function makeCardTemplate(user, postData) {
-	var postPic = '';
-	if (postData.pictureLocation != "") {
-		postPic = '<div class="post-photo"><img src="images/userPictures/' + postData.author + '/' + postData.pictureLocation + '"></div>';
-	}
-	var cardTemplate = [
-        '<div class="feed" id="' + postData.id + '"><div class="head"><div class="user"><div class="profile-picture">',
-        '<img src="',
-        'images/userPictures/' + user.id + '/' + user.profilePicture,
-        '"></div><div class="ingo">',
-        '<h3>' + user.name + ' ' + user.surname + '</h3>',
-        '<small>' + printDateTime(postData.posted) + '</small>',
-        '</div></div><span class="edit"><i class="uil uil-ellipsis-h"></i></span></div><br><div class="caption">',
-        '<p>' + postData.description + '</p></div>',
-        postPic,
-        '<div class="comments text-muted" id="view-comments" onclick="viewComments(\'' + postData.id + '\')">',
-        '<p>View all comments</p>',
-        '</div><div class="add-comment">',
-        '<input type="text" placeholder="Type comment..."><span><i id="add-comment" onclick="addComment(\'' + postData.id + '\')" class="uil uil-enter"></i></span>',
-        '</div>'
-    ];
-    return $(cardTemplate.join(''));
-}
 
 $('#posts').click(function() {
     clear();
@@ -507,4 +484,65 @@ $("#add-comment-image").click(function() {
         }
     });
 });
+
+function makeCardTemplate(user, postData) {
+	var postPic = '';
+	if (postData.pictureLocation != "") {
+		postPic = '<div class="post-photo"><img src="images/userPictures/' + postData.author + '/' + postData.pictureLocation + '"></div>';
+	}
+	var delPost = '';
+	if (user.admin || user.id == postData.author) {
+		delPost = '<span class="delete-post" onclick="deletePost(\'' + postData.id + '\',\'' + postData.author + '\')"><i class="uil uil-trash-alt"></i></span>';
+	}
+	var cardTemplate = [
+        '<div class="feed" id="' + postData.id + '"><div class="head"><div onclick="goToOtherProfile(\'' + user.id + '\')" class="user"><div class="profile-picture">',
+        '<img src="',
+        'images/userPictures/' + user.id + '/' + user.profilePicture,
+        '"></div><div class="ingo">',
+        '<h3>' + user.name + ' ' + user.surname + '</h3>',
+        '<small>' + printDateTime(postData.posted) + '</small>',
+        '</div></div>' + delPost + '</div><br><div class="caption">',
+        '<p>' + postData.description + '</p></div>',
+        postPic,
+        '<div class="comments text-muted" id="view-comments" onclick="viewComments(\'' + postData.id + '\')">',
+        '<p>View all comments</p>',
+        '</div><br><div class="add-comment">',
+        '<input type="text" placeholder="Type comment..."><span><i id="add-comment" onclick="addComment(\'' + postData.id + '\')" class="uil uil-enter"></i></span>',
+        '</div>'
+    ];
+    return $(cardTemplate.join(''));
+}
+
+function deletePost(postId, author) {
+	if (confirm('Are you sure you want to delete this post?')) {
+		var postJSON = JSON.stringify({ postId: postId, text: "Your post has been deleted" });
+		getLogged((loggedUser) => {
+			if(loggedUser.admin==true) {
+				$.ajax({
+			        url: "rest/profile/deletePostByAdmin",
+			        type: "DELETE",
+			        data: postJSON,
+			        contentType: "application/json",
+			        complete: function(data) {
+			        	$("#feeds #" + postId).fadeOut();
+						socket.send("deletedByAdminPost"+ postId + "user" + author + "admin" + loggedUser.id);
+			        }
+			    });
+			} else {
+				$.ajax({
+			        url: "rest/profile/deletePost",
+			        type: "DELETE",
+			        data: postId,
+			        contentType: "application/json",
+			        complete: function(data) {
+			        	$("#feeds #" + postId).fadeOut();
+			        }
+			    });
+			}
+			}
+		);
+		
+		
+	}
+}
 

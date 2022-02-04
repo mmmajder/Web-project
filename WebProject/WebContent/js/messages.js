@@ -6,44 +6,16 @@ $(document).ready(function() {
 		});
 	});
 });
-var socket
-$(document).ready(function() {
-	try{
-		socket = new WebSocket("ws://localhost:9000/WebProject/websocket/echoAnnotation");
-		socket.onopen = function() {
-			console.log("otvoren soket")
-		}
-		socket.onmessage = function(msg) {
-			if (msg.startsWith("deletePostByAdmin")) { 
-				deletedPostMessage(msg.data)
-				
-				
-			} else {
-				receiveMessage(msg.data, "left");
-			}
-			
-		}
-		connection.onerror = function (error) { 	
-			console.log('WebSocket Error ' + error); 
-		}; 
-		socket.onclose = function() {
-			console.log("zatvoren soket")
-			socket = null;
-		}
-	} catch(exception) {
-		console.log(exception);
-	}
-})
 
-function deletedPostMessage(msg) {
-	//"deletePostByAdmin"+ user.id + "postId" + post.id + "user" + post.author
-	var adminId = msg.split('postDate')[0].split('deletePostByAdmin')[1];
-	var postDate = msg.split('user')[0].split('postDate')[1];
-	var authorId = msg.split('user')[1];
+function deletedInfoMessage(msg, content) {
+	//	PATTERN	"deletePostByAdmin"+ postId + "user" + author + "admin" + loggedUser.id
+	var postId = msg.split('user')[0].split('deleteByAdmin')[1];
+	var authorId = msg.split('user')[1].split('admin')[0];
+	var adminId = msg.split('admin')[1]
 	if (selectedChat) {
 		if (selectedChat.loggedUser.id==authorId && selectedChat.otherUser.id==adminId) {
 			seenMessage();
-			$('.chat-messages').append(makeDmsTemplate("Your post has been removed by Meeply admin. Date of post: " +postDate, position, selectedChat.otherUser));
+			$('.chat-messages').append(makeDmsTemplate("Your " + content + " has been deleted", "left", selectedChat.otherUser));
 			$(".chat-messages").scrollTop($(".chat-messages")[0].scrollHeight);
 		}
 		else {
@@ -203,7 +175,7 @@ function chat(data) {
 	selectedChat = chatDms;
 	seenMessage();		
 	$("#profile-picture-top").attr("src","images/userPictures/" + chatDms.otherUser.id + "/" + chatDms.otherUser.profilePicture);
-	$("#profile-picture-top").click(goToOtherProfile(chatDms.otherUser.id));
+	//$("#profile-picture-top").click(goToOtherProfile(chatDms.otherUser.id));
 	$("#profile-name-top").html(chatDms.otherUser.name + " " + chatDms.otherUser.surname);
 	chatDms.dms.forEach(function(item) {
 		if (item.sender == chatDms.loggedUser.id) {
@@ -311,31 +283,3 @@ function save(chatDms, content) {
 		}
 });
 }
-
-window.onbeforeunload = function(event)
-{
-    socket.close();
-};
-
-function goToHomepage() {
-	socket.close();
-	window.location.href = "feed.html";
-}
-
-function logOut() {
-	socket.close();
-	$.ajax({
-        url: "rest/logout/logout",
-        type: "GET",
-        contentType: "application/json",
-        complete: function(data) {
-			window.location.href = "index.html";
-        }
-    });
-}
-
-function goToMyProfile() {
-	socket.close();
-	window.location.href = "profile.html";
-}
-

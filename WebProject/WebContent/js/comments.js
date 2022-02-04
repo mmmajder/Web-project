@@ -16,7 +16,7 @@ function addComment(id) {
 						$('#' + comment.id).append('<span class="edit" onclick="editComment(\'' + comment.id + '\',\'' + comment.text + '\',\'' + id + '\')"><i class="uil uil-edit"></i></span>');
 					} 
 					if (user.id == comment.authorId || user.admin) {
-						$('#' + comment.id).append('<span class="del" onclick="deleteComment(\'' + comment.id + '\',\'' + id + '\')"><i class="uil uil-trash-alt"></i></span>');
+						$('#' + comment.id).append('<span class="del" onclick="deleteComment(\'' + comment.id + '\',\'' + id + '\',\'' + comment.author +'\')"><i class="uil uil-trash-alt"></i></span>');
 					} 
 				});
 				$('#' + id + ' input').val('');
@@ -78,13 +78,13 @@ function loadCommentsOnPost(comments, id) {
 				$('#' + comments[i].id).append('<span class="edit" onclick="editComment(\'' + comments[i].id + '\',\'' + comments[i].text + '\',\'' + id + '\')"><i class="uil uil-edit"></i></span>');
 			} 
 			if (user.id == comments[i].authorId || user.admin) {
-				$('#' + comments[i].id).append('<span class="del" onclick="deleteComment(\'' + comments[i].id + '\',\'' + id + '\')"><i class="uil uil-trash-alt"></i></span>');
+				$('#' + comments[i].id).append('<span class="del" onclick="deleteComment(\'' + comments[i].id + '\',\'' + id + '\',\'' + comments[i].authorId + '\')"><i class="uil uil-trash-alt"></i></span>');
 			} 
 		});
 	}
 }
 
-function deleteComment(comID, pid) {
+function deleteComment(comID, pid, authorId) {
 	  if (confirm('Are you sure you want to delete this comment?')) {
 		var c = JSON.stringify({commentID: comID, text: '', postID: pid});
 		  $.ajax({
@@ -97,6 +97,10 @@ function deleteComment(comID, pid) {
 					comment = data.responseJSON;
 					$('#' + comment.id).fadeOut();
 					event.preventDefault();
+					getLogged((loggedUser) => {
+						socket.send("deletedByAdminComment"+ comID + "user" + authorId + "admin" + loggedUser.id);
+					});
+					
 		        }
 		    });
 	  }
