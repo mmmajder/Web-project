@@ -218,6 +218,10 @@ public class ProfileService {
 		User loggedUser = (User) request.getSession().getAttribute("logged");
 		UserDAO userDAO = (UserDAO) ctx.getAttribute("userDAO");
 		userDAO.removeFriend(loggedUser.getId(), otherUserId);
+		ChatDAO chatDAO = (ChatDAO) ctx.getAttribute("chatDAO");
+		User otherUser = userDAO.findById(otherUserId);
+		Chat chat = chatDAO.getChatForUsers(loggedUser, otherUser);
+		userDAO.removeChat(otherUser, loggedUser, chat);
 	}
 
 	@POST

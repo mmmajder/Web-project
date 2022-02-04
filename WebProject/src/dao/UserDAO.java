@@ -17,8 +17,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import javax.sound.midi.Soundbank;
-
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
 import beans.Chat;
@@ -382,6 +380,15 @@ public class UserDAO {
 		findById(senderId).deleteRequest(requestId);
 		findById(id).deleteRequest(requestId);
 		writeFile();
+	}
+
+	private void removeChat(User user, String charForDelete) {
+		user.removeChat(charForDelete);
+	}
+	
+	public void removeChat(User user1, User user2, Chat chat) {
+		user1.removeChat(chat.getId());
+		user2.removeChat(chat.getId());		
 	}
 
 }

@@ -233,5 +233,9 @@ public class User {
 	public void addRequest(String request) {
 		this.friendRequests.add(request);		
 	}
+	
+	public void removeChat(String chatId) {
+		this.chats.remove(chatId);
+	}
 
 }

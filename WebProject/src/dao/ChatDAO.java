@@ -223,10 +223,4 @@ public class ChatDAO {
 		add(chat);
 		return chat;
 	}
-
-	public void removeChat(User user1, User user2) {
-		Chat chat = getChatForUsers(user1, user2);
-		chats.remove(chat.getId());
-		writeFile();
-	}
 }
