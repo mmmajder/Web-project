@@ -8,7 +8,7 @@ PO00037;U00002;photo12.jpeg;drhrh;2022-02-04 15:41;;false;true
 PO00016;U00007;user7.png;Mnogo dobra slika 16;2020-01-01 10:00;COM-000000014;false;true
 PO00038;U00002;photo13.jpeg;ftrjtzj;2022-02-04 15:42;;false;false
 PO00017;U00007;bear11.jpg;Mnogo dobra slika 17;2020-01-01 10:20;COM-000000015;false;true
-PO00039;U00002;photo14.jpeg;aaaa;2022-02-04 16:02;COM-00000017|COM-00000018|COM-00000019;false;false
+PO00039;U00002;photo14.jpeg;aaaa;2022-02-04 16:02;;false;false
 PO00010;U00004;bear8.jpg;Mnogo dobar post 10;2020-01-01 19:00;COM-00000007|COM-00000008|COM-00000009|COM-00000010|COM-00000016;true;false
 PO00032;U00002;photo10.jpeg;još jedan meda;2022-02-02 16:25;;false;true
 PO00011;U00005;;Mnogo dobar post 11;2020-01-01 13:00;COM-00000011;false;false
@@ -18,14 +18,13 @@ PO00034;U00002;photo12.jpeg;to travel is to live <3;2022-02-02 16:57;;true;false
 PO00013;U00006;bear9.jpg;Mnogo dobra slika 13;2020-01-01 21:00;;false;true
 PO00035;U00002;photo13.jpeg;sunce;2022-02-02 17:55;;false;false
 PO00030;U00002;photo8.jpeg;novi meda, ali beli;2022-02-01 12:53;;true;false
-PO00031;U00002;photo9.jpeg;meda;2022-02-02 16:25;;false;false
+PO00031;U00002;photo9.jpeg;meda;2022-02-02 16:25;;true;false
 PO00007;U00004;;Mnogo dobar post 7;2020-01-01 13:00;;false;false
 PO00029;U00002;photo7.jpeg;;2022-02-01 12:48;;false;true
 PO00008;U00004;bear7.jpg;Mnogo dobar post 8;2020-01-01 17:00;;true;false
 PO00009;U00004;bear5.jpg;Mnogo dobra slika 9;2020-01-01 18:00;;false;true
 PO00003;U00001;;Mnogo dobar post 3;2020-01-01 13:00;;false;false
 PO00025;U00002;;novi post, pls radi;2022-02-01 12:42;;true;false
-PO00047;U00002;;post5;2022-02-04 21:07:11.053;COM-00000020;true;false
 PO00004;U00002;bear4.jpg;Mnogo dobra slika 4;2020-01-01 14:00;;false;true
 PO00026;U00002;photo4.jpeg;Moj novi medica.;2022-02-01 12:43;;false;true
 PO00005;U00003;bear5.jpg;Mnogo dobra slika 5;2020-01-01 15:00;;false;true
@@ -33,16 +32,11 @@ PO00027;U00002;photo5.jpeg;;2022-02-01 12:45;;false;true
 PO00006;U00003;bear6.jpg;Mnogo dobra slika 6;2020-01-01 16:00;COM-00000001|COM-00000002|COM-00000003|COM-00000004;false;true
 PO00028;U00002;photo6.jpeg;;2022-02-01 12:47;;false;true
 PO00021;U00001;user1.png;Mnogo dobra slika 29;2020-01-01 01:00;;false;true
-PO00043;U00002;;post1
-;2022-02-04 21:06:58.656;;false;false
 PO00022;U00002;user2.jpg;Mnogo dobra slika 32;2020-01-01 12:00;;false;true
-PO00044;U00002;;post2;2022-02-04 21:07:01.922;;false;false
 PO00001;U00001;;Mnogo dobar post 1;2020-01-01 11:00;;false;false
 PO00023;U00002;photo2.jpeg;Mnogo dobra slika 30;2020-01-01 14:00;;false;false
-PO00045;U00002;;post3;2022-02-04 21:07:04.562;;false;false
 PO00002;U00001;;Mnogo dobar post 2;2020-01-01 12:00;COM-00000005|COM-00000006;false;false
 PO00024;U00003;user3.jpg;Mnogo dobra slika 33;2020-01-01 16:00;;false;true
-PO00046;U00002;;post4;2022-02-04 21:07:07.658;;true;false
 PO00040;U00002;photo15.jpeg;bbbb;2022-02-04 16:02;;false;true
 PO00041;U00002;photo16.jpeg;aaa;2022-02-04 16:13;;false;true
 PO00020;U00008;bear13.jpg;Mnogo dobra slika 20;2020-01-01 16:30;;false;true

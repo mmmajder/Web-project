@@ -1,26 +1,3 @@
-var socket
-$(document).ready(function() {
-	try{
-		socket = new WebSocket("ws://localhost:9000/WebProject/websocket/echoAnnotation");
-		socket.onopen = function() {
-			console.log("otvoren soket")
-		}
-		socket.onmessage = function(msg) {
-			console.log("stigao")
-			receiveMessage(msg.data, "left");
-		}
-		connection.onerror = function (error) { 	
-			console.log('WebSocket Error ' + error); 
-		}; 
-		socket.onclose = function() {
-			console.log("zatvoren soket")
-			socket = null;
-		}
-	} catch(exception) {
-		console.log(exception);
-	}
-})
-
 $(document).ready(function() {
 	$.ajax({
 		url: "rest/messages/notSeenMessages",
@@ -121,38 +98,7 @@ $("#remove-pic").click(function() {
 	$("#add-img").val('');
 	$('#add-post-image').attr('src', '');
 })
-window.onbeforeunload = function(event)
-{
-    socket.close();
-};
 
-// navbar icons
-function goToMyProfile() {
-	socket.close();
-	window.location.href = "profile.html";
-}
-
-function goToSearch() {
-	socket.close();
-	window.location.href = "search.html";
-}
-
-function goToMessages() {
-	socket.close();
-	window.location.href = "messages.html";
-}
-
-function logOut() {
-	socket.close();
-	$.ajax({
-        url: "rest/logout/logout",
-        type: "GET",
-        contentType: "application/json",
-        complete: function(data) {
-			window.location.href = "index.html";
-        }
-    });
-}
 
 // add new image
 function getImage(input) {

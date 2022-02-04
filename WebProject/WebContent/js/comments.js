@@ -84,33 +84,6 @@ function loadCommentsOnPost(comments, id) {
 	}
 }
 
-var socket
-$(document).ready(function() {
-	try{
-		socket = new WebSocket("ws://localhost:9000/WebProject/websocket/echoAnnotation");
-		socket.onopen = function() {
-			console.log("otvoren soket")
-		}
-		socket.onmessage = function(msg) {
-			if (msg.data.startsWith("deletePostByAdmin")) { 
-				deletedPostMessage(msg.data)				
-			} else {
-				receiveMessage(msg.data, "left");
-			}
-			
-		}
-		connection.onerror = function (error) { 	
-			console.log('WebSocket Error ' + error); 
-		}; 
-		socket.onclose = function() {
-			console.log("zatvoren soket")
-			socket = null;
-		}
-	} catch(exception) {
-		socket.close();
-	}
-})
-
 function deleteComment(comID, pid, authorId) {
 	  if (confirm('Are you sure you want to delete this comment?')) {
 		var c = JSON.stringify({commentID: comID, text: '', postID: pid});
