@@ -96,14 +96,11 @@ public class UserDAO {
 	}
 
 	public User find(String username, String password) {
-		for (String user : users.keySet()) {
-			System.out.println(user);
-		}
 		if (!users.containsKey(username)) {
 			return null;
 		}
 		User user = users.get(username);
-		if (!user.getPassword().equals(password)) {
+		if (!user.getPassword().equals(password) || user.isBlocked()) {
 			return null;
 		}
 		return user;
