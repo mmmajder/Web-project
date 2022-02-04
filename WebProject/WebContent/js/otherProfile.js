@@ -172,7 +172,16 @@ function addRemoveFriend() {
 	} 
 	
 	else if($('#add-remove-friend').html() == "Add friend") {
-		// TO DO za Milana <3
+		$.ajax({
+			url: "rest/friendRequest/send",
+			type: "POST",
+			data: id,
+			contentType: "application/json",
+			dataType: "json",
+			complete: function() {
+	        	$('#add-remove-friend').html("Unsend request");
+            }
+	    });		
 	} 
 	
 	else if($('#add-remove-friend').html() == "Accept") {
@@ -236,10 +245,6 @@ function showFriends() {
 				var userFriends = data.responseJSON;
 				userFriends.forEach(function(item) {
 					$('.friendships').append(makeFriendTemplate(item));
-					/*
-					 * createFriendCard(item, function(data1) {
-					 * $('.friendships').append(data1); } )
-					 */
 				});
 				$('.friends').addClass('visible');
 			}
@@ -251,7 +256,7 @@ function showFriends() {
 
 function makeFriendTemplate(user) {
 	var cardTemplate = [
-		'<div class="friendship">',
+		'<div class="friendship" id="\'' + user.id + '\'">',
 		'<div class="profile-picture" onclick="goToOtherProfile(\'' + user.id + '\')" >',
 		'<img src="images/userPictures/',
 		user.id+ "/" +user.profilePicture,
@@ -280,16 +285,18 @@ function makeFriendTemplate(user) {
 }
 
 function removeFriend(userId) {
-	$.ajax({
-		url: "rest/profile/removeFriend",
-		type: "POST",
-		data: userId,
-		contentType: "application/json",
-		dataType: "json",
-		complete: function() {
-			// add fade out
-		}
-    });
+	if (confirm('Are you sure you want to remove this user from friends?')) {
+		$.ajax({
+			url: "rest/profile/removeFriend",
+			type: "POST",
+			data: userId,
+			contentType: "application/json",
+			dataType: "json",
+			complete: function() {
+				$('.friendship #' + userId).fadeOut();
+			}
+	    });
+	}
 }
 
 function openChat(userId) {

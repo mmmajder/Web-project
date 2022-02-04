@@ -985,6 +985,9 @@ h4 {
     .left .btn {
         display: none;
     }
+    .messages-container .left {
+    	display: none;
+    }
 }
 
 

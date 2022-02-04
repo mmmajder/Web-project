@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import javax.sound.midi.Soundbank;
+
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
 import beans.Chat;
@@ -45,7 +47,6 @@ public class UserDAO {
 
 	public User findById(String id) {
 		for (User user : findAll()) {
-			System.out.println(id + " " + user.getId());
 			if (user.getId().equals(id)) {
 				return user;
 			}
@@ -62,7 +63,7 @@ public class UserDAO {
 		}
 		return admins;
 	}
-	
+
 	public void add(User user) {
 		users.put(user.getUsername(), user);
 		writeFile();
@@ -70,7 +71,6 @@ public class UserDAO {
 
 	public User editUser(String id, EditProfileData data) {
 		User user = findById(id);
-		System.out.println(data.getPrivacy());
 		user.setName(data.getName());
 		user.setSurname(data.getSurname());
 		if (!data.getPassword().equals("")) {
@@ -233,13 +233,11 @@ public class UserDAO {
 	}
 
 	public int getNumberOfMutualFriends(User loggedUser, User otherUser) {
-		System.out.println(loggedUser);
 		return loggedUser.getFriends().stream().filter(otherUser.getFriends()::contains).collect(Collectors.toList())
 				.size();
 	}
 
 	public ArrayList<User> getMutualFriends(User loggedUser, User otherUser) {
-		System.out.println(loggedUser);
 		List<String> ids = loggedUser.getFriends().stream().filter(otherUser.getFriends()::contains)
 				.collect(Collectors.toList());
 		ArrayList<User> users = new ArrayList<User>();
@@ -251,12 +249,9 @@ public class UserDAO {
 
 	public ArrayList<User> getFriends(User user) {
 		ArrayList<User> users = new ArrayList<User>();
-		System.out.println("stigao " + user);
 		for (String u : user.getFriends()) {
-			System.out.println(u);
 			try {
 				users.add(findById(u));
-				System.out.println(findById(u));
 			} catch (Exception e) {
 			}
 		}
@@ -361,16 +356,19 @@ public class UserDAO {
 		removeFromFriendsList(otherUser, loggedUser.getId());
 		writeFile();
 	}
-	
-	private void addFriendRequest(User user, String friendRequestId) {
-		ArrayList<String> friendRequests = user.getFriendRequests();
-		friendRequests.add(friendRequestId);
-		user.setFriendRequests(friendRequests);
-	}
 
 	public void addFriendRequest(String senderId, String receiverId, String friendRequestId) {
-		addFriendRequest(findById(senderId), friendRequestId);
-		addFriendRequest(findById(receiverId), friendRequestId);
+		System.out.println("\n\nFRIEND REQUEST\n\n");
+		System.out.println(senderId);
+		System.out.println(findById(senderId));
+		findById(senderId).addRequest(friendRequestId);
+		System.out.println(findById(senderId));
+		System.out.println(receiverId);
+		System.out.println(findById(receiverId));
+		findById(receiverId).addRequest(friendRequestId);
+		System.out.println(findById(receiverId));
+
+		writeFile();
 	}
 
 	public void blockUser(String userId) {
@@ -384,9 +382,9 @@ public class UserDAO {
 	}
 
 	public void deleteRequest(String senderId, String id, String requestId) {
-		users.get(senderId).deleteRequest(requestId);
-		users.get(id).deleteRequest(requestId);
-		writeFile();		
+		findById(senderId).deleteRequest(requestId);
+		findById(id).deleteRequest(requestId);
+		writeFile();
 	}
 
 }

@@ -175,11 +175,9 @@ public class FriendRequestDAO {
 		for (String freqID : receiver.getFriendRequests()) {
 			FriendRequest request = findById(freqID);
 			if (request.getSender().equals(sender.getId())) {
-				System.out.println(request);
 				request.setState(state);
 				writeFile();
-				System.out.println(request);
-				break;
+				return;
 			}
 		}
 	}

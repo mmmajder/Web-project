@@ -63,7 +63,7 @@ public class User {
 		this.gender = gender;
 		this.isAdmin = isAdmin;
 		this.dateOfBirth = dateOfBirth;
-		this.profilePicture = "images/default.jpg";
+		this.profilePicture = "../../images/default.jpg";
 		this.biography = "Click to Edit Profile to add your biography!";
 		this.friends = new ArrayList<String>();
 		this.friendRequests = new ArrayList<String>();
@@ -228,6 +228,10 @@ public class User {
 
 	public void deleteRequest(String requestId) {
 		this.friendRequests.remove(requestId);		
+	}
+	
+	public void addRequest(String request) {
+		this.friendRequests.add(request);		
 	}
 
 }

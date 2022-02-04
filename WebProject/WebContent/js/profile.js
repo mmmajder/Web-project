@@ -27,7 +27,10 @@ function setBio(user) {
 	}
 	$("#date-of-birth").html(printDate(user.dateOfBirth));
 	$("#profile-bio-text").html(user.biography);
-	$(".profile-info .profile-photo img").attr("src", "images/userPictures/" + user.id + "/" + user.profilePicture);
+	if(user.profilePicture == "")
+		$(".profile-info .profile-photo img").attr("src", "images/default.jpg");
+	else
+		$(".profile-info .profile-photo img").attr("src", "images/userPictures/" + user.id + "/" + user.profilePicture);
 	$(".profile-name-surname").html(user.name + " " + user.surname)
 }
 
@@ -357,7 +360,7 @@ $("#friends").click(function() {
 
 function makeFriendTemplate(user) {
 	var cardTemplate = [
-		'<div class="friendship" id="' + user.id + '">',
+		'<div class="friendship">',
 		'<div class="profile-picture" onclick="goToOtherProfile(\'' + user.id + '\')" >',
 		'<img src="images/userPictures/',
 		user.id+ "/" +user.profilePicture,
@@ -393,7 +396,7 @@ function removeFriend(userId) {
 		contentType: "application/json",
 		dataType: "json",
 		complete: function() {
-			$('.friendship #' + userId).fadeOut();
+			$('.friendship #' + userId).parent().fadeOut();
 		}
     });
 }
@@ -411,20 +414,6 @@ function openChat(userId) {
     });
 	
 } 
-
-//$(".friendships").on('click', 'div.friend-name', function() {
-//	var id = $(this).attr('id');
-//	$.ajax({
-//		url: "rest/profile/viewOtherProfile",
-//		type: "POST",
-//		contentType: "application/json",
-//		dataType: "json",
-//		data: id,
-//		complete: function(data) {
-//			window.open("otherProfile.html", '_self').focus();
-//		}
-//	});
-//});
 
 $("#add-comment-image").click(function() {
 	var t = $("#comment-text").val();

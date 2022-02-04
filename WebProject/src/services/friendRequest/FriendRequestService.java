@@ -76,14 +76,14 @@ public class FriendRequestService {
 		FriendRequestDAO friendRequestDAO = (FriendRequestDAO) ctx.getAttribute("friendRequestDAO");
 		friendRequestDAO.changeStatus(sender, user, FriendRequestState.DENIED);
 	}
-	
+
 	@POST
 	@Path("/send")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void sendRequest(@Context HttpServletRequest request, String receiverId) {
 		User user = (User) request.getSession().getAttribute("logged");
 		FriendRequestDAO friendRequestDAO = (FriendRequestDAO) ctx.getAttribute("friendRequestDAO");
-		String friendReqId =friendRequestDAO.createFriendRequest(user.getId(), user.getId());
+		String friendReqId = friendRequestDAO.createFriendRequest(user.getId(), receiverId);
 		UserDAO userDAO = (UserDAO) ctx.getAttribute("userDAO");
 		userDAO.addFriendRequest(user.getId(), receiverId, friendReqId);
 	}
@@ -91,34 +91,34 @@ public class FriendRequestService {
 	@POST
 	@Path("/unsendRequest")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void unsendRequest(@Context HttpServletRequest request, String senderId) {
+	public void unsendRequest(@Context HttpServletRequest request, String receiverId) {
 		User user = (User) request.getSession().getAttribute("logged");
 		UserDAO userDAO = (UserDAO) ctx.getAttribute("userDAO");
 		FriendRequestDAO friendRequestDAO = (FriendRequestDAO) ctx.getAttribute("friendRequestDAO");
-		String requestId = friendRequestDAO.getRequestId(senderId, user.getId());
-		if(requestId == null)
+		String requestId = friendRequestDAO.getRequestId(user.getId(), receiverId);
+		if (requestId == null)
 			return;
-		userDAO.deleteRequest(senderId, user.getId(), requestId);
-		friendRequestDAO.deleteRequest(requestId);
+		userDAO.deleteRequest(user.getId(), receiverId, requestId);
+		friendRequestDAO.changeStatus(user, userDAO.findById(receiverId), FriendRequestState.DENIED);
 	}
-	
+
 	@POST
 	@Path("/blockUser")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void blockUser(@Context HttpServletRequest request, String userId) {
 		User user = (User) request.getSession().getAttribute("logged");
-		if(user.isAdmin()) {
+		if (user.isAdmin()) {
 			UserDAO userDAO = (UserDAO) ctx.getAttribute("userDAO");
 			userDAO.blockUser(userId);
 		}
 	}
-	
+
 	@POST
 	@Path("/unblockUser")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void unblockUser(@Context HttpServletRequest request, String userId) {
 		User user = (User) request.getSession().getAttribute("logged");
-		if(user.isAdmin()) {
+		if (user.isAdmin()) {
 			UserDAO userDAO = (UserDAO) ctx.getAttribute("userDAO");
 			userDAO.unblockUser(userId);
 		}
