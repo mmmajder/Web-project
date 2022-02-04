@@ -14,6 +14,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 import beans.Chat;
+import beans.FriendRequest;
 import beans.User;
 import dao.ChatDAO;
 import dao.FriendRequestDAO;
@@ -76,6 +77,17 @@ public class FriendRequestService {
 		friendRequestDAO.changeStatus(sender, user, FriendRequestState.DENIED);
 	}
 	
+	@POST
+	@Path("/send")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void sendRequest(@Context HttpServletRequest request, String receiverId) {
+		User user = (User) request.getSession().getAttribute("logged");
+		FriendRequestDAO friendRequestDAO = (FriendRequestDAO) ctx.getAttribute("friendRequestDAO");
+		String friendReqId =friendRequestDAO.createFriendRequest(user.getId(), user.getId());
+		UserDAO userDAO = (UserDAO) ctx.getAttribute("userDAO");
+		userDAO.addFriendRequest(user.getId(), receiverId, friendReqId);
+	}
+
 	@POST
 	@Path("/unsendRequest")
 	@Consumes(MediaType.APPLICATION_JSON)

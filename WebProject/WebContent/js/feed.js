@@ -1,7 +1,7 @@
 var socket
 $(document).ready(function() {
 	try{
-		socket = new WebSocket("ws://localhost:8088/WebProject/websocket/echoAnnotation");
+		socket = new WebSocket("ws://localhost:9000/WebProject/websocket/echoAnnotation");
 		socket.onopen = function() {
 			console.log("otvoren soket")
 		}
@@ -144,7 +144,14 @@ function goToMessages() {
 
 function logOut() {
 	socket.close();
-	window.location.href = "index.html";
+	$.ajax({
+        url: "rest/logout/logout",
+        type: "GET",
+        contentType: "application/json",
+        complete: function(data) {
+			window.location.href = "index.html";
+        }
+    });
 }
 
 // add new image
@@ -197,7 +204,7 @@ function makeCardTemplate(user, postData) {
 	}
 	var delPost = '';
 	if (user.admin || user.id == postData.author) {
-		delPost = '<span class="delete-post" onclick="deletePost(\'' + postData.id + '\',\'' + user.admin + '\')"><i class="uil uil-trash-alt"></i></span>';
+		delPost = '<span class="delete-post" onclick="deletePost(\'' + postData.id + '\',\'' + postData.posted + '\',\'' + postData.author + '\')"><i class="uil uil-trash-alt"></i></span>';
 	}
 	var cardTemplate = [
         '<div class="feed" id="' + postData.id + '"><div class="head"><div onclick="goToOtherProfile(\'' + user.id + '\')" class="user"><div class="profile-picture">',
@@ -218,27 +225,28 @@ function makeCardTemplate(user, postData) {
     return $(cardTemplate.join(''));
 }
 
-function deletePost(postID, isAdmin) {
+function deletePost(postId, user, author) {
 	if (confirm('Are you sure you want to delete this post?')) {
-		var post = JSON.stringify({ id: postID });
-		if(isAdmin) {
+		var postJSON = JSON.stringify({ id: postId });
+		if(user.admin=="true") {
 			$.ajax({
 		        url: "rest/profile/deletePostByAdmin",
 		        type: "DELETE",
-		        data: post,
+		        data: postJSON,
 		        contentType: "application/json",
 		        complete: function(data) {
-		        	$("#feeds #" + postID).fadeOut();
+		        	$("#feeds #" + postId).fadeOut();
+					socket.send("deletePostByAdmin"+ postId + "postDate" + postId.posted + "user" + author);
 		        }
 		    });
 		} else {
 			$.ajax({
-		        url: "rest/profile/delete",
+		        url: "rest/profile/deletePost",
 		        type: "DELETE",
-		        data: post,
+		        data: postId,
 		        contentType: "application/json",
 		        complete: function(data) {
-		        	$("#feeds #" + postID).fadeOut();
+		        	$("#feeds #" + postId).fadeOut();
 		        }
 		    });
 		}

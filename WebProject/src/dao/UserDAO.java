@@ -53,6 +53,16 @@ public class UserDAO {
 		return null;
 	}
 
+	public ArrayList<User> getAdmins() {
+		ArrayList<User> admins = new ArrayList<User>();
+		for (User user : findAll()) {
+			if (user.isAdmin()) {
+				admins.add(user);
+			}
+		}
+		return admins;
+	}
+	
 	public void add(User user) {
 		users.put(user.getUsername(), user);
 		writeFile();
@@ -350,6 +360,17 @@ public class UserDAO {
 		removeFromFriendsList(loggedUser, otherUser.getId());
 		removeFromFriendsList(otherUser, loggedUser.getId());
 		writeFile();
+	}
+	
+	private void addFriendRequest(User user, String friendRequestId) {
+		ArrayList<String> friendRequests = user.getFriendRequests();
+		friendRequests.add(friendRequestId);
+		user.setFriendRequests(friendRequests);
+	}
+
+	public void addFriendRequest(String senderId, String receiverId, String friendRequestId) {
+		addFriendRequest(findById(senderId), friendRequestId);
+		addFriendRequest(findById(receiverId), friendRequestId);
 	}
 
 	public void blockUser(String userId) {

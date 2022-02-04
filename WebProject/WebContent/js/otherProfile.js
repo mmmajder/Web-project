@@ -404,7 +404,14 @@ function goToHomepage() {
 }
 
 function logOut() {
-	window.location.href = "index.html";
+	$.ajax({
+        url: "rest/logout/logout",
+        type: "GET",
+        contentType: "application/json",
+        complete: function(data) {
+			window.location.href = "index.html";
+        }
+    });
 }
 
 function goToProfile() {

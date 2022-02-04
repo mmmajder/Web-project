@@ -9,13 +9,19 @@ $(document).ready(function() {
 var socket
 $(document).ready(function() {
 	try{
-		socket = new WebSocket("ws://localhost:8088/WebProject/websocket/echoAnnotation");
+		socket = new WebSocket("ws://localhost:9000/WebProject/websocket/echoAnnotation");
 		socket.onopen = function() {
 			console.log("otvoren soket")
 		}
 		socket.onmessage = function(msg) {
-			console.log("stigao")
-			receiveMessage(msg.data, "left");
+			if (msg.startsWith("deletePostByAdmin")) { 
+				deletedPostMessage(msg.data)
+				
+				
+			} else {
+				receiveMessage(msg.data, "left");
+			}
+			
 		}
 		connection.onerror = function (error) { 	
 			console.log('WebSocket Error ' + error); 
@@ -28,6 +34,25 @@ $(document).ready(function() {
 		console.log(exception);
 	}
 })
+
+function deletedPostMessage(msg) {
+	//"deletePostByAdmin"+ user.id + "postId" + post.id + "user" + post.author
+	var adminId = msg.split('postDate')[0].split('deletePostByAdmin')[1];
+	var postDate = msg.split('user')[0].split('postDate')[1];
+	var authorId = msg.split('user')[1];
+	if (selectedChat) {
+		if (selectedChat.loggedUser.id==authorId && selectedChat.otherUser.id==adminId) {
+			seenMessage();
+			$('.chat-messages').append(makeDmsTemplate("Your post has been removed by Meeply admin. Date of post: " +postDate, position, selectedChat.otherUser));
+			$(".chat-messages").scrollTop($(".chat-messages")[0].scrollHeight);
+		}
+		else {
+			initChats();
+		}
+	} else {
+		initChats();
+	}
+}
 
 function receiveMessage(msg, position) {
 	var sender = msg.split("recieverId")[0].split("senderId")[1];
@@ -88,7 +113,9 @@ function openChatIfNeeded() {
 		type: "GET",
 		contentType: "application/json",
 		complete: function(data) {
-			chat(data);
+			if (data.responseText!=""){
+				chat(data);
+			}
 		}
 	});
 }
@@ -112,8 +139,18 @@ $(document).ready(function() {
 function makeChatTemplate(chatHeadData) {
 	var color = 'white';
 	if (!chatHeadData.chat.seen && chatHeadData.lastSender==chatHeadData.otherParticipant.id) {
-		color = 'grey';
+		if (chatHeadData.otherParticipant.admin) {
+			color = 'lightblue';
+		} else {
+			color = 'grey';
+		}
 	}
+	var lastMessage = "";
+	if (chatHeadData.lastMessage) {
+		lastMessage = printDateTime(chatHeadData.lastMessage);
+	}
+	
+	
 	var cardTemplate = [
 		'<div class="message" id="',
 		chatHeadData.chat.id,
@@ -134,7 +171,7 @@ function makeChatTemplate(chatHeadData) {
 		chatHeadData.content,
 		'</p>',
 		'<p>',
-		printDateTime(chatHeadData.lastMessage),
+		lastMessage,
 		"</p>",
 		'</div>',
 		'</div>'
@@ -287,10 +324,18 @@ function goToHomepage() {
 
 function logOut() {
 	socket.close();
-	window.location.href = "index.html";
+	$.ajax({
+        url: "rest/logout/logout",
+        type: "GET",
+        contentType: "application/json",
+        complete: function(data) {
+			window.location.href = "index.html";
+        }
+    });
 }
 
 function goToMyProfile() {
 	socket.close();
 	window.location.href = "profile.html";
 }
+
