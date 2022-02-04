@@ -24,6 +24,10 @@ $("#search-btn").click(function search() {
     });
 })
 
+function goToHomepage() {
+	window.location.href = "feed.html";
+}
+
 $(document).ready(function() {	
 	$.ajax({
         url: "rest/login/testlogin",

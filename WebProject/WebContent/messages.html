@@ -18,57 +18,55 @@
         <div class="container">
             <img src="images/Meeply.png" class="logo">
             <div id="buttons">
-            	<span id="logged-user-username"></span>
+                <span id="logged-user-username"></span>
                 <span><i id="homepage" class="uil uil-home" onclick="goToHomepage()"></i></span>
                 <span><i id="my-profile" class="uil uil-user-circle" onclick="goToMyProfile()"></i></span>
                 <span><i id="log-out" class="uil uil-sign-out-alt" onclick="logOut()"></i></span>
             </div>
         </div>
     </nav>
-    <main>
-        <div class="container">
-            <div class="messages-container">
-                <!--Search people to message-->
-                <div class="left">
-                    <div class="heading">
-                        <h4>Messages</h4><i class="uil uil-edit"></i>
-                    </div>
-                    <div class="search-bar">
-                        <i class="uil uil-search"></i>
-                        <input type="search" placeholder="Search messages" id="message-search">
-                    </div>
-                    <div class="messages">
-                        
-                    </div>
-                </div>
 
-                <!--Chat-->
-                <div class="chat">
-                    <div class="user">
-                        <div class="profile-picture">
-                            <img id="profile-picture-top">
-                            <div class="active"></div>
-                        </div>
-                        <div class="message-body">
-                            <h4 id="profile-name-top"></h4>
-                        </div>
-                    </div>
-                    <div class="chat-content">
-                        <div class="chat-messages">
-                            
-                        </div>
-                    </div>
-                    <!--Send new message-->
-                    <div class="new-message">
-                        <input type="text" placeholder="Type a message..." id="new-message-text">
-                        <div class="send-message-icon">
-                            <span><i id="send-message" class="uil uil-message"></i></span>
-                        </div>
-                    </div>
+    <div class="messages-container">
+        <!--Search people to message-->
+        <div id="messages-search">
+            <div class="heading">
+                <h4>Messages</h4>
+            </div>
+            <div class="search-bar">
+                <i class="uil uil-search"></i>
+                <input type="search" placeholder="Search messages" id="message-search">
+            </div>
+            <div class="messages">
+
+            </div>
+        </div>
+
+        <!--Chat-->
+        <div class="chat">
+            <div class="user">
+                <div class="profile-picture">
+                    <img id="profile-picture-top">
+                    <div class="active"></div>
+                </div>
+                <div class="message-body">
+                    <h4 id="profile-name-top"></h4>
+                </div>
+            </div>
+            <div class="chat-content">
+                <div class="chat-messages">
+
+                </div>
+            </div>
+            <!--Send new message-->
+            <div class="new-message">
+                <input type="text" placeholder="Type a message..." id="new-message-text">
+                <div class="send-message-icon">
+                    <span><i id="send-message" class="uil uil-message"></i></span>
                 </div>
             </div>
         </div>
-    </main>
+    </div>
+
 
     <script src="js/globals.js"></script>
     <script src="js/messages.js"></script>

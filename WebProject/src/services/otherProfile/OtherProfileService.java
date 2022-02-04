@@ -11,6 +11,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
+
 import beans.Post;
 import beans.User;
 import dao.UserDAO;
@@ -112,6 +114,9 @@ public class OtherProfileService {
 		} else if(dao.isPending(otherUser, logged)) {
 			relation.setFriendStatus("Accept");
 			relation.setSendMessage("Decline");
+		} else if(otherUser.isAdmin()) {
+			relation.setFriendStatus("");
+			relation.setSendMessage("");
 		} else {
 			relation.setFriendStatus("Add friend");
 			relation.setSendMessage("");

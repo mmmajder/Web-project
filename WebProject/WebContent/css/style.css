@@ -37,7 +37,7 @@
 }
 
 #just-looking {
-	cursor: pointer;
+    cursor: pointer;
 }
 
 .register,
@@ -172,8 +172,8 @@ body {
 }
 
 .profile-picture img {
-	object-fit: cover;
-	width: 2.7rem;
+    object-fit: cover;
+    width: 2.7rem;
     height: 2.7rem;
 }
 
@@ -187,8 +187,8 @@ body {
 }
 
 .profile-photo img {
-	object-fit: cover;
-	width: 15rem;
+    object-fit: cover;
+    width: 15rem;
     height: 15rem;
 }
 
@@ -202,8 +202,8 @@ body {
 }
 
 .comments-content .profile-photo img {
-	object-fit: cover;
-	width: 1.5rem;
+    object-fit: cover;
+    width: 1.5rem;
     height: 1.5rem;
 }
 
@@ -288,17 +288,17 @@ nav .container #buttons span,
     margin: 0 8px;
 }
 
-#add-comment, 
+#add-comment,
 .delete-post {
-	font-size: 1.2rem;
+    font-size: 1.2rem;
     color: var(--color-primary);
     cursor: pointer;
     margin: 0 8px;
 }
 
 .add-comment i {
-	font-size: 1.5rem;
-	text-align: center;
+    font-size: 1.5rem;
+    text-align: center;
 }
 
 nav .container #buttons i,
@@ -429,7 +429,7 @@ main .container .left .profile {
 }
 
 .left .sidebar i .messages-count {
-	background: var(--color-danger);
+    background: var(--color-danger);
     color: white;
     font-size: 0.5rem;
     border-radius: 0.8rem;
@@ -472,44 +472,6 @@ main .container .left .profile {
 .left .sidebar .menu-item:last-child.active {
     overflow: hidden;
     border-bottom-left-radius: var(--card-border-radius);
-}
-
-
-/**Notification popup**/
-
-.left .notifications-popup {
-    position: absolute;
-    top: 0;
-    left: 110%;
-    width: 30rem;
-    background: var(--color-white);
-    border-radius: var(--card-border-radius);
-    padding: var(--card-padding);
-    box-shadow: 0 0 2rem hsl(var(--color-primary), 75%, 60% 25%);
-    z-index: 8;
-    display: none;
-}
-
-.left .notifications-popup::before {
-    content: "";
-    width: 1.2rem;
-    height: 1.2rem;
-    display: block;
-    background: var(--color-white);
-    position: absolute;
-    left: -0.6rem;
-    transform: rotate(45deg);
-}
-
-.left .notifications-popup>div {
-    display: flex;
-    align-items: start;
-    gap: 1rem;
-    margin-bottom: 1rem;
-}
-
-.left .notifications-popup small {
-    display: block;
 }
 
 
@@ -662,13 +624,13 @@ main .container .right {
 }
 
 .middle .date-of-birth-search {
-	display: inline-flex;
-	text-align: center;
-	width: 100%;
+    display: inline-flex;
+    text-align: center;
+    width: 100%;
 }
 
 .middle .date-of-birth-search {
-	justify-content: space-between;
+    justify-content: space-between;
 }
 
 .middle table button {
@@ -679,19 +641,19 @@ main .container .right {
 }
 
 .middle input[type=date] {
-	padding: 5px 10px;
+    padding: 5px 10px;
 }
 
 .middle table {
-	text-align: left;
-	font-size: 1rem;
-	width: 100%;
-	border-spacing: 3px;
+    text-align: left;
+    font-size: 1rem;
+    width: 100%;
+    border-spacing: 3px;
 }
 
 .middle table button:hover,
 .middle table .active-sort {
-	background: var(--color-primary);
+    background: var(--color-primary);
     color: white;
 }
 
@@ -700,10 +662,11 @@ main .container .right {
     overflow: visible;
 }
 
-#search-btn, #clear-btn {
-	width: 45%;
-	text-align: center;
-	float: left;
+#search-btn,
+#clear-btn {
+    width: 45%;
+    text-align: center;
+    float: left;
 }
 
 .right .profile-picture img {
@@ -823,7 +786,7 @@ h4 {
     padding: 4rem;
     align-content: center;
     text-align: center;
-	max-height: inherit;
+    max-height: inherit;
 }
 
 .edit-profile-card .buttons {
@@ -831,7 +794,7 @@ h4 {
 }
 
 #resultEdit {
-	text-align: center;
+    text-align: center;
 }
 
 
@@ -843,7 +806,7 @@ h4 {
 }
 
 #post-image {
-	max-width: 80%;
+    max-width: 80%;
     overflow: hidden;
 }
 
@@ -861,12 +824,12 @@ h4 {
 }
 
 #view-comments {
-	cursor: pointer;	
+    cursor: pointer;
 }
 
 .column #posted {
-	font-size: 8px;
-	float: left;
+    font-size: 8px;
+    float: left;
 }
 
 .stop-scrolling {
@@ -888,77 +851,6 @@ h4 {
     color: var(--color-primary);
     padding: 1rem;
     cursor: pointer;
-}
-
-
-/**Theme customization**/
-
-.customize-theme {
-    background: rgba(255, 255, 255, 0.5);
-    width: 100vw;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 100;
-    text-align: center;
-    display: none;
-    place-items: center;
-}
-
-.customize-theme .card {
-    background: var(--color-white);
-    padding: 3rem;
-    border-radius: var(--card-border-radius);
-    border: 2px solid var(--color-primary);
-    width: 50%;
-}
-
-.customize-theme .theme {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1.5rem;
-    padding-top: 1rem;
-}
-
-.customize-theme .theme>div {
-    padding: var(--card-padding);
-    width: 100%;
-    display: flex;
-    align-items: center;
-    font-size: 1rem;
-    font-weight: bold;
-    border-radius: 0.4rem;
-    cursor: pointer;
-}
-
-.customize-theme .theme>div.active {
-    border: 2px solid var(--color-primary);
-}
-
-.customize-theme .theme .theme-1 {
-    background-color: #F0EEF6;
-    color: #241E38;
-}
-
-.customize-theme .theme .theme-2 {
-    background-color: #8BC6EC;
-    background-image: linear-gradient(90deg, #8BC6EC 0%, #9599E2 100%);
-    color: #241E38;
-}
-
-.customize-theme .theme .theme-3 {
-    background-color: #241E38;
-    color: #F0EEF6;
-}
-
-.customize-theme .theme>div span {
-    width: 2rem;
-    height: 2rem;
-    border-radius: 50%;
-    margin-right: 1rem;
-    border: 2px solid var(--color-grey);
 }
 
 
@@ -985,8 +877,11 @@ h4 {
     .left .btn {
         display: none;
     }
-    .messages-container .left {
-    	display: none;
+}
+
+@media screen and (max-width: 600px) {
+    #messages-search {
+        display: none;
     }
 }
 
@@ -1061,8 +956,8 @@ h4 {
 }
 
 .private {
-	padding: var(--card-padding);
-	text-align: center;
+    padding: var(--card-padding);
+    text-align: center;
 }
 
 .photos .row {
@@ -1125,86 +1020,79 @@ h4 {
     cursor: pointer;
 }
 
+
 /**Messages**/
 
-main .messages-container {
+.messages-container {
     display: grid;
-    grid-template-columns: 25vw auto;
+    grid-template-columns: 25vw 50vw;
     column-gap: 2rem;
-    position: fixed;
-    top: 10%;
-    height: 80%;
-    width: 80%;
-    left: 10%;
+    justify-content: center;
+    width: 70%;
+    height: 70%;
+    margin: auto auto;
+    margin-top: 6rem;
 }
 
-main .messages-container .left {
-    height: max-content;
-    position: sticky;
+#messages-search {
     display: block;
     top: var(--sticky-top-right);
-    bottom: 0;
-    top: 0;
-    left: 0;
-    right: 0;
     overflow: hidden;
-    margin-top: 2rem;
     background: var(--color-white);
     padding: var(--card-padding);
     border-radius: var(--card-border-radius);
 }
 
-.left .messages {
+#messages-search .messages {
     background: var(--color-white);
     padding: var(--card-padding);
     border-radius: var(--card-border-radius);
-    margin-top: 2rem;
     margin-bottom: 1rem;
     overflow-y: scroll;
-    height: 400px;
+    height: 50vh;
 }
 
-.left .heading {
+#messages-search .heading {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 1rem;
 }
 
-.left .heading i {
+#messages-search .heading i {
     font-size: 1.4rem;
 }
 
-.left .search-bar {
+#messages-search .search-bar {
     display: flex;
     margin-bottom: 1rem;
 }
 
-.left .messages .message {
+#messages-search .messages .message {
     display: flex;
     gap: 1rem;
     margin-bottom: 1rem;
     align-items: start;
 }
 
-.left .message .profile-picture {
+#messages-search .message .profile-picture {
     position: relative;
     overflow: visible;
 }
 
-.left .profile-picture img {
+#messages-search .profile-picture img {
     border-radius: 50%;
 }
 
-.left .messages .message:last-child {
+#messages-search .messages .message:last-child {
     margin: 0;
 }
 
-.left .messages .message p {
+#messages-search .messages .message p {
     font-size: 0.8rem;
 }
 
-.left .messages .message .profile-picture .active {
+#messages-search .messages .message .profile-picture .active {
     width: 0.8rem;
     height: 0.8rem;
     border-radius: 50%;
@@ -1215,7 +1103,12 @@ main .messages-container .left {
     right: 0;
 }
 
-.chat,
+.chat {
+    background: var(--color-white);
+    border-radius: var(--card-border-radius);
+    padding: var(--card-padding);
+}
+
 .photo-comments {
     background: var(--color-white);
     border-radius: var(--card-border-radius);
@@ -1233,8 +1126,7 @@ main .messages-container .left {
 
 .chat-content {
     position: relative;
-    height: 415px;
-    bottom: 2rem;
+    height: 60vh;
 }
 
 .chat-messages {
@@ -1252,8 +1144,6 @@ main .messages-container .left {
 
 .chat .user {
     display: flex;
-    gap: 1rem;
-    margin-bottom: 1rem;
 }
 
 .new-message {

@@ -19,7 +19,7 @@ PO00013;U00006;bear9.jpg;Mnogo dobra slika 13;2020-01-01 21:00;;false;true
 PO00035;U00002;photo13.jpeg;sunce;2022-02-02 17:55;;false;false
 PO00030;U00002;photo8.jpeg;novi meda, ali beli;2022-02-01 12:53;;true;false
 PO00031;U00002;photo9.jpeg;meda;2022-02-02 16:25;;false;false
-PO00007;U00004;;Mnogo dobar post 7;2020-01-01 13:00;;true;false
+PO00007;U00004;;Mnogo dobar post 7;2020-01-01 13:00;;false;false
 PO00029;U00002;photo7.jpeg;;2022-02-01 12:48;;false;true
 PO00008;U00004;bear7.jpg;Mnogo dobar post 8;2020-01-01 17:00;;true;false
 PO00009;U00004;bear5.jpg;Mnogo dobra slika 9;2020-01-01 18:00;;false;true
@@ -40,4 +40,4 @@ PO00024;U00003;user3.jpg;Mnogo dobra slika 33;2020-01-01 16:00;;false;true
 PO00040;U00002;photo15.jpeg;bbbb;2022-02-04 16:02;;false;true
 PO00041;U00002;photo16.jpeg;aaa;2022-02-04 16:13;;false;true
 PO00020;U00008;bear13.jpg;Mnogo dobra slika 20;2020-01-01 16:30;;false;true
-PO00042;U00002;photo17.jpeg;aaa;2022-02-04 16:22;;false;true
+PO00042;U00002;photo17.jpeg;aaa;2022-02-04 16:22:28.500;;false;true
