@@ -77,14 +77,14 @@ public class FeedService {
 			String base64String = postData.getPictureLocation();
 			String[] strings = base64String.split(",");
 			String extension;
-			switch (strings[0]) {// check image's extension
+			switch (strings[0]) { // check image's extension
 			case "data:image/jpeg;base64":
 				extension = "jpeg";
 				break;
 			case "data:image/png;base64":
 				extension = "png";
 				break;
-			default:// should write cases for more images types
+			default:
 				extension = "jpg";
 				break;
 			}

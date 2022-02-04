@@ -57,15 +57,10 @@ public class FriendRequestService {
 		User user = (User) request.getSession().getAttribute("logged");
 		UserDAO userDAO = (UserDAO) ctx.getAttribute("userDAO");
 		User sender = userDAO.findById(senderId);
-		System.out.println("sender " + sender);
-		System.out.println("user " + user);
 		userDAO.addFriend(user.getId(), senderId);
-
 		ChatDAO chatDAO = (ChatDAO) ctx.getAttribute("chatDAO");
 		Chat chat = chatDAO.createChat(user, sender);
-
 		userDAO.addChatToUsers(user, sender, chat);
-
 		FriendRequestDAO friendRequestDAO = (FriendRequestDAO) ctx.getAttribute("friendRequestDAO");
 		friendRequestDAO.changeStatus(sender, user, FriendRequestState.ACCEPTED);
 	}
