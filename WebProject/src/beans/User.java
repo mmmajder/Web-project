@@ -226,4 +226,8 @@ public class User {
 				+ isPrivate + ", isBlocked=" + isBlocked + ", isAdmin=" + isAdmin + "]";
 	}
 
+	public void deleteRequest(String requestId) {
+		this.friendRequests.remove(requestId);		
+	}
+
 }

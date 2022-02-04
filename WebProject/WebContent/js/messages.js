@@ -157,7 +157,7 @@ function makeChatTemplate(chatHeadData) {
 		'" style="background-color:',
 		color,
 		';"',
-		'><div onclick="goToOtherProfile(\'' + chatHeadData.otherParticipant.id + '\')" class="profile-picture">',
+		'><div class="profile-picture">',
 		'<img src="images/userPictures/',
 		chatHeadData.otherParticipant.id + "/" + chatHeadData.otherParticipant.profilePicture,
 		'">',
@@ -203,6 +203,7 @@ function chat(data) {
 	selectedChat = chatDms;
 	seenMessage();		
 	$("#profile-picture-top").attr("src","images/userPictures/" + chatDms.otherUser.id + "/" + chatDms.otherUser.profilePicture);
+	$("#profile-picture-top").click(goToOtherProfile(chatDms.otherUser.id));
 	$("#profile-name-top").html(chatDms.otherUser.name + " " + chatDms.otherUser.surname);
 	chatDms.dms.forEach(function(item) {
 		if (item.sender == chatDms.loggedUser.id) {

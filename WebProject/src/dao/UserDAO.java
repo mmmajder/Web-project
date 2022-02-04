@@ -147,9 +147,8 @@ public class UserDAO {
 
 	void readFile() {
 		try {
-			CSVReader csvr = new CSVReader(
-					new InputStreamReader(new FileInputStream(repository.getPath() + "/resources/" + CSV_FILE), "UTF-8"), ';',
-					'\'', 1);
+			CSVReader csvr = new CSVReader(new InputStreamReader(
+					new FileInputStream(repository.getPath() + "/resources/" + CSV_FILE), "UTF-8"), ';', '\'', 1);
 
 			String[] nextLine;
 			/*
@@ -372,6 +371,22 @@ public class UserDAO {
 	public void addFriendRequest(String senderId, String receiverId, String friendRequestId) {
 		addFriendRequest(findById(senderId), friendRequestId);
 		addFriendRequest(findById(receiverId), friendRequestId);
+	}
+
+	public void blockUser(String userId) {
+		users.get(userId).setBlocked(true);
+		writeFile();
+	}
+
+	public void unblockUser(String userId) {
+		users.get(userId).setBlocked(false);
+		writeFile();
+	}
+
+	public void deleteRequest(String senderId, String id, String requestId) {
+		users.get(senderId).deleteRequest(requestId);
+		users.get(id).deleteRequest(requestId);
+		writeFile();		
 	}
 
 }

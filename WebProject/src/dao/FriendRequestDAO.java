@@ -32,7 +32,7 @@ public class FriendRequestDAO {
 		this.path = contextPath;
 		readFile();
 	}
-	
+
 	public static void main(String[] args) {
 		FriendRequestDAO dao = new FriendRequestDAO("src");
 		for (FriendRequest x : dao.findAll()) {
@@ -70,6 +70,19 @@ public class FriendRequestDAO {
 			}
 		}
 		return pendingFriendRequests;
+	}
+
+	public boolean isPending(User one, User other) {
+		for (String r : one.getFriendRequests()) {
+			FriendRequest friendRequest = getById(r);
+			if (friendRequest != null) {
+				if (friendRequest.getSender().equals(one.getId()) && friendRequest.getReciever().equals(other.getId())
+						&& friendRequest.getState() == FriendRequestState.PENDING) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	// FR000002
@@ -111,8 +124,8 @@ public class FriendRequestDAO {
 
 	void readFile() {
 		try (CSVReader csvr = new CSVReader(
-				new InputStreamReader(new FileInputStream(repository.getPath() + "/resources/" + CSV_FILE), "UTF-8"), ';', '\'',
-				1);) {
+				new InputStreamReader(new FileInputStream(repository.getPath() + "/resources/" + CSV_FILE), "UTF-8"),
+				';', '\'', 1);) {
 			String[] nextLine;
 			// String[] columns = new String[]
 			// {"id","senderID","recieverID","dateOfRequest","state"};
@@ -169,5 +182,19 @@ public class FriendRequestDAO {
 				break;
 			}
 		}
+	}
+
+	public String getRequestId(String senderId, String id) {
+		for (FriendRequest request : findAll()) {
+			if (request.getSender().equals(senderId) && request.getReciever().equals(id)) {
+				return request.getId();
+			}
+		}
+		return null;
+	}
+
+	public void deleteRequest(String requestId) {
+		friendRequests.remove(requestId);
+		writeFile();
 	}
 }

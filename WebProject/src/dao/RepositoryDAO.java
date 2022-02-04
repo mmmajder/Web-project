@@ -13,7 +13,7 @@ public class RepositoryDAO {
 
 	private static ArrayList<String> tomcatPaths = new ArrayList<String>(Arrays.asList(
 			"C:/Users/Lenovo/Documents/apache-tomcat-8.0.47/webapps/WebProject",
-			"C:/Users/Korisnik/eclipse-workspace.metadata.plugins/org.eclipse.wst.server.core/tmp1/wtpwebapps/WebProject"));
+			"C:/Users/Korisnik/eclipse-workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp1/wtpwebapps/WebProject"));
 
 	public String getPath() {
 		return paths.get(programmer);

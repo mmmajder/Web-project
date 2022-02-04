@@ -104,10 +104,120 @@ $(document).ready(function() {
         contentType: "application/json",
         complete: function(data) {
             var user = data.responseJSON;
-            $("#logged-user-username").html("@" + user.username);
+            if(user != null) {
+            	$("#logged-user-username").html("@" + user.username);
+            }
+        }
+	});
+	
+	$.ajax({
+        url: "rest/otherProfile/getRelationStatus",
+        type: "GET",
+        contentType: "application/json",
+        complete: function(data) {
+            var relation = data.responseJSON;
+        	$('#add-remove-friend').html(relation.friendStatus);
+            if(relation.friendStatus == "") { 
+            	$('#add-remove-friend').hide();
+            } 
+        	$('#send-message').html(relation.sendMessage);
+            if(relation.sendMessage == "") { 
+            	$('#send-message').hide();
+            } 
         }
 	});
 });
+
+function addRemoveFriend() {
+	var id = $("#add-remove-friend").attr("user-id");
+	
+	if($('#add-remove-friend').html() == "Block user") {
+		$.ajax({
+			url: "rest/friendRequest/blockUser",
+			type: "POST",
+			contentType: "application/json",
+			data: id,
+			complete: function() {
+	        	$('#add-remove-friend').html("Unblock user");
+            	$('#send-message').html("Send a message");
+            }
+		});
+	} 
+	
+	else if($('#add-remove-friend').html() == "Unblock user") {
+		$.ajax({
+			url: "rest/friendRequest/unblockUser",
+			type: "POST",
+			contentType: "application/json",
+			data: id,
+			complete: function() {
+	        	$('#add-remove-friend').html("Block user");
+            	$('#send-message').html("Send a message");
+            }
+		});
+	} 
+	
+	else if($('#add-remove-friend').html() == "Remove friend") {
+		$.ajax({
+			url: "rest/profile/removeFriend",
+			type: "POST",
+			data: id,
+			contentType: "application/json",
+			dataType: "json",
+			complete: function() {
+	        	$('#add-remove-friend').html("Add friend");
+            	$('#send-message').hide();
+            }
+	    });
+	} 
+	
+	else if($('#add-remove-friend').html() == "Add friend") {
+		// TO DO za Milana <3
+	} 
+	
+	else if($('#add-remove-friend').html() == "Accept") {
+		$.ajax({
+			url: "rest/friendRequest/accept",
+			type: "POST",
+			contentType: "application/json",
+			data: id,
+			complete: function() {
+	        	$('#add-remove-friend').html("Remove friend");
+            	$('#send-message').html("Send a message");
+            }
+		});
+	} 
+	
+	else if($('#add-remove-friend').html() == "Unsend request") {
+		$.ajax({
+			url: "rest/friendRequest/unsendRequest",
+			type: "POST",
+			contentType: "application/json",
+			data: $('#send-message').attr("user-id"),
+			complete: function() {
+	        	$('#add-remove-friend').html("Add friend");
+            	$('#send-message').hide();
+			}
+		});
+	}
+}
+
+function sendMessage() {
+	if($('#send-message').html() == "Send a message") {
+		openChat($('#send-message').attr("user-id"));
+	} else if($('#send-message').html() == "Decline") {
+		$.ajax({
+			url: "rest/friendRequest/deny",
+			type: "POST",
+			contentType: "application/json",
+			data: $('#send-message').attr("user-id"),
+			complete: function() {
+	        	$('#add-remove-friend').html("Add friend");
+            	$('#send-message').hide();
+			}
+		});
+	}
+}
 
 $("#friends").click(function() {
 	clear();
@@ -142,7 +252,7 @@ function showFriends() {
 function makeFriendTemplate(user) {
 	var cardTemplate = [
 		'<div class="friendship">',
-		'<div class="profile-picture">',
+		'<div class="profile-picture" onclick="goToOtherProfile(\'' + user.id + '\')" >',
 		'<img src="images/userPictures/',
 		user.id+ "/" +user.profilePicture,
 		'">',
@@ -155,11 +265,11 @@ function makeFriendTemplate(user) {
 		'</h3>',
 		'</div>',
 		'<div class="buttons">',
-		'<div class="btn" id="open-chat">',
+		'<div class="btn" id="open-chat" onclick="openChat(\'' + user.id + '\')">',
 		'<i class="uil uil-message"></i>',
 		'<label>Send a Message</label>',
 		'</div>',
-		'<div class="btn" id="remove-friend">',
+		'<div class="btn" id="remove-friend" onclick="removeFriend(\'' + user.id + '\')">',
 		'<i class="uil uil-multiply"></i>',
 		'<label>Remove Friend</label>',
 		'</div>',
@@ -168,6 +278,33 @@ function makeFriendTemplate(user) {
 	];
 	return $(cardTemplate.join(''));
 }
+
+function removeFriend(userId) {
+	$.ajax({
+		url: "rest/profile/removeFriend",
+		type: "POST",
+		data: userId,
+		contentType: "application/json",
+		dataType: "json",
+		complete: function() {
+			// add fade out
+		}
+    });
+}
+
+function openChat(userId) {
+	$.ajax({
+		url: "rest/messages/openedChat",
+		type: "POST",
+		data: userId,
+		contentType: "application/json",
+		dataType: "json",
+		complete: function() {
+			window.location.href = "messages.html";
+		}
+    });
+	
+} 
 
 function showPosts() {
 	if(!arePostsPrivate()) {
@@ -247,7 +384,9 @@ function setBio(user) {
 	$("#date-of-birth").html(printDate(user.dateOfBirth));
 	$("#profile-bio-text").html(user.biography);
 	$(".profile-info .profile-photo img").attr("src", "images/userPictures/" + user.id + "/" + user.profilePicture);
-	$(".profile-name-surname").html(user.name + " " + user.surname)
+	$(".profile-name-surname").html(user.name + " " + user.surname);
+	$("#add-remove-friend").attr("user-id", user.id);
+	$("#send-message").attr("user-id", user.id);
 }
 
 // friendship filter

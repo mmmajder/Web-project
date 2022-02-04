@@ -92,4 +92,40 @@ public class FriendRequestService {
 		UserDAO userDAO = (UserDAO) ctx.getAttribute("userDAO");
 		userDAO.addFriendRequest(user.getId(), receiverId, friendReqId);
 	}
+
+	@POST
+	@Path("/unsendRequest")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void unsendRequest(@Context HttpServletRequest request, String senderId) {
+		User user = (User) request.getSession().getAttribute("logged");
+		UserDAO userDAO = (UserDAO) ctx.getAttribute("userDAO");
+		FriendRequestDAO friendRequestDAO = (FriendRequestDAO) ctx.getAttribute("friendRequestDAO");
+		String requestId = friendRequestDAO.getRequestId(senderId, user.getId());
+		if(requestId == null)
+			return;
+		userDAO.deleteRequest(senderId, user.getId(), requestId);
+		friendRequestDAO.deleteRequest(requestId);
+	}
+	
+	@POST
+	@Path("/blockUser")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void blockUser(@Context HttpServletRequest request, String userId) {
+		User user = (User) request.getSession().getAttribute("logged");
+		if(user.isAdmin()) {
+			UserDAO userDAO = (UserDAO) ctx.getAttribute("userDAO");
+			userDAO.blockUser(userId);
+		}
+	}
+	
+	@POST
+	@Path("/unblockUser")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void unblockUser(@Context HttpServletRequest request, String userId) {
+		User user = (User) request.getSession().getAttribute("logged");
+		if(user.isAdmin()) {
+			UserDAO userDAO = (UserDAO) ctx.getAttribute("userDAO");
+			userDAO.unblockUser(userId);
+		}
+	}
 }
