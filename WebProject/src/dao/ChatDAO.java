@@ -99,7 +99,7 @@ public class ChatDAO {
 			User otherParticipant = userDAO.findById(getOtherParticipant(user, chat));
 			DM dm = getLastDM(chat, dmDAO);
 			if (dm == null) {
-				chatsUser.add(new ChatHeadData(chat, otherParticipant, "", LocalDateTime.now(), null));
+				chatsUser.add(new ChatHeadData(chat, otherParticipant, "", null, null));
 			} else {
 				chatsUser.add(
 						new ChatHeadData(chat, otherParticipant, dm.getContent(), dm.getDateTime(), dm.getSender()));

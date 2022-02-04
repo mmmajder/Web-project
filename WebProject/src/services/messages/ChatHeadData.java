@@ -64,6 +64,12 @@ public class ChatHeadData implements Comparable<ChatHeadData> {
 
 	@Override
 	public int compareTo(ChatHeadData o) {
+		if (this.getLastMessage()==null) {
+			return 1;
+		}
+		if (o.getLastMessage()==null) {
+			return -1;
+		}
 		if (this.getLastMessage().isAfter(o.getLastMessage())) {
 			return -1;
 		} else {

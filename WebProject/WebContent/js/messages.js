@@ -145,6 +145,12 @@ function makeChatTemplate(chatHeadData) {
 			color = 'grey';
 		}
 	}
+	var lastMessage = "";
+	if (chatHeadData.lastMessage) {
+		lastMessage = printDateTime(chatHeadData.lastMessage);
+	}
+	
+	
 	var cardTemplate = [
 		'<div class="message" id="',
 		chatHeadData.chat.id,
@@ -165,7 +171,7 @@ function makeChatTemplate(chatHeadData) {
 		chatHeadData.content,
 		'</p>',
 		'<p>',
-		printDateTime(chatHeadData.lastMessage),
+		lastMessage,
 		"</p>",
 		'</div>',
 		'</div>'
