@@ -1,14 +1,14 @@
 function getLogged(callback) {
-	$.ajax({
-		url: "rest/profile/getUser",
-		type: "GET",
-		contentType: "application/json",
-		dataType: "json",
-		complete: function(data) {
-			var loggedUser = data.responseJSON;
-			callback(loggedUser);
-		}
-	});
+    $.ajax({
+        url: "rest/profile/getUser",
+        type: "GET",
+        contentType: "application/json",
+        dataType: "json",
+        complete: function(data) {
+            var loggedUser = data.responseJSON;
+            callback(loggedUser);
+        }
+    });
 }
 
 function printDate(data) {
@@ -27,88 +27,116 @@ function printDateTime(data) {
 }
 
 function goToOtherProfile(id) {
-	$.ajax({
-		url: "rest/profile/viewOtherProfile",
-		type: "POST",
-		contentType: "application/json",
-		dataType: "json",
-		data: id,
-		complete: function(data) {
-			window.open("otherProfile.html", '_self').focus();
-		}
-	});
+    $.ajax({
+        url: "rest/profile/viewOtherProfile",
+        type: "POST",
+        contentType: "application/json",
+        dataType: "json",
+        data: id,
+        complete: function(data) {
+            window.open("otherProfile.html", '_self').focus();
+        }
+    });
 }
 
 var socket
 $(document).ready(function() {
-	try{
-		socket = new WebSocket("ws://localhost:8088/WebProject/websocket/echoAnnotation");
-		socket.onopen = function() {
-			console.log("otvoren soket")
-		}
-		socket.onmessage = function(msg) {
-			if (msg.data.startsWith("deletedByAdminPost")) { 
-				deletedInfoMessage(msg.data, "post")				
-			} else if (msg.data.startsWith("deletedByAdminComment")) { 
-				deletedInfoMessage(msg.data, "comment")				
-			} else {
-				receiveMessage(msg.data, "left");
-			}
-			
-		}
-		connection.onerror = function (error) { 	
-			console.log('WebSocket Error ' + error); 
-		}; 
-		socket.onclose = function() {
-			console.log("zatvoren soket")
-			socket = null;
-		}
-	} catch(exception) {
-		console.log(exception);
-	}
+    try {
+        socket = new WebSocket("ws://localhost:8088/WebProject/websocket/echoAnnotation");
+        socket.onopen = function() {
+            console.log("otvoren soket")
+        }
+        socket.onmessage = function(msg) {
+            if (msg.data.startsWith("deletedByAdminPost")) {
+                deletedInfoMessage(msg.data, "post")
+            } else if (msg.data.startsWith("deletedByAdminComment")) {
+                deletedInfoMessage(msg.data, "comment")
+            } else {
+                receiveMessage(msg.data, "left");
+            }
+
+        }
+        connection.onerror = function(error) {
+            console.log('WebSocket Error ' + error);
+        };
+        socket.onclose = function() {
+            console.log("zatvoren soket")
+            socket = null;
+        }
+    } catch (exception) {
+        console.log(exception);
+    }
 })
 
 function redirectIfError() {
-	window.location.href = "error404.html";
+    window.location.href = "error404.html";
 }
 
-$(document).ready(function() { 
-		
-});
-
-window.onbeforeunload = function(event)
-{
+window.onbeforeunload = function(event) {
     socket.close();
 };
 
 function goToHomepage() {
-	socket.close();
-	window.location.href = "feed.html";
+    socket.close();
+    window.location.href = "feed.html";
 }
 
 function logOut() {
-	socket.close();
-	$.ajax({
+    socket.close();
+    $.ajax({
         url: "rest/logout/logout",
         type: "GET",
         contentType: "application/json",
         complete: function(data) {
-			window.location.href = "index.html";
+            window.location.href = "index.html";
         }
     });
 }
 
 function goToMyProfile() {
-	socket.close();
-	window.location.href = "profile.html";
+    socket.close();
+    window.location.href = "profile.html";
 }
 
 function goToSearch() {
-	socket.close();
-	window.location.href = "search.html";
+    socket.close();
+    window.location.href = "search.html";
 }
 
 function goToMessages() {
-	socket.close();
-	window.location.href = "messages.html";
+    socket.close();
+    window.location.href = "messages.html";
+}
+
+function deletePost(postId, author) {
+	if (confirm('Are you sure you want to delete this post?')) {
+		var postJSON = JSON.stringify({ postId: postId, text: "Your post has been deleted" });
+		getLogged((loggedUser) => {
+			if(loggedUser.admin==true) {
+				$.ajax({
+			        url: "rest/profile/deletePostByAdmin",
+			        type: "DELETE",
+			        data: postJSON,
+			        contentType: "application/json",
+			        complete: function(data) {
+			        	$("#feeds #" + postId).fadeOut();
+						socket.send("deletedByAdminPost"+ postId + "user" + author + "admin" + loggedUser.id);
+			        }
+			    });
+			} else {
+				$.ajax({
+			        url: "rest/profile/deletePost",
+			        type: "DELETE",
+			        data: postId,
+			        contentType: "application/json",
+			        complete: function(data) {
+			        	$("#feeds #" + postId).fadeOut();
+			        }
+			    });
+			}
+			}
+		);
+		
+		
+	}
 }

@@ -586,12 +586,6 @@ main .container .left .profile {
 }
 
 
-/*.middle .uil-enter {
-	width: 12.7rem;
-    height: 12.7rem;
-}*/
-
-
 /**RIGHT**/
 
 main .container .right {
@@ -1104,20 +1098,20 @@ h4 {
 }
 
 .message-notification {
-	color: var(--color-white);
+    color: var(--color-white);
     padding: 3px;
     font-size: 8px;
-	border-radius: var(--card-border-radius);
-	display: inline;
-	float: right;
+    border-radius: var(--card-border-radius);
+    display: inline;
+    float: right;
 }
 
 .message-notification .friend {
-	background-color: var(--color-primary);
+    background-color: var(--color-primary);
 }
 
 .message-notification .admin {
-	background-color: var(--color-danger);
+    background-color: var(--color-danger);
 }
 
 .chat {

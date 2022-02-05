@@ -75,6 +75,8 @@ public class OtherProfileService {
 	public boolean arePostsPrivate(@Context HttpServletRequest request) {
 		User otherUser = (User) request.getSession().getAttribute("otherProfile");
 		User logged = (User) request.getSession().getAttribute("logged");
+		if (logged == null)
+			return otherUser.isPrivate();
 		if (logged.isAdmin())
 			return false;
 		if (logged.getFriends().contains(otherUser.getId()))

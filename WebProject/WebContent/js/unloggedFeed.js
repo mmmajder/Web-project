@@ -65,7 +65,7 @@ function makeCardTemplate(user, postData) {
         'images/userPictures/' + user.id + '/' + user.profilePicture,
         '"></div><div class="ingo">',
         '<h3>' + user.name + ' ' + user.surname + '</h3>',
-        '<small>' + postData.posted + '</small>',
+        '<small>' + printDateTime(postData.posted) + '</small>',
         '</div></div></div><br><div class="caption">',
         '<p>' + postData.description + '</p></div>',
         postPic,

@@ -124,16 +124,11 @@ function makeChatTemplate(chatHeadData) {
     }
 
     var cardTemplate = [
-        '<div class="message" id="',
-        chatHeadData.chat.id,
-        '"><div class="profile-picture">',
+        '<div class="message" id="' + chatHeadData.chat.id + '"><div class="profile-picture">',
         '<img src="images/userPictures/',
         chatHeadData.otherParticipant.id + "/" + chatHeadData.otherParticipant.profilePicture,
-        '">',
-        '<div class="active"></div>',
-        '</div>',
-        '<div class="message-body">',
-        '<h5>',
+        '"><div class="active"></div></div>',
+        '<div class="message-body"><h5>',
         chatHeadData.otherParticipant.name + " " + chatHeadData.otherParticipant.surname,
         notification,
         '</h5><p class="text-muted">',
