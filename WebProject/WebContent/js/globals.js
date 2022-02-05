@@ -68,6 +68,14 @@ $(document).ready(function() {
 	}
 })
 
+function redirectIfError() {
+	window.location.href = "error404.html";
+}
+
+$(document).ready(function() { 
+		
+});
+
 window.onbeforeunload = function(event)
 {
     socket.close();

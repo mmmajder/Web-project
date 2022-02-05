@@ -17,8 +17,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import javax.sound.midi.Soundbank;
-
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
 import beans.Chat;
@@ -27,6 +25,7 @@ import beans.Post;
 import beans.User;
 import enums.Gender;
 import services.profile.EditProfileData;
+import services.registration.RegisterUser;
 import services.search.SearchData;
 import services.search.UserSearchData;
 
@@ -70,6 +69,9 @@ public class UserDAO {
 	}
 
 	public User editUser(String id, EditProfileData data) {
+		if (EditProfileData.isEmpty(data)) {
+			return null;
+		}
 		User user = findById(id);
 		user.setName(data.getName());
 		user.setSurname(data.getSurname());
@@ -96,14 +98,11 @@ public class UserDAO {
 	}
 
 	public User find(String username, String password) {
-		for (String user : users.keySet()) {
-			System.out.println(user);
-		}
 		if (!users.containsKey(username)) {
 			return null;
 		}
 		User user = users.get(username);
-		if (!user.getPassword().equals(password)) {
+		if (!user.getPassword().equals(password) || user.isBlocked()) {
 			return null;
 		}
 		return user;
@@ -386,5 +385,16 @@ public class UserDAO {
 		findById(id).deleteRequest(requestId);
 		writeFile();
 	}
+
+	/*private void removeChat(User user, String charForDelete) {
+		user.removeChat(charForDelete);
+	}*/
+	
+	public void removeChat(User user1, User user2, Chat chat) {
+		user1.removeChat(chat.getId());
+		user2.removeChat(chat.getId());		
+	}
+	
+	
 
 }

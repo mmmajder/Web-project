@@ -64,5 +64,27 @@ public class EditProfileData {
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
+	
+	public static boolean isEmpty(EditProfileData editProfileData) {
+		if (editProfileData.getBiography().equals("")) {
+			return true;
+		} 
+		if (editProfileData.getDateOfBirth().equals("")) {
+			return true;
+		} 
+		if (editProfileData.getGender().equals("")) {
+			return true;
+		} 
+		if (editProfileData.getName().equals("")) {
+			return true;
+		} 
+		if (editProfileData.getPrivacy().equals("")) {
+			return true;
+		} 
+		if (editProfileData.getSurname().equals("")) {
+			return true;
+		} 
+		return false;
+	}
 
 }

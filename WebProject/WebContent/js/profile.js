@@ -177,12 +177,15 @@ $("#edit-profile-save-changed").click(function() {
 		contentType: "application/json",
 		dataType: "json",
 		complete: function(ret) {
-			console.log(ret);
-			var data = JSON.parse(ret.responseText);
-			$("#resultEdit").html("Successfully edited profile");
-			$("#date-of-birth").html(printDate(data.dateOfBirth));
-			$("#profile-bio-text").html(data.biography);
-			$(".profile-name-surname").html(data.name + " " + data.surname)
+			if (ret!=null) {
+				var data = JSON.parse(ret.responseText);
+				$("#resultEdit").html("Successfully edited profile");
+				$("#date-of-birth").html(printDate(data.dateOfBirth));
+				$("#profile-bio-text").html(data.biography);
+				$(".profile-name-surname").html(data.name + " " + data.surname);
+			} else {
+				$("#resultEdit").html("Unable to edit profile. Enter valid data.");
+			}
 		}
 	});
 });

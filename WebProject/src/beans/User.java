@@ -180,7 +180,7 @@ public class User {
 	public void addPost(String p) {
 		this.posts.add(p);
 	}
-	
+
 	public void deletePost(String p) {
 		this.posts.remove(p);
 	}
@@ -227,11 +227,15 @@ public class User {
 	}
 
 	public void deleteRequest(String requestId) {
-		this.friendRequests.remove(requestId);		
+		this.friendRequests.remove(requestId);
 	}
-	
+
 	public void addRequest(String request) {
-		this.friendRequests.add(request);		
+		this.friendRequests.add(request);
+	}
+
+	public void removeChat(String chatId) {
+		this.chats.remove(chatId);
 	}
 
 }

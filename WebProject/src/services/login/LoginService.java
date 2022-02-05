@@ -25,7 +25,6 @@ public class LoginService {
 			String contextPath = ctx.getRealPath("");
 			ctx.setAttribute("userDAO", new UserDAO(contextPath));
 		}
-		System.out.println("userDAO");
 	}
 
 	@POST
@@ -34,7 +33,6 @@ public class LoginService {
 	public User login(@Context HttpServletRequest request, LoginUser temp) {
 		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");
 		User retUser = dao.find(temp.getUsername(), temp.getPassword());
-		System.out.println(retUser);
 		if (retUser != null) {
 			request.getSession().setAttribute("logged", retUser);
 		}
