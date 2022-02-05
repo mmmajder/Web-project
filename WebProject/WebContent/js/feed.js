@@ -3,14 +3,17 @@ $(document).ready(function() {
 		url: "rest/messages/notSeenMessages",
 		type: "GET",
 		contentType: "application/json",
-		complete: function(notSeenMessage) {
+		success: function(notSeenMessage) {
 			if (notSeenMessage.responseJSON) {
 				$(".messages-count").css('visibility', 'visible');
 			}
 			else {
 				$(".messages-count").css('visibility', 'hidden');
 			}
-		}
+		},
+		error: function(XMLHttpRequest, textStatus, errorThrown) {
+	       alert("some error");
+	   }
 	});
 });
 
@@ -20,11 +23,16 @@ function receiveMessage(msg) {
 
 $(document).ready(function() {
 	
+})
+
+
+$(document).ready(function() {
+	
 	$.ajax({
         url: "rest/feed/getUserPosts",
         type: "GET",
         contentType: "application/json",
-        complete: function(data) {
+        success: function(data) {
         	$('#feeds').empty();
             var userPosts = data.responseJSON;
             userPosts.forEach(function(item) {
@@ -33,21 +41,27 @@ $(document).ready(function() {
 					event.preventDefault();
 				} )
             });
-        }
+        },
+		error: function(XMLHttpRequest, textStatus, errorThrown) {
+	       alert("some error");
+	    }
 	});
 	
 	$.ajax({
         url: "rest/login/testlogin",
         type: "GET",
         contentType: "application/json",
-        complete: function(data) {
+        success: function(data) {
             var user = data.responseJSON;
             $("#logged-user-username").html("@" + user.username);
             if(user.admin) {
             	$(".create-post").hide();
             	$(".friend-requests").hide();
             }
-        }
+        },
+		error: function(XMLHttpRequest, textStatus, errorThrown) {
+	       alert("some error");
+	    }
 	});
 });
 

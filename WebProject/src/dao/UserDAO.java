@@ -25,6 +25,7 @@ import beans.Post;
 import beans.User;
 import enums.Gender;
 import services.profile.EditProfileData;
+import services.registration.RegisterUser;
 import services.search.SearchData;
 import services.search.UserSearchData;
 
@@ -68,6 +69,9 @@ public class UserDAO {
 	}
 
 	public User editUser(String id, EditProfileData data) {
+		if (EditProfileData.isEmpty(data)) {
+			return null;
+		}
 		User user = findById(id);
 		user.setName(data.getName());
 		user.setSurname(data.getSurname());
@@ -382,13 +386,15 @@ public class UserDAO {
 		writeFile();
 	}
 
-	private void removeChat(User user, String charForDelete) {
+	/*private void removeChat(User user, String charForDelete) {
 		user.removeChat(charForDelete);
-	}
+	}*/
 	
 	public void removeChat(User user1, User user2, Chat chat) {
 		user1.removeChat(chat.getId());
 		user2.removeChat(chat.getId());		
 	}
+	
+	
 
 }

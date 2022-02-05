@@ -97,7 +97,7 @@ public class MessageService {
 	@Path("/notSeenMessages")
 	@Produces(MediaType.APPLICATION_JSON)
 	public boolean notSeenMessages(@Context HttpServletRequest request) {
-		User user = (User) request.getSession().getAttribute("logged");
+		User user = (User) request.getSession().getAttribute("logged");		
 		UserDAO userDAO = (UserDAO) ctx.getAttribute("userDAO");
 		DmDAO dmDAO = (DmDAO) ctx.getAttribute("dmDAO");
 		ChatDAO chatDao = (ChatDAO) ctx.getAttribute("chatDAO");

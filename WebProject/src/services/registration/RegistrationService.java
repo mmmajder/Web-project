@@ -41,6 +41,9 @@ public class RegistrationService {
 			return null;
 		}
 		UserDAO userDao = (UserDAO) ctx.getAttribute("userDAO");
+		if (RegistrationData.emptyFieldRegistration(registerUser)) {
+			return null;
+		}
 		User existingUser = userDao.findByUsername(registerUser.getUsername());
 		if (existingUser == null) {
 			User retUser = new User(userDao.generateId(), registerUser.getUsername(), registerUser.getEmail(),
@@ -49,9 +52,9 @@ public class RegistrationService {
 			request.getSession().setAttribute("logged", retUser);
 			userDao.add(retUser);
 			RepositoryDAO repositoryDAO = new RepositoryDAO();
-			String path = repositoryDAO.getPath() + "/images/userPictures/"	+ retUser.getId();
+			String path = repositoryDAO.getPath() + "/images/userPictures/" + retUser.getId();
 			new File(path).mkdirs();
-			
+
 			ChatDAO chatDao = (ChatDAO) ctx.getAttribute("chatDAO");
 			for (User admin : userDao.getAdmins()) {
 				Chat chat = chatDao.createChat(retUser, admin);

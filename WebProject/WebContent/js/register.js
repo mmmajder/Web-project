@@ -26,7 +26,7 @@ function register() {
 				window.open("feed.html", '_self').focus(); 
 			} else {
 				$("#resultRegister").empty();
-				$("#resultRegister").append("User with this username already exist");
+				$("#resultRegister").append("Invalid input");
 			}
         }
     });
