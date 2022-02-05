@@ -325,6 +325,14 @@ function showPosts() {
 	            userPosts.forEach(function(item) {
 					createPost(item, function(data1) {
 						$('#feeds').append(data1);
+						getLogged(function(logged) {
+							if (logged == null) {
+								$('.add-comment').hide();
+								$('.delete-post').hide();
+							} else if (logged.id != item.author && !logged.admin) {
+								$('#' + item.id + ' .delete-post').hide();
+							}
+						});
 					} )
 	            });
 	            $('.posts').addClass('visible');
@@ -360,11 +368,7 @@ $('#posts').click(function() {
 function setBio(user) {
 	$("#profile-user-name").html("@" + user.username);
 	$("#number-of-posts").html(user.posts.length + " Posts");
-	$("#number-of-photos").html(user.posts.length + " Photos"); // TODO
-	$("#number-of-friends").html(user.friends.length + " Friends"); // kada je
-																	// nula
-																	// izbaci 1
-																	// ?
+	$("#number-of-friends").html(user.friends.length + " Friends");
 	$("#date-of-birth").html(printDate(user.dateOfBirth));
 	$("#profile-bio-text").html(user.biography);
 	$(".profile-info .profile-photo img").attr("src", "images/userPictures/" + user.id + "/" + user.profilePicture);
@@ -384,7 +388,16 @@ $(document).ready(function() {
 });
 
 function goToHomepage() {
-	window.location.href = "feed.html";
+	getLogged((user)=> {
+		if(user==null) {
+			window.location.href = "unlogged.html";
+		}
+		else {
+			window.location.href = "feed.html";
+		}
+	});
+	
+	
 }
 
 function logOut() {
@@ -490,10 +503,7 @@ function makeCardTemplate(user, postData) {
 	if (postData.pictureLocation != "") {
 		postPic = '<div class="post-photo"><img src="images/userPictures/' + postData.author + '/' + postData.pictureLocation + '"></div>';
 	}
-	var delPost = '';
-	if (user.admin || user.id == postData.author) {
-		delPost = '<span class="delete-post" onclick="deletePost(\'' + postData.id + '\',\'' + postData.author + '\')"><i class="uil uil-trash-alt"></i></span>';
-	}
+	var delPost = '<span class="delete-post" onclick="deletePost(\'' + postData.id + '\',\'' + postData.author + '\')"><i class="uil uil-trash-alt"></i></span>';
 	var cardTemplate = [
         '<div class="feed" id="' + postData.id + '"><div class="head"><div onclick="goToOtherProfile(\'' + user.id + '\')" class="user"><div class="profile-picture">',
         '<img src="',
@@ -511,38 +521,5 @@ function makeCardTemplate(user, postData) {
         '</div>'
     ];
     return $(cardTemplate.join(''));
-}
-
-function deletePost(postId, author) {
-	if (confirm('Are you sure you want to delete this post?')) {
-		var postJSON = JSON.stringify({ postId: postId, text: "Your post has been deleted" });
-		getLogged((loggedUser) => {
-			if(loggedUser.admin==true) {
-				$.ajax({
-			        url: "rest/profile/deletePostByAdmin",
-			        type: "DELETE",
-			        data: postJSON,
-			        contentType: "application/json",
-			        complete: function(data) {
-			        	$("#feeds #" + postId).fadeOut();
-						socket.send("deletedByAdminPost"+ postId + "user" + author + "admin" + loggedUser.id);
-			        }
-			    });
-			} else {
-				$.ajax({
-			        url: "rest/profile/deletePost",
-			        type: "DELETE",
-			        data: postId,
-			        contentType: "application/json",
-			        complete: function(data) {
-			        	$("#feeds #" + postId).fadeOut();
-			        }
-			    });
-			}
-			}
-		);
-		
-		
-	}
 }
 

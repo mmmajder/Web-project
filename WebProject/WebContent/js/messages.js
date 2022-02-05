@@ -156,6 +156,7 @@ function makeChatTemplate(chatHeadData) {
 		'</div>'
 	];
 	return $(cardTemplate.join(''));
+
 }
 
 
