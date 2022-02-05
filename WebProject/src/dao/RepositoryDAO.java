@@ -6,7 +6,7 @@ import java.util.Arrays;
 public class RepositoryDAO {
 	// 0 - Andjela
 	// 1 - Milan
-	private static int programmer = 1;
+	private static int programmer = 0;
 	private static ArrayList<String> paths = new ArrayList<String>(
 			Arrays.asList("C:/Users/Lenovo/Desktop/Web/Projekat/web-project/WebProject/WebContent",
 					"C:/Users/Korisnik/Desktop/WEBProjekat/web-project/WebProject/WebContent"));

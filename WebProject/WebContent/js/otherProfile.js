@@ -371,7 +371,11 @@ function setBio(user) {
 	$("#number-of-friends").html(user.friends.length + " Friends");
 	$("#date-of-birth").html(printDate(user.dateOfBirth));
 	$("#profile-bio-text").html(user.biography);
-	$(".profile-info .profile-photo img").attr("src", "images/userPictures/" + user.id + "/" + user.profilePicture);
+	try {
+		$(".profile-info .profile-photo img").attr("src", "images/userPictures/" + user.id + "/" + user.profilePicture);
+	} catch(e) {
+		$(".profile-info .profile-photo img").attr("src", "images/default.jpg");
+	}
 	$(".profile-name-surname").html(user.name + " " + user.surname);
 	$("#add-remove-friend").attr("user-id", user.id);
 	$("#send-message").attr("user-id", user.id);
@@ -396,8 +400,6 @@ function goToHomepage() {
 			window.location.href = "feed.html";
 		}
 	});
-	
-	
 }
 
 function logOut() {
