@@ -32,9 +32,12 @@ PO00027;U00002;photo5.jpeg;;2022-02-01 12:45;;false;true
 PO00006;U00003;bear6.jpg;Mnogo dobra slika 6;2020-01-01 16:00;COM-00000001|COM-00000002|COM-00000003|COM-00000004;false;true
 PO00028;U00002;photo6.jpeg;;2022-02-01 12:47;;false;true
 PO00021;U00001;user1.png;Mnogo dobra slika 29;2020-01-01 01:00;;false;true
+PO00043;U00013;photo0.jpeg;Moj prvi post;2022-02-05 11:31;;false;false
 PO00022;U00002;user2.jpg;Mnogo dobra slika 32;2020-01-01 12:00;;false;true
+PO00044;U00013;photo1.jpeg;Moja prva fotka;2022-02-05 11:31;;false;true
 PO00001;U00001;;Mnogo dobar post 1;2020-01-01 11:00;;false;false
 PO00023;U00002;photo2.jpeg;Mnogo dobra slika 30;2020-01-01 14:00;;true;false
+PO00045;U00013;photo2.jpeg;vidite što je lepo;2022-02-05 11:32;;false;true
 PO00002;U00001;;Mnogo dobar post 2;2020-01-01 12:00;COM-00000005|COM-00000006;false;false
 PO00024;U00003;user3.jpg;Mnogo dobra slika 33;2020-01-01 16:00;;false;true
 PO00040;U00002;photo15.jpeg;bbbb;2022-02-04 16:02;;false;true
