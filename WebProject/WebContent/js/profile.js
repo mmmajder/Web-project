@@ -15,15 +15,22 @@ $('#friends').click(function() {
 	$('.friends').addClass('visible');
 });
 
+$(document).ready(function() {
+	getLogged((loggedUser) => {
+		if (loggedUser==null) {
+			window.location.href = "error404.html";
+		}
+	});
+});
+
+
 function setBio(user) {
 	$("#profile-user-name").html("@" + user.username);
 	if(!user.admin) {
 		$("#number-of-posts").html(user.posts.length + " Posts");
 		$("#number-of-photos").html(user.posts.length + " Photos"); // TODO
-		$("#number-of-friends").html(user.friends.length + " Friends"); // kada je
-																		// nula
-																		// izbaci 1
-																		// ?
+		$("#number-of-friends").html(user.friends.length + " Friends"); 
+																		
 	}
 	$("#date-of-birth").html(printDate(user.dateOfBirth));
 	$("#profile-bio-text").html(user.biography);

@@ -7,6 +7,15 @@ $(document).ready(function() {
     });
 });
 
+$(document).ready(function() {
+	getLogged((loggedUser) => {
+		if (loggedUser==null) {
+			window.location.href = "error404.html";
+		}
+	});
+});
+
+
 function deletedInfoMessage(msg, content) {
     //	PATTERN	"deletePostByAdmin"+ postId + "user" + author + "admin" + loggedUser.id
     var postId = msg.split('user')[0].split('deleteByAdmin')[1];
@@ -107,46 +116,48 @@ $(document).ready(function() {
 })
 
 function makeChatTemplate(chatHeadData) {
-    var notification = "";
-    if (!chatHeadData.chat.seen && chatHeadData.lastSender == chatHeadData.otherParticipant.id) {
-        if (chatHeadData.otherParticipant.admin)
-            notification = '<div class="message-notification admin">New message</div>';
-        else
-            notification = '<div class="message-notification friend">New message</div>';
-    }
-    var content = "Start chatting with " + chatHeadData.otherParticipant.name;
-    if (chatHeadData.content) {
-        content = chatHeadData.content;
-    }
-    var lastMessage = "";
-    if (chatHeadData.lastMessage) {
-        lastMessage = printDateTime(chatHeadData.lastMessage);
-    }
-
-    var cardTemplate = [
-        '<div class="message" id="',
-        chatHeadData.chat.id,
-        '"><div class="profile-picture">',
-        '<img src="images/userPictures/',
-        chatHeadData.otherParticipant.id + "/" + chatHeadData.otherParticipant.profilePicture,
-        '">',
-        '<div class="active"></div>',
-        '</div>',
-        '<div class="message-body">',
-        '<h5>',
-        chatHeadData.otherParticipant.name + " " + chatHeadData.otherParticipant.surname,
-        notification,
-        '</h5><p class="text-muted">',
-        content,
-        '</p>',
-        '<p style="font-size: 10px">',
-        lastMessage,
-        "</p>",
-        '</div>',
-        '</div>'
-    ];
-    return $(cardTemplate.join(''));
+	var color = 'white';
+	if (!chatHeadData.chat.seen && chatHeadData.lastSender==chatHeadData.otherParticipant.id) {
+		if (chatHeadData.otherParticipant.admin) {
+			color = 'lightblue';
+		} else {
+			color = 'grey';
+		}
+	}
+	var lastMessage = "";
+	if (chatHeadData.lastMessage) {
+		lastMessage = printDateTime(chatHeadData.lastMessage);
+	}
+	
+	
+	var cardTemplate = [
+		'<div class="message" id="',
+		chatHeadData.chat.id,
+		'" style="background-color:',
+		color,
+		';"',
+		'><div class="profile-picture">',
+		'<img src="images/userPictures/',
+		chatHeadData.otherParticipant.id + "/" + chatHeadData.otherParticipant.profilePicture,
+		'">',
+		'<div class="active"></div>',
+		'</div>',
+		'<div class="message-body">',
+		'<h5>',
+		chatHeadData.otherParticipant.name + " " + chatHeadData.otherParticipant.surname,
+		'</h5>',
+		'<p class="text-muted">',
+		chatHeadData.content,
+		'</p>',
+		'<p>',
+		lastMessage,
+		"</p>",
+		'</div>',
+		'</div>'
+	];
+	return $(cardTemplate.join(''));
 }
+
 
 var selectedChat;
 

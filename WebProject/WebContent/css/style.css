@@ -1113,11 +1113,11 @@ h4 {
 }
 
 .message-notification .friend {
-	background-color: var(--color-primary);
+	background-color: #9599E2;
 }
 
 .message-notification .admin {
-	background-color: var(--color-danger);
+	background-color: hsl(0, 95%, 65%);
 }
 
 .chat {

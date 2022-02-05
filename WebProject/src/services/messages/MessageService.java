@@ -46,6 +46,9 @@ public class MessageService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<ChatHeadData> getChats(@Context HttpServletRequest request) {
 		User user = (User) request.getSession().getAttribute("logged");
+		if (user == null) {
+			return null;
+		}
 		ChatDAO chatDao = (ChatDAO) ctx.getAttribute("chatDAO");
 		UserDAO userDAO = (UserDAO) ctx.getAttribute("userDAO");
 		DmDAO dmDAO = (DmDAO) ctx.getAttribute("dmDAO");
@@ -97,7 +100,10 @@ public class MessageService {
 	@Path("/notSeenMessages")
 	@Produces(MediaType.APPLICATION_JSON)
 	public boolean notSeenMessages(@Context HttpServletRequest request) {
-		User user = (User) request.getSession().getAttribute("logged");		
+		User user = (User) request.getSession().getAttribute("logged");	
+		if (user==null) {		
+			return false;	// caught on front
+		}
 		UserDAO userDAO = (UserDAO) ctx.getAttribute("userDAO");
 		DmDAO dmDAO = (DmDAO) ctx.getAttribute("dmDAO");
 		ChatDAO chatDao = (ChatDAO) ctx.getAttribute("chatDAO");

@@ -114,7 +114,6 @@ public class UserDAO {
 		StringBuilder sb = new StringBuilder();
 		sb.append("U");
 		sb.append(number);
-		System.out.println(sb);
 		return sb.toString();
 
 	}
@@ -135,7 +134,6 @@ public class UserDAO {
 						u.getBiography(), printList(u.getFriends()), printList(u.getFriendRequests()),
 						printList(u.getPosts()), printList(u.getChats()), new Boolean(u.isPrivate()).toString(),
 						new Boolean(u.isBlocked()).toString(), new Boolean(u.isAdmin()).toString() });
-				System.out.println(u);
 			}
 			writer.writeAll(data);
 			writer.close();
@@ -166,7 +164,6 @@ public class UserDAO {
 				User user = new User(nextLine[0], nextLine[1], nextLine[2], nextLine[3], nextLine[4], nextLine[5], date,
 						gender, nextLine[8], nextLine[9], friends, friendRequests, posts, chats,
 						new Boolean(nextLine[14]), new Boolean(nextLine[15]), new Boolean(nextLine[16]));
-				System.out.println(user);
 				users.put(user.getUsername(), user);
 			}
 			csvr.close();
@@ -357,15 +354,8 @@ public class UserDAO {
 	}
 
 	public void addFriendRequest(String senderId, String receiverId, String friendRequestId) {
-		System.out.println("\n\nFRIEND REQUEST\n\n");
-		System.out.println(senderId);
-		System.out.println(findById(senderId));
 		findById(senderId).addRequest(friendRequestId);
-		System.out.println(findById(senderId));
-		System.out.println(receiverId);
-		System.out.println(findById(receiverId));
 		findById(receiverId).addRequest(friendRequestId);
-		System.out.println(findById(receiverId));
 
 		writeFile();
 	}

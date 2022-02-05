@@ -46,7 +46,6 @@ public class CommentDAO {
 
 	public Comment findById(String id) {
 		for (Comment comment : findAll()) {
-			System.out.println("Comment: " + comment.getId() + " " + id);
 			if (comment.getId().equals(id)) {
 				return comment;
 			}
@@ -93,7 +92,6 @@ public class CommentDAO {
 				LocalDateTime lastEdited = getDateTime(nextLine[4]);
 				Comment comment = new Comment(nextLine[0], nextLine[1], nextLine[2], created, lastEdited,
 						getBool(nextLine[5]));
-				System.out.println(comment);
 				comments.put(comment.getId(), comment);
 			}
 			csvr.close();

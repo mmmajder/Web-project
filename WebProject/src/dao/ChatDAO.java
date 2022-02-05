@@ -138,7 +138,6 @@ public class ChatDAO {
 			for (Chat c : findAll()) {
 				data.add(new String[] { c.getId(), printList(c.getParticipants()), printList(c.getDms()),
 						new Boolean(c.isSeen()).toString() });
-				System.out.println(c);
 			}
 			writer.writeAll(data);
 			writer.close();
@@ -170,7 +169,6 @@ public class ChatDAO {
 
 				Chat chat = new Chat(nextLine[0], chatDms, participants, new Boolean(nextLine[3]));
 				chats.put(chat.getId(), chat);
-				System.out.println(chat);
 			}
 			csvr.close();
 		} catch (FileNotFoundException e) {
@@ -216,7 +214,6 @@ public class ChatDAO {
 		participants.add(user1.getId());
 		participants.add(user2.getId());
 		Chat chat = new Chat(generateId(), new ArrayList<String>(), participants, true);
-		System.out.println(chat);
 		add(chat);
 		return chat;
 	}
