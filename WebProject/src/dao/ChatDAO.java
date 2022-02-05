@@ -80,13 +80,10 @@ public class ChatDAO {
 
 	public DmData getDmData(String chatId, DmDAO dmDao, UserDAO userDAO, User user) {
 		Chat chat = findById(chatId);
-		System.out.println(chat);
 		ArrayList<DM> dms = new ArrayList<DM>();
 		User otherParticipant = userDAO.findById(getOtherParticipant(user, chat));
 		for (String dmId : chat.getDms()) {
-			System.out.println(dmId);
 			DM dm = dmDao.findById(dmId);
-			System.out.println(dm);
 			dms.add(dmDao.findById(dmId));
 		}
 		return new DmData(chat, dms, user, otherParticipant);

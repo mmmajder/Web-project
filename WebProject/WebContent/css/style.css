@@ -1103,6 +1103,23 @@ h4 {
     right: 0;
 }
 
+.message-notification {
+	color: var(--color-white);
+    padding: 3px;
+    font-size: 8px;
+	border-radius: var(--card-border-radius);
+	display: inline;
+	float: right;
+}
+
+.message-notification .friend {
+	background-color: var(--color-primary);
+}
+
+.message-notification .admin {
+	background-color: var(--color-danger);
+}
+
 .chat {
     background: var(--color-white);
     border-radius: var(--card-border-radius);

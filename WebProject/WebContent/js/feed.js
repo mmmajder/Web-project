@@ -30,6 +30,11 @@ $(document).ready(function() {
             userPosts.forEach(function(item) {
 				createPost(item, function(data1) {
 					$('#feeds').append(data1);
+					getLogged(function(logged) {
+						if (logged.id != item.author && !logged.admin) {
+							$('#' + item.id + ' .delete-post').hide();
+						}
+					});
 					event.preventDefault();
 				} )
             });
@@ -148,10 +153,7 @@ function makeCardTemplate(user, postData) {
 	if (postData.pictureLocation != "") {
 		postPic = '<div class="post-photo"><img src="images/userPictures/' + postData.author + '/' + postData.pictureLocation + '"></div>';
 	}
-	var delPost = '';
-	if (user.admin || user.id == postData.author) {
-		delPost = '<span class="delete-post" onclick="deletePost(\'' + postData.id + '\',\'' + postData.author + '\')"><i class="uil uil-trash-alt"></i></span>';
-	}
+	var delPost = '<span class="delete-post" onclick="deletePost(\'' + postData.id + '\',\'' + postData.author + '\')"><i class="uil uil-trash-alt"></i></span>';
 	var cardTemplate = [
         '<div class="feed" id="' + postData.id + '"><div class="head"><div onclick="goToOtherProfile(\'' + user.id + '\')" class="user"><div class="profile-picture">',
         '<img src="',
