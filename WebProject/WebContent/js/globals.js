@@ -41,36 +41,37 @@ function goToOtherProfile(id) {
 
 var socket
 $(document).ready(function() {
-    try {
-        socket = new WebSocket("ws://localhost:8088/WebProject/websocket/echoAnnotation");
-        socket.onopen = function() {
-            console.log("otvoren soket")
-        }
-        socket.onmessage = function(msg) {
-            if (msg.data.startsWith("deletedByAdminPost")) {
-                deletedInfoMessage(msg.data, "post")
-            } else if (msg.data.startsWith("deletedByAdminComment")) {
-                deletedInfoMessage(msg.data, "comment")
-            } else {
-                receiveMessage(msg.data, "left");
-            }
-
-        }
-        connection.onerror = function(error) {
-            console.log('WebSocket Error ' + error);
-        };
-        socket.onclose = function() {
-            console.log("zatvoren soket")
-            socket = null;
-        }
-    } catch (exception) {
-        console.log(exception);
-    }
+	try{
+		socket = new WebSocket("ws://localhost:9000/WebProject/websocket/echoAnnotation");
+		socket.onopen = function() {
+			console.log("otvoren soket")
+		}
+		socket.onmessage = function(msg) {
+			if (msg.data.startsWith("deletedByAdminPost")) { 
+				deletedInfoMessage(msg.data, "post")				
+			} else if (msg.data.startsWith("deletedByAdminComment")) { 
+				deletedInfoMessage(msg.data, "comment")				
+			} else {
+				receiveMessage(msg.data, "left");
+			}
+			
+		}
+		connection.onerror = function (error) { 	
+			console.log('WebSocket Error ' + error); 
+		}; 
+		socket.onclose = function() {
+			console.log("zatvoren soket")
+			socket = null;
+		}
+	} catch(exception) {
+		console.log(exception);
+	}
 })
 
 function redirectIfError() {
     window.location.href = "error404.html";
 }
+
 
 window.onbeforeunload = function(event) {
     socket.close();

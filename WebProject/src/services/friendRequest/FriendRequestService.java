@@ -46,6 +46,9 @@ public class FriendRequestService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<UserSearchData> getFriendRequests(@Context HttpServletRequest request) {
 		User user = (User) request.getSession().getAttribute("logged");
+		if (user==null) {
+			return new ArrayList<UserSearchData>();
+		}
 		FriendRequestDAO dao = (FriendRequestDAO) ctx.getAttribute("friendRequestDAO");
 		UserDAO userDAO = (UserDAO) ctx.getAttribute("userDAO");
 		return dao.getPrintData(user, userDAO);

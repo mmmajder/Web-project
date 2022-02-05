@@ -24,13 +24,6 @@ public class PostDAO {
 	private Map<String, Post> posts = new HashMap<>();
 	private RepositoryDAO repository = new RepositoryDAO();
 	private String path;
-	
-	public static void main(String[] args) {
-		PostDAO dao = new PostDAO("src");
-		for (Post post : dao.findAll()) {
-			System.out.println(post);
-		}
-	}
 
 	public PostDAO(String contextPath) {
 		this.path = contextPath;

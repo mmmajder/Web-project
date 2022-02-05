@@ -33,13 +33,6 @@ public class FriendRequestDAO {
 		readFile();
 	}
 
-	public static void main(String[] args) {
-		FriendRequestDAO dao = new FriendRequestDAO("src");
-		for (FriendRequest x : dao.findAll()) {
-			System.out.println(x);
-		}
-	}
-
 	public Collection<FriendRequest> findAll() {
 		return friendRequests.values();
 	}

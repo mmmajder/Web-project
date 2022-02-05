@@ -388,7 +388,16 @@ $(document).ready(function() {
 });
 
 function goToHomepage() {
-	window.location.href = "feed.html";
+	getLogged((user)=> {
+		if(user==null) {
+			window.location.href = "unlogged.html";
+		}
+		else {
+			window.location.href = "feed.html";
+		}
+	});
+	
+	
 }
 
 function logOut() {

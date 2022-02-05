@@ -41,7 +41,7 @@ public class RegistrationService {
 			return null;
 		}
 		UserDAO userDao = (UserDAO) ctx.getAttribute("userDAO");
-		if (RegistrationData.emptyFieldRegistration(registerUser)) {
+		if (!RegistrationData.isValid(registerUser)) {
 			return null;
 		}
 		User existingUser = userDao.findByUsername(registerUser.getUsername());

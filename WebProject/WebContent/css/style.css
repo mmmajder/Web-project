@@ -1106,14 +1106,6 @@ h4 {
     float: right;
 }
 
-.message-notification .friend {
-    background-color: var(--color-primary);
-}
-
-.message-notification .admin {
-    background-color: var(--color-danger);
-}
-
 .chat {
     background: var(--color-white);
     border-radius: var(--card-border-radius);

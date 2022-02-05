@@ -19,7 +19,15 @@ function receiveMessage(msg) {
 }
 
 $(document).ready(function() {
-	
+	getLogged((loggedUser) => {
+		if (loggedUser==null) {
+			window.location.href = "error404.html";
+		}
+	});
+});
+
+
+$(document).ready(function() {	
 	$.ajax({
         url: "rest/feed/getUserPosts",
         type: "GET",

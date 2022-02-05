@@ -1,23 +1,33 @@
 package services.registration;
 
 public class RegistrationData {
-	public static boolean emptyFieldRegistration(RegisterUser registerUser) {
-		if (registerUser.getDateOfBirth() == "") {
+	public static boolean isValid(RegisterUser registerUser) {
+		if (!isValid(registerUser.getDateOfBirth())) {
 			return false;
-		} else if (registerUser.getEmail() == "") {
+		} 
+		if (!isValid(registerUser.getEmail())) {
 			return false;
-		} else if (registerUser.getGender() == "") {
+		} 
+		if (!isValid(registerUser.getGender())) {
 			return false;
-		} else if (registerUser.getName() == "") {
+		} 
+		if (!isValid(registerUser.getName())) {
 			return false;
-		} else if (registerUser.getPassword() == "") {
+		} 
+		if (!isValid(registerUser.getPassword())) {
 			return false;
-		} else if (registerUser.getSurname() == "") {
+		} 
+		if (!isValid(registerUser.getSurname())) {
 			return false;
-		} else if (registerUser.getUsername() == "") {
+		} 
+		if (!isValid(registerUser.getUsername())) {
 			return false;
-		}
+		} 
 		return true;
+	}
+	
+	private static boolean isValid(String s) {
+		return !s.equals("") && !s.contains(";");
 	}
 
 }
