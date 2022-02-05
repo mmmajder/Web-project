@@ -65,26 +65,29 @@ public class EditProfileData {
 		this.gender = gender;
 	}
 	
-	public static boolean isEmpty(EditProfileData editProfileData) {
-		if (editProfileData.getBiography().equals("")) {
-			return true;
+	public static boolean isValid(EditProfileData editProfileData) {
+		if (!isValid(editProfileData.getBiography())) {
+			return false;
 		} 
-		if (editProfileData.getDateOfBirth().equals("")) {
-			return true;
+		if (!isValid(editProfileData.getDateOfBirth())) {
+			return false;
 		} 
-		if (editProfileData.getGender().equals("")) {
-			return true;
+		if (!isValid(editProfileData.getGender())) {
+			return false;
 		} 
-		if (editProfileData.getName().equals("")) {
-			return true;
+		if (!isValid(editProfileData.getName())) {
+			return false;
 		} 
-		if (editProfileData.getPrivacy().equals("")) {
-			return true;
+		if (!isValid(editProfileData.getPrivacy())) {
+			return false;
 		} 
-		if (editProfileData.getSurname().equals("")) {
-			return true;
+		if (!isValid(editProfileData.getSurname())) {
+			return false;
 		} 
-		return false;
+		return true;
 	}
-
+	
+	private static boolean isValid(String s) {
+		return !s.equals("") && !s.contains(";");
+	}
 }

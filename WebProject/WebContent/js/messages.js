@@ -119,9 +119,9 @@ function makeChatTemplate(chatHeadData) {
 	var color = 'white';
 	if (!chatHeadData.chat.seen && chatHeadData.lastSender==chatHeadData.otherParticipant.id) {
 		if (chatHeadData.otherParticipant.admin) {
-			color = 'lightblue';
+			color = 'hsl(0, 95%, 65%)';
 		} else {
-			color = 'grey';
+			color = '#8BC6EC';
 		}
 	}
 	var lastMessage = "";

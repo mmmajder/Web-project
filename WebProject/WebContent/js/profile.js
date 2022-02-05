@@ -184,7 +184,7 @@ $("#edit-profile-save-changed").click(function() {
 		contentType: "application/json",
 		dataType: "json",
 		complete: function(ret) {
-			if (ret!=null) {
+			if (ret.responseText!="") {
 				var data = JSON.parse(ret.responseText);
 				$("#resultEdit").html("Successfully edited profile");
 				$("#date-of-birth").html(printDate(data.dateOfBirth));

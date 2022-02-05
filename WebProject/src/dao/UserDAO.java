@@ -69,7 +69,7 @@ public class UserDAO {
 	}
 
 	public User editUser(String id, EditProfileData data) {
-		if (EditProfileData.isEmpty(data)) {
+		if (!EditProfileData.isValid(data)) {
 			return null;
 		}
 		User user = findById(id);
