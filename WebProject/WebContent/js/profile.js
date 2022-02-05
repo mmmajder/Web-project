@@ -32,9 +32,7 @@ function setBio(user) {
 	}
 	$("#date-of-birth").html(printDate(user.dateOfBirth));
 	$("#profile-bio-text").html(user.biography);
-	if(user.profilePicture == "")
-		$(".profile-info .profile-photo img").attr("src", "images/default.jpg");
-	else
+	if(!user.profilePicture.includes("default"))
 		$(".profile-info .profile-photo img").attr("src", "images/userPictures/" + user.id + "/" + user.profilePicture);
 	$(".profile-name-surname").html(user.name + " " + user.surname)
 }

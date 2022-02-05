@@ -361,12 +361,12 @@ public class UserDAO {
 	}
 
 	public void blockUser(String userId) {
-		users.get(userId).setBlocked(true);
+		findById(userId).setBlocked(true);
 		writeFile();
 	}
 
 	public void unblockUser(String userId) {
-		users.get(userId).setBlocked(false);
+		findById(userId).setBlocked(false);
 		writeFile();
 	}
 
@@ -375,16 +375,10 @@ public class UserDAO {
 		findById(id).deleteRequest(requestId);
 		writeFile();
 	}
-
-	/*private void removeChat(User user, String charForDelete) {
-		user.removeChat(charForDelete);
-	}*/
 	
 	public void removeChat(User user1, User user2, Chat chat) {
 		user1.removeChat(chat.getId());
 		user2.removeChat(chat.getId());		
 	}
-	
-	
 
 }

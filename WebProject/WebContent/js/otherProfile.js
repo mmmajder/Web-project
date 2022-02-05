@@ -10,14 +10,14 @@ function getOtherProfile(callback) {
 	});
 }
 
-function arePostsPrivate() {
+function arePostsPrivate(callback) {
 	$.ajax({
 		url: "rest/otherProfile/arePostsPrivate",
 		type: "GET",
 		contentType: "application/json",
 		dataType: "json",
 		complete: function(isPrivate) {
-			return isPrivate.responseJSON=="true";
+			callback(isPrivate.responseJSON);
 		}
 	});
 }
@@ -37,24 +37,26 @@ $('#photos').click(function() {
 
 // display photos
 function showPhotos() {
-	if(!arePostsPrivate()) {
-		$.ajax({
-			url: "rest/otherProfile/photos",
-			type: "GET",
-			contentType: "application/json",
-			dataType: "json",
-			complete: function(data) {
-				var userPhotos = data.responseJSON;
-				if (userPhotos.length == 0)
-					return;
-				loadPhotos(userPhotos);
-				$('.photos').addClass('visible');
-				$('#photos').addClass('active');
-			}
-		});
-	} else {
-		$('.private').show();
-	}
+	arePostsPrivate((priv) => { 
+		if(!priv) {
+			$.ajax({
+				url: "rest/otherProfile/photos",
+				type: "GET",
+				contentType: "application/json",
+				dataType: "json",
+				complete: function(data) {
+					var userPhotos = data.responseJSON;
+					if (userPhotos.length == 0)
+						return;
+					loadPhotos(userPhotos);
+					$('.photos').addClass('visible');
+					$('#photos').addClass('active');
+				}
+			});
+		} else {
+			$('.private').show();
+		}
+	});
 }
 
 function loadPhotos(userPhotos) {
@@ -235,23 +237,25 @@ $("#friends").click(function() {
 });
 
 function showFriends() {
-	if(!arePostsPrivate()) {
-		$.ajax({
-			url: "rest/otherProfile/friends",
-			type: "GET",
-			contentType: "application/json",
-			complete: function(data) {
-				$('.friendships').empty();
-				var userFriends = data.responseJSON;
-				userFriends.forEach(function(item) {
-					$('.friendships').append(makeFriendTemplate(item));
-				});
-				$('.friends').addClass('visible');
-			}
-		});
-	} else {
-		$('.private').show();
-	}
+	arePostsPrivate((priv) => { 
+		if(!priv) {
+			$.ajax({
+				url: "rest/otherProfile/friends",
+				type: "GET",
+				contentType: "application/json",
+				complete: function(data) {
+					$('.friendships').empty();
+					var userFriends = data.responseJSON;
+					userFriends.forEach(function(item) {
+						$('.friendships').append(makeFriendTemplate(item));
+					});
+					$('.friends').addClass('visible');
+				}
+			});
+		} else {
+			$('.private').show();
+		}
+	});
 }
 
 function makeFriendTemplate(user) {
@@ -314,33 +318,35 @@ function openChat(userId) {
 } 
 
 function showPosts() {
-	if(!arePostsPrivate()) {
-		$.ajax({
-	        url: "rest/otherProfile/posts",
-	        type: "GET",
-	        contentType: "application/json",
-	        complete: function(data) {
-	        	$('#feeds').empty();
-	            var userPosts = data.responseJSON;
-	            userPosts.forEach(function(item) {
-					createPost(item, function(data1) {
-						$('#feeds').append(data1);
-						getLogged(function(logged) {
-							if (logged == null) {
-								$('.add-comment').hide();
-								$('.delete-post').hide();
-							} else if (logged.id != item.author && !logged.admin) {
-								$('#' + item.id + ' .delete-post').hide();
-							}
-						});
-					} )
-	            });
-	            $('.posts').addClass('visible');
-	        }
-	    });
-	} else {
-		$('.private').show();
-	}
+	arePostsPrivate((priv) => { 
+		if(!priv) {
+			$.ajax({
+		        url: "rest/otherProfile/posts",
+		        type: "GET",
+		        contentType: "application/json",
+		        complete: function(data) {
+		        	$('#feeds').empty();
+		            var userPosts = data.responseJSON;
+		            userPosts.forEach(function(item) {
+						createPost(item, function(data1) {
+							$('#feeds').append(data1);
+							getLogged(function(logged) {
+								if (logged == null) {
+									$('.add-comment').hide();
+									$('.delete-post').hide();
+								} else if (logged.id != item.author && !logged.admin) {
+									$('#' + item.id + ' .delete-post').hide();
+								}
+							});
+						} )
+		            });
+		            $('.posts').addClass('visible');
+		        }
+		    });
+		} else {
+			$('.private').show();
+		}
+	});
 }
 
 var createPost = function(postData, callback) {
@@ -371,11 +377,8 @@ function setBio(user) {
 	$("#number-of-friends").html(user.friends.length + " Friends");
 	$("#date-of-birth").html(printDate(user.dateOfBirth));
 	$("#profile-bio-text").html(user.biography);
-	try {
+	if(!user.profilePicture.includes("default"))
 		$(".profile-info .profile-photo img").attr("src", "images/userPictures/" + user.id + "/" + user.profilePicture);
-	} catch(e) {
-		$(".profile-info .profile-photo img").attr("src", "images/default.jpg");
-	}
 	$(".profile-name-surname").html(user.name + " " + user.surname);
 	$("#add-remove-friend").attr("user-id", user.id);
 	$("#send-message").attr("user-id", user.id);

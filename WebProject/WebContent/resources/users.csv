@@ -2,9 +2,9 @@ id;username;password;email;name;surname;dateOfBirth;gender;profilePicture;biogra
 U00011;aaa;aaa;ajder.milan2000@gmail.com;Milan;Ajder;2022-01-31;FEMALE;images/default.jpg;Click to Edit Profile to add your biography!;;;;C000023|C000024;true;false;false
 U00003;jova;jova12345;jova@gmail.com;Jova;Jovičić;1965-05-05;MALE;user3.jpg;Mlad lep zgodan 2.;U00002|U00004;FR000002|FR000003|FR000008;PO00005|PO00006|PO00024;C000001|C000005|C000011|C000012;false;false;false
 U00012;andjela;a;andjelamiskovic2000@gmail.com;Anđela;Mišković;2000-03-01;FEMALE;../../images/default.jpg;Click to Edit Profile to add your biography!;;;;C000025|C000026;true;false;false
-U00013;andjela1;a;andjelamiskovic2000@gmail.com;Anđela;Mišković;2022-02-22;FEMALE;../../images/default.jpg;Click to Edit Profile to add your biography!;;;;C000027|C000028;true;false;false
+U00013;andjela1;a;andjelamiskovic2000@gmail.com;Anđela;Mišković;2022-02-22;FEMALE;photo1.jpeg;Ovo je moja biografija!;U00005;FR000011;PO00043|PO00044|PO00045;C000027|C000028|C000029;true;false;false
 U00007;mia;mia12345;mia@gmail.com;Mia;Mijić;1995-01-05;FEMALE;user7.png;Mlada lepa zgodna.;U00002;FR000006;PO00015|PO00016|PO00017|PO00018;C000004|C000019|C000020;false;true;false
-U00005;steva;steva12345;steva@gmail.com;Steva;Stević;2000-01-01;MALE;user5.png;Da li si ikada mene voljela;U00002|U00004;FR000005|FR000009;PO00011|PO00012;C000003|C000006|C000015|C000016;true;false;false
+U00005;steva;steva12345;steva@gmail.com;Steva;Stević;2000-01-01;MALE;user5.png;Da li si ikada mene voljela;U00002|U00004|U00013;FR000005|FR000009|FR000011;PO00011|PO00012;C000003|C000006|C000015|C000016|C000029;true;false;false
 U00001;pera;pera12345;pera@gmail.com;Pera;Perić;2000-01-01;MALE;user1.png;Mlad lep zgodan;;FR000001|FR000002;PO00001|PO00002|PO00003|PO00021;C000007|C000008;false;false;false
 U00004;masa;masa12345;masa@gmail.com;Maša;Mašić;1967-05-05;FEMALE;bear5.jpg;Mlada lepa zgodna;U00002|U00003|U00005;FR000004|FR000008|FR000009;PO00007|PO00008|PO00009|PO00010;C000002|C000005|C000006|C000013|C000014;false;false;false
 U00008;tea;tea12345;tea@gmail.com;Tea;Tešić;1975-02-05;FEMALE;user8.png;Mlada lepa zgodna;;FR000007;PO00019|PO00020;C000021|C000022;true;false;false

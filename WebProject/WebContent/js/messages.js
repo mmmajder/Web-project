@@ -115,13 +115,61 @@ $(document).ready(function() {
     });
 })
 
+//function makeChatTemplate(chatHeadData) {
+//	var color = 'white';
+//	if (!chatHeadData.chat.seen && chatHeadData.lastSender==chatHeadData.otherParticipant.id) {
+//		if (chatHeadData.otherParticipant.admin) {
+//			color = 'hsl(0, 95%, 65%)';
+//		} else {
+//			color = '#8BC6EC';
+//		}
+//	}
+//	var lastMessage = "";
+//	if (chatHeadData.lastMessage) {
+//		lastMessage = printDateTime(chatHeadData.lastMessage);
+//	}
+//	
+//	var content = "Start chatting with " + chatHeadData.otherParticipant.name;
+//	if (chatHeadData.content != "") {
+//		content = chatHeadData.content;
+//	}
+//	
+//	var cardTemplate = [
+//		'<div class="message" id="',
+//		chatHeadData.chat.id,
+//		'" style="background-color:',
+//		color,
+//		';"',
+//		'><div class="profile-picture">',
+//		'<img src="images/userPictures/',
+//		chatHeadData.otherParticipant.id + "/" + chatHeadData.otherParticipant.profilePicture,
+//		'">',
+//		'<div class="active"></div>',
+//		'</div>',
+//		'<div class="message-body">',
+//		'<h5>',
+//		chatHeadData.otherParticipant.name + " " + chatHeadData.otherParticipant.surname,
+//		'</h5>',
+//		'<p class="text-muted">',
+//		content,
+//		'</p>',
+//		'<p>',
+//		lastMessage,
+//		"</p>",
+//		'</div>',
+//		'</div>'
+//	];
+//	return $(cardTemplate.join(''));
+//
+//}
+
 function makeChatTemplate(chatHeadData) {
-	var color = 'white';
+	var style = 'display:none;';
 	if (!chatHeadData.chat.seen && chatHeadData.lastSender==chatHeadData.otherParticipant.id) {
 		if (chatHeadData.otherParticipant.admin) {
-			color = 'hsl(0, 95%, 65%)';
+			style = 'color: var(--color-white);padding: 3px;font-size: 8px;border-radius: var(--card-border-radius);display: inline;background-color: var(--color-danger);';
 		} else {
-			color = '#8BC6EC';
+			style = 'color: var(--color-white);padding: 3px;font-size: 8px;border-radius: var(--card-border-radius);display: inline;background-color: var(--color-primary);';
 		}
 	}
 	var lastMessage = "";
@@ -129,14 +177,15 @@ function makeChatTemplate(chatHeadData) {
 		lastMessage = printDateTime(chatHeadData.lastMessage);
 	}
 	
+	var content = "Start chatting with " + chatHeadData.otherParticipant.name;
+	if (chatHeadData.content != "") {
+		content = chatHeadData.content;
+	}
 	
 	var cardTemplate = [
 		'<div class="message" id="',
 		chatHeadData.chat.id,
-		'" style="background-color:',
-		color,
-		';"',
-		'><div class="profile-picture">',
+		'"><div class="profile-picture">',
 		'<img src="images/userPictures/',
 		chatHeadData.otherParticipant.id + "/" + chatHeadData.otherParticipant.profilePicture,
 		'">',
@@ -146,8 +195,9 @@ function makeChatTemplate(chatHeadData) {
 		'<h5>',
 		chatHeadData.otherParticipant.name + " " + chatHeadData.otherParticipant.surname,
 		'</h5>',
+		'<div style="' + style + '">New message</div>',
 		'<p class="text-muted">',
-		chatHeadData.content,
+		content,
 		'</p>',
 		'<p>',
 		lastMessage,
